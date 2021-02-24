@@ -20,7 +20,7 @@ public class Almoxarifado implements java.io.Serializable {
 		this.produto=produto;
 	}
 	
-//GET's	
+//GETs	
 	public float getPreco() {
 		return preco;
 	}
@@ -45,7 +45,7 @@ public class Almoxarifado implements java.io.Serializable {
 		return produto;
 	}
 
-//SET's
+//SETs
 	public void setPreco(float preco) {
 		this.preco=preco;
 	}
@@ -70,3 +70,5 @@ public class Almoxarifado implements java.io.Serializable {
 		this.produto= new Produto(id, nome, tipo, quant, preco, disp);
 	}
 }
+
+VRAU
