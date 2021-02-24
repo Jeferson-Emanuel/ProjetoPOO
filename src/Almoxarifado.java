@@ -1,9 +1,10 @@
+import java.util.Calendar;
 
 public class Almoxarifado implements java.io.Serializable {
 	
 	private float preco;
-	private String registro_in;
-	private String registro_out;
+	private Calendar registro_in;
+	private Calendar registro_out;
 	private String pedido;
 	private int id;
 	private Produto produto;
@@ -11,7 +12,7 @@ public class Almoxarifado implements java.io.Serializable {
 	public Almoxarifado(){	
 	}
 //CONSTRUTOR	
-	public Almoxarifado(float preco, String registro_in, String registro_out, String pedido, int id, Produto produto) {
+	public Almoxarifado(float preco, Calendar registro_in, Calendar registro_out, String pedido, int id, Produto produto) {
 		this.preco=preco;
 		this.registro_in=registro_in;
 		this.registro_out=registro_out;
@@ -25,11 +26,11 @@ public class Almoxarifado implements java.io.Serializable {
 		return preco;
 	}
 	
-	public String getRegistroIn() {
+	public Calendar getRegistroIn() {
 		return registro_in;
 	}
 	
-	public String getRegistroOut() {
+	public Calendar getRegistroOut() {
 		return registro_out;
 	}
 	
@@ -50,11 +51,11 @@ public class Almoxarifado implements java.io.Serializable {
 		this.preco=preco;
 	}
 	
-	public void setRegistroIn(String registro_in) {
+	public void setRegistroIn(Calendar registro_in) {
 		this.registro_in=registro_in;
 	}
 	
-	public void setRegistroOut(String registro_out) {
+	public void setRegistroOut(Calendar registro_out) {
 		this.registro_out=registro_out;
 	}
 	
