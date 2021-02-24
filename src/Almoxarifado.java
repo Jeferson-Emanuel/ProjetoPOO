@@ -70,5 +70,3 @@ public class Almoxarifado implements java.io.Serializable {
 		this.produto= new Produto(id, nome, tipo, quant, preco, disp);
 	}
 }
-
-VRAU
