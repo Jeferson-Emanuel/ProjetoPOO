@@ -1,15 +1,16 @@
+import java.util.Calendar;
 
 public class Reserva implements java.io.Serializable {
 	
-	private String tipo_espaco;
-	private String horaIni;
-	private String horaFim;
-	private String data;
+	private Calendar tipo_espaco;
+	private Calendar horaIni;
+	private Calendar horaFim;
+	private Calendar data;
 	
 	public Reserva() {
 	}
 //CONSTRUTOR
-	public Reserva(String tipo_espaco, String horaIni, String horaFim, String data) {
+	public Reserva(Calendar tipo_espaco, Calendar horaIni, Calendar horaFim, Calendar data) {
 		this.tipo_espaco=tipo_espaco;
 		this.horaIni=horaIni;
 		this.horaFim=horaFim;
@@ -17,36 +18,36 @@ public class Reserva implements java.io.Serializable {
 	}
 	
 //GET's
-	public String getEspaco() {
+	public Calendar getEspaco() {
 		return tipo_espaco;
 	}
 	
-	public String getHoraIni() {
+	public Calendar getHoraIni() {
 		return horaIni;
 	}
 	
-	public String getHoraFim() {
+	public Calendar getHoraFim() {
 		return horaFim;
 	}
 	
-	public String getData() {
+	public Calendar getData() {
 		return data;
 	}
 	
 //SET's
-	public void setEspaco(String tipo_espaco) {
+	public void setEspaco(Calendar tipo_espaco) {
 		this.tipo_espaco=tipo_espaco;
 	}
 	
-	public void setHoraIni(String horaIni) {
+	public void setHoraIni(StringCalendar horaIni) {
 		this.horaIni=horaIni;
 	}
 	
-	public void setHoraFim(String horaFim) {
+	public void setHoraFim(Calendar horaFim) {
 		this.horaFim=horaFim;
 	}
 	
-	public void setData(String data) {
+	public void setData(Calendar data) {
 		this.data=data;
 	}
 }
