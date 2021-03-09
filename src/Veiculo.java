@@ -1,10 +1,14 @@
 
-public class Veiculo implements java.io.Serializable {
+import java.util.List;
+
+@Entity
+public class Veiculo {
 	
 	private String modelo;
 	private String tipo;
 	private String placa;
 	private String cor;
+	@Id
 	private Morador dono;
 	
 	public Veiculo() {
@@ -58,5 +62,34 @@ public class Veiculo implements java.io.Serializable {
 	
 	public void setDono(String nome, int id, String tipo, Apartamento apt, Veiculo veiculo) {
 		this.dono= new Morador(nome, id, tipo, apt, veiculo);
+	}
+	
+	public interface VeiculoDAO {
+		
+		void salva(Veiculo v);
+		List<Veiculo> lista();
+	}
+	
+	public class JPAVeiculoDAO implements VeiculoDAO {
+		
+		public void salva(Veiculo v) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(v);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Veiculo> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Veiculo> veiculo = em.createQuery("select a from Veiculo v").getResultList();
+			
+			em.close();
+			
+			return veiculo;
+		}
 	}
 }
