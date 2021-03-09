@@ -1,6 +1,10 @@
 
-public class Produto implements java.io.Serializable {
+import java.util.List;
+
+@Entity 
+public class Produto {
 	
+	@Id 
 	private int id;
 	private String nome;
 	private String tipo;
@@ -68,5 +72,34 @@ public class Produto implements java.io.Serializable {
 	
 	public void setDisp(boolean disp) {
 		this.disp=disp;
+	}
+	
+	public interface ProdutoDAO {
+		
+		void salva(Produto p);
+		List<Produto> lista();
+	}
+	
+	public class JPAProdutoDAO implements ProdutoDAO {
+		
+		public void salva(Produto p) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(p);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Produto> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Produto> produto = em.createQuery("select a from Produto p").getResultList();
+			
+			em.close();
+			
+			return produto;
+		}
 	}
 }
