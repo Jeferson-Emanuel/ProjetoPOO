@@ -1,9 +1,12 @@
+import java.util.List;
 
-public class Fornecedor implements java.io.Serializable {
+@Entity
+public class Fornecedor {
 	
 	private String nome;
 	private String tipo;
 	private String endereco;
+	@Id
 	private String contato;
 	
 	public Fornecedor() {
@@ -48,5 +51,34 @@ public class Fornecedor implements java.io.Serializable {
 	
 	public void setContato(String contato) {
 		this.contato=contato;
+	}
+	
+	public interface FornecedorDAO {
+		
+		void salva(Fornecedor f);
+		List<Fornecedor> lista();
+	}
+	
+	public class JPAFornecedorDAO implements FornecedorDAO {
+		
+		public void salva(Fornecedor f) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(f);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Fornecedor> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Fornecedor> fornecedor = em.createQuery("select a from Fornecedor f").getResultList();
+			
+			em.close();
+			
+			return fornecedor;
+		}
 	}
 }
