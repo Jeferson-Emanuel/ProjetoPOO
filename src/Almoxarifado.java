@@ -1,14 +1,17 @@
 import java.util.Calendar;
+import java.util.List;
 
-public class Almoxarifado implements java.io.Serializable {
+@Entity
+public class Almoxarifado {
 	
 	private float preco;
 	private Calendar registro_in;
 	private Calendar registro_out;
 	private String pedido;
+	@Id
 	private int id;
 	private Produto produto;
-	
+
 	public Almoxarifado(){	
 	}
 //CONSTRUTOR	
@@ -21,7 +24,7 @@ public class Almoxarifado implements java.io.Serializable {
 		this.produto=produto;
 	}
 	
-//GETs	
+//GET's	
 	public float getPreco() {
 		return preco;
 	}
@@ -46,7 +49,7 @@ public class Almoxarifado implements java.io.Serializable {
 		return produto;
 	}
 
-//SETs
+//SET's
 	public void setPreco(float preco) {
 		this.preco=preco;
 	}
@@ -69,5 +72,34 @@ public class Almoxarifado implements java.io.Serializable {
 	
 	public void setProduto(int id, String nome, String tipo, int quant, float preco, boolean disp) {
 		this.produto= new Produto(id, nome, tipo, quant, preco, disp);
+	}
+	
+	public interface AlmoxarifadoDAO {
+		
+		void salva(Almoxarifado a);
+		List<Almoxarifado> lista();
+	}
+	
+	public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
+		
+		public void salva(Almoxarifado a) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(a);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Almoxarifado> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Almoxarifado> almoxarifado = em.createQuery("select a from Almoxarifado a").getResultList();
+			
+			em.close();
+			
+			return almoxarifado;
+		}
 	}
 }
