@@ -1,7 +1,10 @@
+import java.util.List;
 
-public class Morador implements java.io.Serializable {
+@Entity
+public class Morador {
 	
 	private String nome;
+	@Id
 	private int id;
 	private String tipo;
 	private Apartamento apt;
@@ -59,4 +62,34 @@ public class Morador implements java.io.Serializable {
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo=veiculo;
 	}
+	
+	public interface MoradorDAO {
+		
+		void salva(Morador m);
+		List<Morador> lista();
+	}
+	
+	public class JPAMoradorDAO implements MoradorDAO {
+		
+		public void salva(Morador m) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(m);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Morador> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Morador> morador = em.createQuery("select a from Morador m").getResultList();
+			
+			em.close();
+			
+			return morador;
+		}
+	}
 }
+
