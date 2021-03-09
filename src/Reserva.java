@@ -1,10 +1,13 @@
 import java.util.Calendar;
+import java.util.List;
 
-public class Reserva implements java.io.Serializable {
+@Entity
+public class Reserva {
 	
 	private String tipo_espaco;
 	private Calendar horaIni;
 	private Calendar horaFim;
+	@Id
 	private Calendar data;
 	
 	public Reserva() {
@@ -49,5 +52,34 @@ public class Reserva implements java.io.Serializable {
 	
 	public void setData(Calendar data) {
 		this.data=data;
+	}
+	
+	public interface ReservaDAO {
+		
+		void salva(Reserva r);
+		List<Reserva> lista();
+	}
+	
+	public class JPAReservaDAO implements ReservaDAO {
+		
+		public void salva(Reserva r) {
+			EntityManager em = abreConexao();
+			em.getTransaction().begin();
+			
+			em.persist(r);
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		
+		public List<Reserva> lista() {
+			EntityManager em = abreConexao();
+			
+			List<Reserva> reserva = em.createQuery("select a from Reserva r").getResultList();
+			
+			em.close();
+			
+			return reserva;
+		}
 	}
 }
