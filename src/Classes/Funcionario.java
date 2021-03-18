@@ -1,15 +1,34 @@
+package Classes;
 
-public class Funcionario implements java.io.Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Table;
+
+//@Entity
+@Table(name="funcionario")
+public class Funcionario {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	
+	@Column
 	private String nome;
+	@Column
 	private String funcao;
+	@Column
 	private String endereco;
+	@Column
 	private String contato;
 	
 	public Funcionario() {
 	}
 //CONSTRUTOR
-	public Funcionario(String nome, String funcao, String endereco, String contato) {
+	public Funcionario(int id, String nome, String funcao, String endereco, String contato) {
+		this.id=id;
 		this.nome=nome;
 		this.funcao=funcao;
 		this.endereco=endereco;
@@ -17,6 +36,10 @@ public class Funcionario implements java.io.Serializable {
 	}
 	
 //GET's
+	public int getId() {
+		return id;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -34,6 +57,10 @@ public class Funcionario implements java.io.Serializable {
 	}
 	
 //SET's
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public void setNome(String nome) {
 		this.nome=nome;
 	}
