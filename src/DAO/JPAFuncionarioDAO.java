@@ -19,40 +19,44 @@ public class JPAFuncionarioDAO implements FuncionarioDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Funcionario obterPorId(int id) {
+		em.getTransaction().begin();
+		Funcionario funcionario = em.find(Funcionario.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return funcionario;
+	}
 	
 	public void salva(Funcionario func) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(func);
-		
 		em.getTransaction().commit();
 		emf.close();
 	}
 	
-	public void remove(Funcionario func) {
-		
-		em.getTransaction().begin();
-		
-		em.remove(func);
-		
-		em.getTransaction().commit();
-		emf.close();
-		
-	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Funcionario> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " +
+		         Funcionario.class.getName()).getResultList();
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Funcionario func");
-		
-		@SuppressWarnings("unchecked")
 		List<Funcionario> funcionario = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return funcionario;
+		return funcionario;*/
+	}
+
+	@Override
+	public Funcionario remove(int id) {
+		// TODO Auto-generated method stub
+		  em.getTransaction().begin();
+	      Funcionario funcionario = em.find(Funcionario.class, id); //consulta por meio do id.
+	      System.out.println("Excluindo os dados de: " + funcionario.getNome());
+	      em.remove(funcionario);
+	      em.getTransaction().commit();
+	      em.close();
+		return null;
 	}
 }

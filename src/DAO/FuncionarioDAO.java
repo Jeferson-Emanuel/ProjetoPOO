@@ -6,6 +6,7 @@ import Classes.Funcionario;
 public interface FuncionarioDAO {
 	
 	void salva(Funcionario func);
-	void remove(Funcionario func);
+	Funcionario obterPorId(int id);
+	Funcionario remove(int id);
 	List<Funcionario> lista();
 }

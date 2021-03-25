@@ -3,6 +3,8 @@ package View;
 import Classes.Produto;
 import DAO.JPAProdutoDAO;
 
+import java.util.List;
+
 import Classes.Almoxarifado;
 import DAO.JPAAlmoxarifadoDAO;
 
@@ -14,6 +16,7 @@ import DAO.JPAFornecedorDAO;
 
 import Classes.Funcionario;
 import DAO.JPAFuncionarioDAO;
+import DAO.FuncionarioDAO;
 
 import Classes.Morador;
 import DAO.JPAMoradorDAO;
@@ -37,7 +40,7 @@ public class Teste {
 		produto.setDisp(true);
 		
 		interfaceDAO.salva(produto);*/
-		
+/*-----------------------------------------------------------------------------------------------------*/	
 		/*JPAAlmoxarifadoDAO almoxarifadoDAO = new JPAAlmoxarifadoDAO();
 		Almoxarifado almoxarifado = new Almoxarifado();
 		
@@ -49,7 +52,7 @@ public class Teste {
 		almoxarifado.setRegistroOut("18/03/2021");
 		
 		almoxarifadoDAO.salva(almoxarifado);*/
-		
+/*-----------------------------------------------------------------------------------------------------*/		
 		/*JPAApartamentoDAO apartamentoDAO = new JPAApartamentoDAO();
 		Apartamento apartamento = new Apartamento();
 		
@@ -58,7 +61,7 @@ public class Teste {
 		apartamento.setNumero(404);
 		
 		apartamentoDAO.salva(apartamento);*/
-		
+/*-----------------------------------------------------------------------------------------------------*/
 		/*JPAFornecedorDAO fornecedorDAO = new JPAFornecedorDAO();
 		Fornecedor fornecedor = new Fornecedor();
 		
@@ -69,18 +72,37 @@ public class Teste {
 		fornecedor.setContato("(81) 3691-1217");
 		
 		fornecedorDAO.salva(fornecedor);*/
+/*-----------------------------------------------------------------------------------------------------*/
+		/*AQUI REMOVE DO BANCO*/
+		/*FuncionarioDAO r = new JPAFuncionarioDAO();
+		r.remove(5);*/
 		
+		/*AQUI ATUALIZA NO BANCO*/
+		/*Funcionario f = new JPAFuncionarioDAO().obterPorId(3);
+		//f.setNome("Zezinho");
+		f.setFuncao("Serviços Gerais");
+		FuncionarioDAO g = new JPAFuncionarioDAO();
+		g.salva(f);*/
+				
+		/*AQUI ESTÁ LISTANDO*/
+		/*JPAFuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
+		List<Funcionario> funcionarios = funcionarioDAO.lista();
+		
+		for(Funcionario func : funcionarios) {
+			System.out.println(func.getNome());
+		}*/
+		
+	/*AQUI SALVA NO BANCO*/
 		/*JPAFuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
 		Funcionario funcionario = new Funcionario();
 		
-		funcionario.setId(1);
-		funcionario.setNome("Seu Jose");
-		funcionario.setFuncao("Porteiro");
-		funcionario.setEndereco("Avenida Brasil, nº 40");
-		funcionario.setContato("(81) 8888-9999");
+		funcionario.setNome("Sebastiao Rozende");
+		funcionario.setFuncao("Encanador");
+		funcionario.setEndereco("Paudalho, nº 140");
+		funcionario.setContato("(81) 5555-6666");
 		
 		funcionarioDAO.salva(funcionario);*/
-		
+/*-----------------------------------------------------------------------------------------------------*/		
 		/*JPAMoradorDAO moradorDAO = new JPAMoradorDAO();
 		Morador morador = new Morador();
 		
@@ -90,7 +112,7 @@ public class Teste {
 		morador.setApt(1,"B",404);
 		
 		moradorDAO.salva(morador);*/
-		
+/*-----------------------------------------------------------------------------------------------------*/
 		/*JPAReservaDAO reservaDAO = new JPAReservaDAO();
 		Reserva reserva = new Reserva();
 		
