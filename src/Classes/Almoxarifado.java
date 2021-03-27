@@ -6,10 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity //NAO CONSEGUI
+@Entity
 @Table(name="almoxarifado")
 public class Almoxarifado {
 	
@@ -18,36 +22,29 @@ public class Almoxarifado {
 	private int id;
 	
 	@Column
-	private float preco;
-	@Column
 	private String registro_in;
 	@Column
 	private String registro_out;
 	@Column
 	private String pedido;
-	@Column
-	private Produto produto;
+	
+	@OneToMany
+	private List<Produto> produto;
 
 	public Almoxarifado(){	
 	}
 //CONSTRUTOR	
-	public Almoxarifado( int id, float preco, String registro_in, String registro_out, String pedido, Produto produto) {
+	public Almoxarifado(int id, String registro_in, String registro_out, String pedido, Produto produto) {
 		this.id=id;
-		this.preco=preco;
 		this.registro_in=registro_in;
 		this.registro_out=registro_out;
 		this.pedido=pedido;
-		this.produto=produto;
 	}
 	
 //GET's	
 	
 	public int getId() {
 		return id;
-	}
-	
-	public float getPreco() {
-		return preco;
 	}
 	
 	public String getRegistroIn() {
@@ -63,17 +60,13 @@ public class Almoxarifado {
 	}
 	
 	public Produto getProduto() {
-		return produto;
+		return (Produto) produto;
 	}
 
 //SET's
 	
 	public void setId(int id) {
 		this.id=id;
-	}
-	
-	public void setPreco(float preco) {
-		this.preco=preco;
 	}
 	
 	public void setRegistroIn(String registro_in) {
@@ -88,7 +81,8 @@ public class Almoxarifado {
 		this.pedido=pedido;
 	}
 	
-	public void setProduto(int id, String nome, String tipo, int quant, float preco, boolean disp) {
-		this.produto= new Produto(id, nome, tipo, quant, preco, disp);
+	@SuppressWarnings("unchecked")
+	public void setProduto(Produto produto) {
+		this.produto= (List<Produto>) produto;
 	}
 }

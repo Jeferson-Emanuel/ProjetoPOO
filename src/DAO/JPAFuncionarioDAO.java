@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import Classes.Funcionario;
 
@@ -57,6 +56,6 @@ public class JPAFuncionarioDAO implements FuncionarioDAO {
 	      em.remove(funcionario);
 	      em.getTransaction().commit();
 	      em.close();
-		return null;
+		return funcionario;
 	}
 }

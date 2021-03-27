@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import Classes.Fornecedor;
 
@@ -20,40 +19,43 @@ public class JPAFornecedorDAO implements FornecedorDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Fornecedor obterPorId(int id) {
+		em.getTransaction().begin();
+		Fornecedor fornecedor = em.find(Fornecedor.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return fornecedor;
+	}
 	
 	public void salva(Fornecedor f) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(f);
-		
 		em.getTransaction().commit();
 		emf.close();
 	}
 	
-	public void remove(Fornecedor f) {
-		
+	@Override
+	public Fornecedor remove(int id) {
 		em.getTransaction().begin();
-		
-		em.remove(f);
-		
+		Fornecedor fornecedor = em.find(Fornecedor.class, id);
+		System.out.println("Exluindo dados de: " + fornecedor.getNome());
+		em.remove(fornecedor);
 		em.getTransaction().commit();
-		emf.close();
-		
+		em.close();
+		return fornecedor;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Fornecedor> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " + Fornecedor.class.getName()).getResultList();
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Fornecedor f");
-		
 		@SuppressWarnings("unchecked")
 		List<Fornecedor> fornecedor = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return fornecedor;
+		return fornecedor;*/
 	}
 }

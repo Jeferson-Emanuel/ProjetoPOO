@@ -6,7 +6,6 @@ import Classes.Apartamento;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 public class JPAApartamentoDAO implements ApartamentoDAO {
 	
@@ -18,40 +17,43 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Apartamento obterPorId(int id) {
+		em.getTransaction().begin();
+		Apartamento apartamento = em.find(Apartamento.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return apartamento;
+	}
 	
 	public void salva(Apartamento ap) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(ap);
-		
 		em.getTransaction().commit();
 		emf.close();
 	}
 	
-	public void remove(Apartamento ap) {
-		
+	@Override
+	public Apartamento remove(int id) {
 		em.getTransaction().begin();
-		
-		em.remove(ap);
-		
+		Apartamento apartamento = em.find(Apartamento.class, id);
+		System.out.println("Excluindo dados do: " + apartamento.getId());
+		em.remove(apartamento);
 		em.getTransaction().commit();
-		emf.close();
-		
+		em.close();
+		return apartamento;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Apartamento> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Apartamento ap");
-		
 		@SuppressWarnings("unchecked")
 		List<Apartamento> apartamento = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return apartamento;
+		return apartamento;*/
 	}
 }

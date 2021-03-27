@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="veiculo")
 public class Veiculo {
 	
@@ -23,19 +24,19 @@ public class Veiculo {
 	private String placa;
 	@Column
 	private String cor;
-	@Column
-	private Morador dono;
+	@OneToOne
+	private Apartamento apartamento;
 	
 	public Veiculo() {
 	}
 //CONSTRUTOR
-	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Morador dono) {
+	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Apartamento apartamento) {
 		this.id=id;
 		this.modelo=modelo;
 		this.tipo=tipo;
 		this.placa=placa;
 		this.cor=cor;
-		this.dono=dono;
+		this.apartamento=apartamento;
 	}
 	
 //GET's
@@ -59,8 +60,8 @@ public class Veiculo {
 		return cor;
 	}
 	
-	public Morador getDono() {
-		return dono;
+	public Apartamento getApartamento() {
+		return apartamento;
 	}
 	
 //SET's
@@ -84,10 +85,7 @@ public class Veiculo {
 		this.cor=cor;
 	}
 	
-	public void setDono(Morador dono) {
-		this.dono = dono;
+	public void setApartamento(Apartamento apartamento) {
+		this.apartamento=apartamento;
 	}
-	/*public void setDono(String nome, int id, String tipo, Apartamento apt, Veiculo veiculo) {
-		this.dono= new Morador(nome, id, tipo, apt, veiculo);
-	}*/
 }

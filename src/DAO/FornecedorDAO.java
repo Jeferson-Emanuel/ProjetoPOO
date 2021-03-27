@@ -6,6 +6,7 @@ import Classes.Fornecedor;
 public interface FornecedorDAO {
 	
 	void salva(Fornecedor f);
-	void remove(Fornecedor f);
+	Fornecedor obterPorId(int id);
+	Fornecedor remove(int id);
 	List<Fornecedor> lista();
 }

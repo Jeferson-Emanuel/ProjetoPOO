@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="reserva")
 public class Reserva {
 	

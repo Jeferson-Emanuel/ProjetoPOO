@@ -4,10 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import javax.persistence.OneToMany;
+
+//import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="apartamento")
 public class Apartamento {
 	
@@ -19,6 +23,9 @@ public class Apartamento {
 	private String bloco;
 	@Column
 	private int numero;
+	
+	/*@OneToMany (mappedBy="apt")
+	private List<Morador> moradores;*/
 	
 	public Apartamento() {
 	}

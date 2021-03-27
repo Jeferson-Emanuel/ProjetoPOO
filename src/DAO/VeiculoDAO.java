@@ -6,6 +6,7 @@ import Classes.Veiculo;
 public interface VeiculoDAO {
 	
 	void salva(Veiculo v);
-	void remove(Veiculo v);
+	Veiculo obterPorId(int id);
+	Veiculo remove(int id);
 	List<Veiculo> lista();
 }

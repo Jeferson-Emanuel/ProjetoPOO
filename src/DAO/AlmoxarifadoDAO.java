@@ -6,6 +6,7 @@ import Classes.Almoxarifado;
 public interface AlmoxarifadoDAO {
 	
 	void salva(Almoxarifado a);
-	void remove(Almoxarifado a);
+	Almoxarifado obterPorId(int id);
+	Almoxarifado remove(int id);
 	List<Almoxarifado> lista();
 }

@@ -6,6 +6,7 @@ import Classes.Apartamento;
 public interface ApartamentoDAO {
 	
 	void salva(Apartamento ap);
-	void remove(Apartamento ap);
+	Apartamento obterPorId(int id);
+	Apartamento remove(int id);
 	List<Apartamento> lista();
 }

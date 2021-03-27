@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.EntityManager;
 
 import Classes.Morador;
@@ -19,39 +18,43 @@ public class JPAMoradorDAO implements MoradorDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Morador obterPorId(int id) {
+		em.getTransaction().begin();
+		Morador morador = em.find(Morador.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return morador;
+	}
+	
 	public void salva(Morador m) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(m);
-		
 		em.getTransaction().commit();
 		emf.close();
 	}
 	
-	public void remove(Morador m) {
-		
+	@Override
+	public Morador remove(int id) {
 		em.getTransaction().begin();
-		
-		em.remove(m);
-		
+		Morador morador = em.find(Morador.class, id);
+		System.out.println("Excluindo dados de: " + morador.getNome());
+		em.remove(morador);
 		em.getTransaction().commit();
-		emf.close();
-		
+		em.close();
+		return morador;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Morador> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " + Morador.class.getName()).getResultList();
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Morador m");
-		
 		@SuppressWarnings("unchecked")
 		List<Morador> morador = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return morador;
+		return morador;*/
 	}
 }
