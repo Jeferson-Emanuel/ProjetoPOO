@@ -2,6 +2,7 @@ package Classes;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
@@ -24,10 +25,13 @@ public class Produto {
 	private float preco;
 	@Column
 	private boolean disp;
+	@ManyToOne
+	private Almoxarifado almoxarifado;
 	
+//CONSTRUTORS
 	public Produto() {	
 	}
-//CONSTRUTOR
+
 	public Produto(int id, String nome, String tipo, int quant, float preco, boolean disp) {
 		this.id=id;
 		this.nome=nome;

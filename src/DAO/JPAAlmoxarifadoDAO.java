@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.List;
 import Classes.Almoxarifado;
+import Classes.Produto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -29,7 +30,7 @@ public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
 		em.getTransaction().begin();
 		em.merge(a);
 		em.getTransaction().commit();
-		emf.close();
+		//emf.close();
 	}
 	
 	@Override

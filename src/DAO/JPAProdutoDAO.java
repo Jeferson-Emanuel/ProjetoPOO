@@ -30,7 +30,8 @@ public class JPAProdutoDAO implements ProdutoDAO {
 		em.getTransaction().begin();
 		em.merge(p);
 		em.getTransaction().commit();
-		emf.close();
+		//em.close();
+		//emf.close();
 	}
 	
 	@Override

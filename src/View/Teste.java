@@ -3,6 +3,7 @@ package View;
 import Classes.Produto;
 import DAO.JPAProdutoDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Classes.Almoxarifado;
@@ -31,28 +32,51 @@ import DAO.ProdutoDAO;
 public class Teste {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
-		/*JPAProdutoDAO interfaceDAO = new JPAProdutoDAO();
-		Produto produto = new Produto();
 		
-		produto.setId(3);
+		JPAProdutoDAO interfaceDAO = new JPAProdutoDAO();
+		
+		Produto produto = new Produto();		
+		//produto.setId(3);
 		produto.setNome("lampada");
 		produto.setPreco(12);
 		produto.setQuant(2);
 		produto.setTipo("eletrico");
-		produto.setDisp(true);*/
+		produto.setDisp(true);
+		
+		interfaceDAO.salva(produto);
+		
+		Produto produto2 = new Produto();
+		//produto2.setId(4);
+		produto2.setNome("vassoura");
+		produto2.setPreco(5);
+		produto2.setQuant(6);
+		produto2.setTipo("madeira");
+		produto2.setDisp(true);
+		
+		interfaceDAO.salva(produto2);
 		
 		/*List<Produto> p = interfaceDAO.lista();
 		
 		for(Produto prod : p) {
 			System.out.println(prod.getNome());
 		}*/
-		
-		//interfaceDAO.salva(produto);
-		
+				
 		//ProdutoDAO p = new JPAProdutoDAO();
 		//p.remove(1);
+		
+//-------------------------------------------------------------------------------------------
+		JPAAlmoxarifadoDAO almoxarifadoDAO = new JPAAlmoxarifadoDAO();
+		Almoxarifado almoxarifado = new Almoxarifado();
+		System.out.println(produto2.getNome());
+		//almoxarifado.setId(2);
+		List <Produto> produtosE = new ArrayList<Produto>();
+		produtosE.add(produto);
+		produtosE.add(produto2);
+		almoxarifado.setProdutosEntrada(produtosE);
+		//almoxarifado.setProdutosSaida(produtosE);
+		
+		almoxarifadoDAO.salva(almoxarifado);
 /*-----------------------------------------------------------------------------------------------------*/	
 		/*JPAAlmoxarifadoDAO almoxarifadoDAO = new JPAAlmoxarifadoDAO();
 		Almoxarifado almoxarifado = new Almoxarifado();
