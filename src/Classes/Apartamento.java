@@ -27,37 +27,31 @@ public class Apartamento {
 	/*@OneToMany (mappedBy="apt")
 	private List<Morador> moradores;*/
 	
+//Constructors	
 	public Apartamento() {
 	}
-//CONSTRUTOR
 	public Apartamento(int id, String bloco, int numero) {
 		this.id=id;
 		this.bloco=bloco;
 		this.numero=numero;
 	}
 
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
-	}
-	
+	}	
 	public String getBloco() {
 		return bloco;
-	}
-	
+	}	
 	public int getNumero() {
 		return numero;
-	}
-	
-//SET's
+	}	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setBloco(String bloco) {
 		this.bloco=bloco;
 	}
-
 	public void setNumero(int numero) {
 		this.numero=numero;
 	}

@@ -23,9 +23,9 @@ public class Morador {
 	@ManyToOne
 	private Apartamento apt;
 	
+//Constructors
 	public Morador() {
 	}
-//CONSTRUTOR
 	public Morador(int id, String nome, String tipo, Apartamento apt) {
 		this.id=id;
 		this.nome=nome;
@@ -33,36 +33,28 @@ public class Morador {
 		this.apt=apt;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
-	}
-	
+	}	
 	public String getNome() {
 		return nome;
-	}
-	
+	}	
 	public String getTipo() {
 		return tipo;
-	}
-	
+	}	
 	public Apartamento getApt() {
 		return apt;
-	}
-	
-//SET's
+	}	
 	public void setId(int id) {
 		this.id=id;
-	}
-	
+	}	
 	public void setNome(String nome) {
 		this.nome=nome;
-	}
-	
+	}	
 	public void setTipo(String tipo) {
 		this.tipo=tipo;
-	}
-	
+	}	
 	public void setApt(Apartamento apt) {
 		this.apt = apt;
 	}

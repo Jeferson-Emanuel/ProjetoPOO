@@ -24,10 +24,10 @@ public class Reserva {
 	private String horaFim;
 	@Column
 	private String data;
-	
+
+//Constructors	
 	public Reserva() {
 	}
-//CONSTRUTOR
 	public Reserva(int id, String tipo_espaco, String horaIni, String horaFim, String data) {
 		this.id=id;
 		this.tipo_espaco=tipo_espaco;
@@ -36,44 +36,34 @@ public class Reserva {
 		this.data=data;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
-	}
-	
+	}	
 	public String getTipo_espaco() {
 		return tipo_espaco;
-	}
-	
+	}	
 	public String getHoraIni() {
 		return horaIni;
-	}
-	
+	}	
 	public String getHoraFim() {
 		return horaFim;
-	}
-	
+	}	
 	public String getData() {
 		return data;
-	}
-	
-//SET's
+	}	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setTipo_espaco(String tipo_espaco) {
 		this.tipo_espaco = tipo_espaco;
-	}
-	
+	}	
 	public void setHoraIni(String horaIni) {
 		this.horaIni=horaIni;
-	}
-	
+	}	
 	public void setHoraFim(String horaFim) {
 		this.horaFim=horaFim;
-	}
-	
+	}	
 	public void setData(String data) {
 		this.data=data;
 	}

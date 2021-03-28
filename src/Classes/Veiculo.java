@@ -27,9 +27,9 @@ public class Veiculo {
 	@OneToOne
 	private Apartamento apartamento;
 	
+//Constructors	
 	public Veiculo() {
 	}
-//CONSTRUTOR
 	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Apartamento apartamento) {
 		this.id=id;
 		this.modelo=modelo;
@@ -39,52 +39,40 @@ public class Veiculo {
 		this.apartamento=apartamento;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
 	}
-
 	public String getModelo() {
 		return modelo;
-	}
-	
+	}	
 	public String getTipo() {
 		return tipo;
-	}
-	
+	}	
 	public String getPlaca() {
 		return placa;
-	}
-	
+	}	
 	public String getCor() {
 		return cor;
-	}
-	
+	}	
 	public Apartamento getApartamento() {
 		return apartamento;
 	}
-	
-//SET's
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setModelo(String modelo) {
 		this.modelo=modelo;
-	}
-	
+	}	
 	public void setTipo(String tipo) {
 		this.tipo=tipo;
-	}
-	
+	}	
 	public void setPlaca(String placa) {
 		this.placa=placa;
-	}
-	
+	}	
 	public void setCor(String cor) {
 		this.cor=cor;
-	}
-	
+	}	
 	public void setApartamento(Apartamento apartamento) {
 		this.apartamento=apartamento;
 	}

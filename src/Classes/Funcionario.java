@@ -24,9 +24,9 @@ public class Funcionario {
 	@Column
 	private String contato;
 	
+//Constructors
 	public Funcionario() {
 	}
-//CONSTRUTOR
 	public Funcionario(int id, String nome, String funcao, String endereco, String contato) {
 		this.id=id;
 		this.nome=nome;
@@ -35,44 +35,34 @@ public class Funcionario {
 		this.contato=contato;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
 	}
-	
 	public String getNome() {
 		return nome;
-	}
-	
+	}	
 	public String getFuncao() {
 		return funcao;
-	}
-	
+	}	
 	public String getEndereco() {
 		return endereco;
-	}
-	
+	}	
 	public String getContato() {
 		return contato;
 	}
-	
-//SET's
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setNome(String nome) {
 		this.nome=nome;
-	}
-	
+	}	
 	public void setFuncao(String funcao) {
 		this.funcao=funcao;
-	}
-	
+	}	
 	public void setEndereco(String endereco) {
 		this.endereco=endereco;
-	}
-	
+	}	
 	public void setContato(String contato) {
 		this.contato=contato;
 	}
