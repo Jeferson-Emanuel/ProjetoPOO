@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-@Entity //NAO CONSEGUI
+@Entity
 @Table(name="morador")
 public class Morador {
 	
