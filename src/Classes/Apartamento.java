@@ -4,10 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import javax.persistence.OneToMany;
+
+//import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="apartamento")
 public class Apartamento {
 	
@@ -20,37 +24,34 @@ public class Apartamento {
 	@Column
 	private int numero;
 	
+	/*@OneToMany (mappedBy="apt")
+	private List<Morador> moradores;*/
+	
+//Constructors	
 	public Apartamento() {
 	}
-//CONSTRUTOR
 	public Apartamento(int id, String bloco, int numero) {
 		this.id=id;
 		this.bloco=bloco;
 		this.numero=numero;
 	}
 
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
-	}
-	
+	}	
 	public String getBloco() {
 		return bloco;
-	}
-	
+	}	
 	public int getNumero() {
 		return numero;
-	}
-	
-//SET's
+	}	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setBloco(String bloco) {
 		this.bloco=bloco;
 	}
-
 	public void setNumero(int numero) {
 		this.numero=numero;
 	}

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import Classes.Veiculo;
 
@@ -19,39 +18,43 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Veiculo obterPorId(int id) {
+		em.getTransaction().begin();
+		Veiculo veiculo = em.find(Veiculo.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return veiculo;
+	}
+	
 	public void salva(Veiculo v) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(v);
-		
 		em.getTransaction().commit();
 		emf.close();
 	}
 	
-	public void remove(Veiculo v) {
-		
+	@Override
+	public Veiculo remove(int id) {
 		em.getTransaction().begin();
-		
-		em.remove(v);
-		
+		Veiculo veiculo = em.find(Veiculo.class, id);
+		System.out.println("Excluindo dados de: " + veiculo.getPlaca());
+		em.remove(veiculo);
 		em.getTransaction().commit();
-		emf.close();
-		
+		em.close();
+		return veiculo;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Veiculo> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " + Veiculo.class.getName()).getResultList();
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Veiculo v");
-		
 		@SuppressWarnings("unchecked")
 		List<Veiculo> veiculo = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return veiculo;
+		return veiculo;*/
 	}
 }

@@ -6,6 +6,7 @@ import Classes.Produto;
 public interface ProdutoDAO {
 	
 	void salva(Produto p);
-	void remove(Produto p);
+	Produto obterPorId(int id);
+	Produto remove(int id);
 	List<Produto> lista();
 }

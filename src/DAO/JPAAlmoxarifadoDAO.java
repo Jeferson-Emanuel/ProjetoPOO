@@ -2,10 +2,11 @@ package DAO;
 
 import java.util.List;
 import Classes.Almoxarifado;
+import Classes.Produto;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
 	
@@ -17,41 +18,45 @@ public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public Almoxarifado obterPorId(int id) {
+		em.getTransaction().begin();
+		Almoxarifado almoxarifado = em.find(Almoxarifado.class, id);
+		em.getTransaction().commit();
+		emf.close();
+		return almoxarifado;
+	}
 	
 	public void salva(Almoxarifado a) {
-		
 		em.getTransaction().begin();
-		
 		em.merge(a);
-		
 		em.getTransaction().commit();
-		emf.close();
+		//emf.close();
 	}
 	
-	public void remove(Almoxarifado a) {
-
-		em.getTransaction().begin();
-		
-		em.remove(a);
-		
-		em.getTransaction().commit();
-		emf.close();
-		
+	@Override
+	public Almoxarifado remove(int id) {
+		// TODO Auto-generated method stub
+		  em.getTransaction().begin();
+	      Almoxarifado almoxarifado = em.find(Almoxarifado.class, id); //consulta por meio do id.
+	      System.out.println("Excluindo os dados de: " + almoxarifado.getId());
+	      em.remove(almoxarifado);
+	      em.getTransaction().commit();
+	      em.close();
+		return almoxarifado;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Almoxarifado> lista() {
 		
-		em.getTransaction().begin();
+		return em.createQuery("FROM " + Almoxarifado.class.getName()).getResultList();		
 		
+		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Almoxarifado a");
-		
 		@SuppressWarnings("unchecked")
 		List<Almoxarifado> almoxarifado = pesquisa.getResultList();
-		
 		em.getTransaction().commit();
 		emf.close();
-		
-		return almoxarifado;
+		return almoxarifado;*/
 	}
 
 }

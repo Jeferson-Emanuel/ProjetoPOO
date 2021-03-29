@@ -6,6 +6,7 @@ import Classes.Morador;
 public interface MoradorDAO {
 	
 	void salva(Morador m);
-	void remove(Morador m);
+	Morador obterPorId(int id);
+	Morador remove(int id);
 	List<Morador> lista();
 }

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="fornecedor")
 public class Fornecedor {
 	
@@ -24,9 +24,9 @@ public class Fornecedor {
 	@Column
 	private String contato;
 	
+//Constructors
 	public Fornecedor() {
 	}
-//CONSTRUTOR
 	public Fornecedor(int id, String nome, String tipo, String endereco, String contato) {
 		this.id=id;
 		this.nome=nome;
@@ -35,44 +35,34 @@ public class Fornecedor {
 		this.contato=contato;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
-	}
-	
+	}	
 	public String getNome() {
 		return nome;
-	}
-	
+	}	
 	public String getTipo() {
 		return tipo;
-	}
-	
+	}	
 	public String getEndereco() {
 		return endereco;
-	}
-	
+	}	
 	public String getContato() {
 		return contato;
-	}
-	
-//SET's
+	}	
 	public void setId(int id) {
 		this.id=id;
-	}
-	
+	}	
 	public void setNome(String nome) {
 		this.nome=nome;
-	}
-	
+	}	
 	public void setTipo(String tipo) {
 		this.tipo=tipo;
-	}
-	
+	}	
 	public void setEndereco(String endereco) {
 		this.endereco=endereco;
-	}
-	
+	}	
 	public void setContato(String contato) {
 		this.contato=contato;
 	}

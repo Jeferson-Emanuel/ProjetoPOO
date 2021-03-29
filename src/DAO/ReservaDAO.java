@@ -6,6 +6,7 @@ import Classes.Reserva;
 public interface ReservaDAO {
 	
 	void salva(Reserva r);
-	void remove(Reserva r);
+	Reserva obterPorId(int id);
+	Reserva remove(int id);
 	List<Reserva> lista();
 }

@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name="veiculo")
 public class Veiculo {
 	
@@ -23,71 +24,56 @@ public class Veiculo {
 	private String placa;
 	@Column
 	private String cor;
-	@Column
-	private Morador dono;
+	@OneToOne
+	private Apartamento apartamento;
 	
+//Constructors	
 	public Veiculo() {
 	}
-//CONSTRUTOR
-	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Morador dono) {
+	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Apartamento apartamento) {
 		this.id=id;
 		this.modelo=modelo;
 		this.tipo=tipo;
 		this.placa=placa;
 		this.cor=cor;
-		this.dono=dono;
+		this.apartamento=apartamento;
 	}
 	
-//GET's
+//Gets & Sets
 	public int getId() {
 		return id;
 	}
-
 	public String getModelo() {
 		return modelo;
-	}
-	
+	}	
 	public String getTipo() {
 		return tipo;
-	}
-	
+	}	
 	public String getPlaca() {
 		return placa;
-	}
-	
+	}	
 	public String getCor() {
 		return cor;
+	}	
+	public Apartamento getApartamento() {
+		return apartamento;
 	}
-	
-	public Morador getDono() {
-		return dono;
-	}
-	
-//SET's
 	public void setId(int id) {
 		this.id = id;
-	}
-	
+	}	
 	public void setModelo(String modelo) {
 		this.modelo=modelo;
-	}
-	
+	}	
 	public void setTipo(String tipo) {
 		this.tipo=tipo;
-	}
-	
+	}	
 	public void setPlaca(String placa) {
 		this.placa=placa;
-	}
-	
+	}	
 	public void setCor(String cor) {
 		this.cor=cor;
+	}	
+	public void setApartamento(Apartamento apartamento) {
+		this.apartamento=apartamento;
 	}
-	
-	public void setDono(Morador dono) {
-		this.dono = dono;
-	}
-	/*public void setDono(String nome, int id, String tipo, Apartamento apt, Veiculo veiculo) {
-		this.dono= new Morador(nome, id, tipo, apt, veiculo);
-	}*/
 }
