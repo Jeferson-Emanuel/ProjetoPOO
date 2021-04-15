@@ -1,4 +1,4 @@
-package Classes;
+package br.upe.ProjetoPOO.Classes;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

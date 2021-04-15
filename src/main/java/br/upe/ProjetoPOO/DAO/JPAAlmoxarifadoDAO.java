@@ -1,8 +1,8 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Almoxarifado;
-import Classes.Produto;
+import br.upe.ProjetoPOO.Classes.Almoxarifado;
+import br.upe.ProjetoPOO.Classes.Produto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Veiculo;
+import br.upe.ProjetoPOO.Classes.Veiculo;
 
 public interface VeiculoDAO {
 	

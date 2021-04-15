@@ -1,4 +1,4 @@
-package Classes;
+package br.upe.ProjetoPOO.Classes;
 
 //import java.util.Calendar;
 import javax.persistence.Entity;

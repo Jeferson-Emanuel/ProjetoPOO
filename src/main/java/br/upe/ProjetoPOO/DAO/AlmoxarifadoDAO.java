@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Almoxarifado;
+import br.upe.ProjetoPOO.Classes.Almoxarifado;
 
 public interface AlmoxarifadoDAO {
 	

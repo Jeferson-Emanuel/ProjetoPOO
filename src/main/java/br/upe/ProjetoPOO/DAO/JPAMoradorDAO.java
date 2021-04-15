@@ -1,4 +1,4 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 
-import Classes.Morador;
+import br.upe.ProjetoPOO.Classes.Morador;
 
 public class JPAMoradorDAO implements MoradorDAO {
 	

@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Morador;
+import br.upe.ProjetoPOO.Classes.Morador;
 
 public interface MoradorDAO {
 	

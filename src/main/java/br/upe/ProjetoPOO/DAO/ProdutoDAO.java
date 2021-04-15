@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Produto;
+import br.upe.ProjetoPOO.Classes.Produto;
 
 public interface ProdutoDAO {
 	

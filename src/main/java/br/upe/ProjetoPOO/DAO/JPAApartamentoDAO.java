@@ -1,8 +1,8 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
 
-import Classes.Apartamento;
+import br.upe.ProjetoPOO.Classes.Apartamento;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

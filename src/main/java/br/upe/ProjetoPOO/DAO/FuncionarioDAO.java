@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Funcionario;
+import br.upe.ProjetoPOO.Classes.Funcionario;
 
 public interface FuncionarioDAO {
 	

@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Fornecedor;
+import br.upe.ProjetoPOO.Classes.Fornecedor;
 
 public interface FornecedorDAO {
 	

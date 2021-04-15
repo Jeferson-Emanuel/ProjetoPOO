@@ -1,7 +1,7 @@
-package DAO;
+package br.upe.ProjetoPOO.DAO;
 
 import java.util.List;
-import Classes.Reserva;
+import br.upe.ProjetoPOO.Classes.Reserva;
 
 public interface ReservaDAO {
 	

@@ -1,34 +1,34 @@
-package View;
+package br.upe.ProjetoPOO.View;
 
-import Classes.Produto;
-import DAO.JPAProdutoDAO;
+import br.upe.ProjetoPOO.Classes.Produto;
+import br.upe.ProjetoPOO.DAO.JPAProdutoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Classes.Almoxarifado;
-import DAO.JPAAlmoxarifadoDAO;
+import br.upe.ProjetoPOO.Classes.Almoxarifado;
+import br.upe.ProjetoPOO.DAO.JPAAlmoxarifadoDAO;
 
-import Classes.Apartamento;
-import DAO.JPAApartamentoDAO;
+import br.upe.ProjetoPOO.Classes.Apartamento;
+import br.upe.ProjetoPOO.DAO.JPAApartamentoDAO;
 
-import Classes.Fornecedor;
-import DAO.JPAFornecedorDAO;
+import br.upe.ProjetoPOO.Classes.Fornecedor;
+import br.upe.ProjetoPOO.DAO.JPAFornecedorDAO;
 
-import Classes.Funcionario;
-import DAO.JPAFuncionarioDAO;
-import DAO.AlmoxarifadoDAO;
-import DAO.ApartamentoDAO;
-import DAO.FuncionarioDAO;
+import br.upe.ProjetoPOO.Classes.Funcionario;
+import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
+import br.upe.ProjetoPOO.DAO.AlmoxarifadoDAO;
+import br.upe.ProjetoPOO.DAO.ApartamentoDAO;
+import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
 
-import Classes.Morador;
-import DAO.JPAMoradorDAO;
+import br.upe.ProjetoPOO.Classes.Morador;
+import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
 
-import Classes.Reserva;
-import Classes.Veiculo;
-import DAO.JPAReservaDAO;
-import DAO.JPAVeiculoDAO;
-import DAO.ProdutoDAO;
+import br.upe.ProjetoPOO.Classes.Reserva;
+import br.upe.ProjetoPOO.Classes.Veiculo;
+import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
+import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+import br.upe.ProjetoPOO.DAO.ProdutoDAO;
 
 public class Teste {
 
@@ -127,7 +127,7 @@ public class Teste {
 		fornecedor.setId(1);
 		fornecedor.setNome("Netcell");
 		fornecedor.setTipo("Provedor de Internet");
-		fornecedor.setEndereco("Rua José Miguel, nº 16");
+		fornecedor.setEndereco("Rua Josï¿½ Miguel, nï¿½ 16");
 		fornecedor.setContato("(81) 3691-1217");
 
 		List<Fornecedor> f = fornecedorDAO.lista();
@@ -145,11 +145,11 @@ public class Teste {
 		/*AQUI ATUALIZA NO BANCO*/
 		/*Funcionario f = new JPAFuncionarioDAO().obterPorId(3);
 		//f.setNome("Zezinho");
-		f.setFuncao("Serviços Gerais");
+		f.setFuncao("Serviï¿½os Gerais");
 		FuncionarioDAO g = new JPAFuncionarioDAO();
 		g.salva(f);*/
 
-		/*AQUI ESTÁ LISTANDO*/
+		/*AQUI ESTï¿½ LISTANDO*/
 		/*JPAFuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
 		List<Funcionario> funcionarios = funcionarioDAO.lista();
 
@@ -163,7 +163,7 @@ public class Teste {
 
 		funcionario.setNome("Francisco");
 		funcionario.setFuncao("Limpador da Piscina");
-		funcionario.setEndereco("Ferro velho, nº 20");
+		funcionario.setEndereco("Ferro velho, nï¿½ 20");
 		funcionario.setContato("(81) 1111-2222");*/
 
 		//funcionarioDAO.salva(funcionario);
