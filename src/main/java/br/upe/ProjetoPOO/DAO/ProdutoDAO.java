@@ -7,6 +7,7 @@ public interface ProdutoDAO {
 	
 	void salva(Produto p);
 	Produto obterPorId(int id);
-	Produto remove(int id);
+	Produto obterPorNome(String nome);
+	void /*Produto*/ remove(int id);
 	List<Produto> lista();
 }

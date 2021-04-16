@@ -30,8 +30,8 @@ public class Produto {
 //Constructors
 	public Produto() {	
 	}
-	public Produto(int id, String nome, String tipo, int quant, float preco, boolean disp) {
-		this.id=id;
+	public Produto(/*int id,*/String nome, String tipo, int quant, float preco, boolean disp) {
+		//this.id=id;
 		this.nome=nome;
 		this.tipo=tipo;
 		this.quant=quant;

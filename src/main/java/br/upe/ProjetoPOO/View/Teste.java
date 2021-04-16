@@ -35,7 +35,7 @@ public class Teste {
 	public static void main(String[] args) {
 		
 //Cadastro de produtos em lista 
-/*
+
 		JPAProdutoDAO produto1DAO = new JPAProdutoDAO();
 		JPAProdutoDAO produto2DAO = new JPAProdutoDAO();
 		
@@ -68,7 +68,7 @@ public class Teste {
 
 		almoxarifadoDAO.salva(almoxarifado);
 		
-*/
+
 		
 //Teste de Classe/interface de Produto
 /*	

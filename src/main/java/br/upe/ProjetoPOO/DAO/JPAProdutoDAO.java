@@ -26,6 +26,14 @@ public class JPAProdutoDAO implements ProdutoDAO {
 		return produto;
 	}
 	
+	public Produto obterPorNome(String nome) {
+		em.getTransaction().begin();
+		Produto produto = em.find(Produto.class, nome);
+		em.getTransaction().commit();
+		emf.close();
+		return produto;
+	}
+	
 	public void salva(Produto p) {
 		em.getTransaction().begin();
 		em.merge(p);
@@ -35,14 +43,14 @@ public class JPAProdutoDAO implements ProdutoDAO {
 	}
 	
 	@Override
-	public Produto remove(int id) {
+	public void /*Produto*/remove(int id) {
 		em.getTransaction().begin();
 		Produto produto = em.find(Produto.class, id);
 		System.out.println("Excluindo dados de: " + produto.getNome());
 		em.remove(produto);
 		em.getTransaction().commit();
 		em.close();
-		return produto;
+		//return produto;
 	}
 	
 	@SuppressWarnings("unchecked")
