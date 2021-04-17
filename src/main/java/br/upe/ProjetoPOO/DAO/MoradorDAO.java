@@ -7,6 +7,7 @@ public interface MoradorDAO {
 	
 	void salva(Morador m);
 	Morador obterPorId(int id);
+	Morador obterPorCpf(String cpf);
 	Morador remove(int id);
 	List<Morador> lista();
 }

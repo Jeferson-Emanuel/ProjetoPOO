@@ -3,10 +3,12 @@ package br.upe.ProjetoPOO.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 
 import br.upe.ProjetoPOO.Classes.Morador;
+import br.upe.ProjetoPOO.Classes.Produto;
 
 public class JPAMoradorDAO implements MoradorDAO {
 	
@@ -23,6 +25,22 @@ public class JPAMoradorDAO implements MoradorDAO {
 		Morador morador = em.find(Morador.class, id);
 		em.getTransaction().commit();
 		emf.close();
+		return morador;
+	}
+	public Morador obterPorCpf(String cpf) {
+		Morador morador = null;
+		em.getTransaction().begin();
+		//Morador morador = em.find(Morador.class, id);
+		try{			
+			morador = em.createQuery(
+					  "SELECT u from Morador u WHERE u.cpf = :cpf", Morador.class).
+					  setParameter("cpf", cpf).getSingleResult();
+		}
+		catch (NoResultException nre){
+		
+		}
+		em.getTransaction().commit();
+		//emf.close();
 		return morador;
 	}
 	

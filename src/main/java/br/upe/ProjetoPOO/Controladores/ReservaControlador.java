@@ -18,7 +18,7 @@ public class ReservaControlador {
 	//Pesquisar esses dados na base
 	ReservaDAO reservaDAO = new JPAReservaDAO();
 	List<Reserva> reservaTemp = null;
-	reservaTemp = reservaDAO.obterPorEspaco(espacoReserva);
+	reservaTemp = reservaDAO.obterPorEspaco();
 	
 	if(reservaTemp != null) {
 		for(int i=0; i < reservaTemp.size(); i ++) {

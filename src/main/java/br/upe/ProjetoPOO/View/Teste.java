@@ -10,11 +10,20 @@ import br.upe.ProjetoPOO.DAO.*;
 public class Teste {
 
 	public static void main(String[] args) {
-	
+
+/*
+	Morador moradorNovo = new Morador("111.222.333-66", "José", "Morador");
+	MoradorControlador moradorControlador = new MoradorControlador();
+	moradorControlador.criarMorador(moradorNovo);
+*/
+
+//Teste de reserva à terminar
+/*	
 	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "14:00h", "17:00h");
 	ReservaControlador reservaControlador = new ReservaControlador();
 	reservaControlador.criarReserva(reservaNova);
-	
+*/
+		
 //Cadastro de produtos em lista 
 
 /*		

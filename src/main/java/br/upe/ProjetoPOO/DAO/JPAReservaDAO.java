@@ -1,5 +1,7 @@
 package br.upe.ProjetoPOO.DAO;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +22,13 @@ public class JPAReservaDAO implements ReservaDAO {
 		em = emf.createEntityManager();
 	}
 	
+	public static List<Reserva> castList(Class<? extends Reserva> clazz, Collection<?> c) {
+	    List<Reserva> r = new ArrayList<Reserva>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
+	}
+	
 	public Reserva obterPorId(int id) {
 		em.getTransaction().begin();
 		Reserva reserva = em.find(Reserva.class, id);
@@ -28,20 +37,20 @@ public class JPAReservaDAO implements ReservaDAO {
 		return reserva;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Reserva> obterPorEspaco(String espaco) {
+	public List<Reserva> obterPorEspaco() {
 		List<Reserva> reservas = null;
 		em.getTransaction().begin();
 		try{			
 			reservas = em.createQuery("FROM " + Reserva.class.getName()).getResultList();
-			System.out.println("Try.");
+			this.castList(reservas);
 		}
 		catch (NoResultException nre){
 		
 		}
 		em.getTransaction().commit();
 		//emf.close();
-		System.out.println("Retornou.");
+		
+		
 		return reservas;		
 	}
 	
