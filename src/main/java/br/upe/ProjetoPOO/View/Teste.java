@@ -1,39 +1,20 @@
 package br.upe.ProjetoPOO.View;
 
-import br.upe.ProjetoPOO.Classes.Produto;
-import br.upe.ProjetoPOO.DAO.JPAProdutoDAO;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import br.upe.ProjetoPOO.Classes.Almoxarifado;
-import br.upe.ProjetoPOO.DAO.JPAAlmoxarifadoDAO;
-
-import br.upe.ProjetoPOO.Classes.Apartamento;
-import br.upe.ProjetoPOO.DAO.JPAApartamentoDAO;
-
-import br.upe.ProjetoPOO.Classes.Fornecedor;
-import br.upe.ProjetoPOO.DAO.JPAFornecedorDAO;
-
-import br.upe.ProjetoPOO.Classes.Funcionario;
-import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
-import br.upe.ProjetoPOO.DAO.AlmoxarifadoDAO;
-import br.upe.ProjetoPOO.DAO.ApartamentoDAO;
-import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
-
-import br.upe.ProjetoPOO.Classes.Morador;
-import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
-
-import br.upe.ProjetoPOO.Classes.Reserva;
-import br.upe.ProjetoPOO.Classes.Veiculo;
-import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
-import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
-import br.upe.ProjetoPOO.DAO.ProdutoDAO;
+import br.upe.ProjetoPOO.Classes.*;
+import br.upe.ProjetoPOO.Controladores.*;
+import br.upe.ProjetoPOO.DAO.*;
 
 public class Teste {
 
 	public static void main(String[] args) {
-		
+	
+	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "14:00h", "17:00h");
+	ReservaControlador reservaControlador = new ReservaControlador();
+	reservaControlador.criarReserva(reservaNova);
+	
 //Cadastro de produtos em lista 
 
 /*		

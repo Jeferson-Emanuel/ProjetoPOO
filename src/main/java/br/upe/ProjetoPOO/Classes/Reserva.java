@@ -19,21 +19,22 @@ public class Reserva {
 	@Column
 	private String tipo_espaco;
 	@Column
+	private String data;
+	@Column
 	private String horaIni;
 	@Column
 	private String horaFim;
-	@Column
-	private String data;
+	
 
 //Constructors	
 	public Reserva() {
 	}
-	public Reserva(int id, String tipo_espaco, String horaIni, String horaFim, String data) {
-		this.id=id;
+	public Reserva(/*int id*/ String tipo_espaco, String data, String horaIni, String horaFim) {
+		//this.id=id;
 		this.tipo_espaco=tipo_espaco;
-		this.horaIni=horaIni;
-		this.horaFim=horaFim;
 		this.data=data;
+		this.horaIni=horaIni;
+		this.horaFim=horaFim;		
 	}
 	
 //Gets & Sets

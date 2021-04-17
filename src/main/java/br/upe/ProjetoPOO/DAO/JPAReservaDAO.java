@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import br.upe.ProjetoPOO.Classes.Produto;
 import br.upe.ProjetoPOO.Classes.Reserva;
 
 public class JPAReservaDAO implements ReservaDAO {
@@ -24,6 +26,23 @@ public class JPAReservaDAO implements ReservaDAO {
 		em.getTransaction().commit();
 		emf.close();
 		return reserva;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Reserva> obterPorEspaco(String espaco) {
+		List<Reserva> reservas = null;
+		em.getTransaction().begin();
+		try{			
+			reservas = em.createQuery("FROM " + Reserva.class.getName()).getResultList();
+			System.out.println("Try.");
+		}
+		catch (NoResultException nre){
+		
+		}
+		em.getTransaction().commit();
+		//emf.close();
+		System.out.println("Retornou.");
+		return reservas;		
 	}
 	
 	public void salva(Reserva r) {	

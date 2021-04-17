@@ -30,14 +30,14 @@ public class Veiculo {
 //Constructors	
 	public Veiculo() {
 	}
-	public Veiculo(int id, String modelo, String tipo, String placa, String cor, Apartamento apartamento) {
+	/*public Veiculo(int id, String modelo, String tipo, String placa, String cor, Apartamento apartamento) {
 		this.id=id;
 		this.modelo=modelo;
 		this.tipo=tipo;
 		this.placa=placa;
 		this.cor=cor;
 		this.apartamento=apartamento;
-	}
+	}*/
 	
 //Gets & Sets
 	public int getId() {
