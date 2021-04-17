@@ -42,8 +42,7 @@ public class JPAProdutoDAO implements ProdutoDAO {
 		}
 		
 		em.getTransaction().commit();
-		//em.close();
-		
+		//em.close();		
 		return produto;
 	}
 	

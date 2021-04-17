@@ -5,26 +5,33 @@ import br.upe.ProjetoPOO.DAO.ProdutoDAO;
 import br.upe.ProjetoPOO.DAO.JPAProdutoDAO;
 import java.util.List;
 
-public class ProdutoControlador {
+public class ProdutoControlador {	
 	
-	//static ProdutoDAO produtoDAO = new JPAProdutoDAO();
-	
-	
-	public void criarProduto(Produto produto) {
-		String nomeProduto = produto.getNome(); //Recebe o nome do produto novo
+	public void criarProduto(Produto produtoNovo) {
+		String nomeProduto = produtoNovo.getNome(); //Recebe o nome do produto novo
 		//List<Produto> produtos = this.listarProduto(); //Recebe lista de produtos já na base
 		
 		ProdutoDAO produtoDAO = new JPAProdutoDAO(); //Instancia o JPA
-		Produto produto01 = null;
-		produto01 = produtoDAO.obterPorNome(nomeProduto);
+		Produto produtoTemp = null;
+		produtoTemp = produtoDAO.obterPorNome(nomeProduto);
 		
-		if(produto01 != null) {
-			//Extrair quantidade do produto encontrado
-			//Atulizar produto novo com a soma
+		if(produtoTemp != null) {
+			//Extrair id e quantidade do produto encontrado
+			int idBase = produtoTemp.getId();
+			int quantBase = produtoTemp.getQuant();
+			System.out.println(idBase);
+			//Guarda soma quantidade antiga + nova
+			int quantNova = quantBase + produtoNovo.getQuant();
+			//Atulizar produto novo com id e a soma
+			produtoNovo.setId(idBase);
+			produtoNovo.setQuant(quantNova);
+			System.out.println(produtoNovo.getId());
 			//Gravar produto novo atualizado
+			produtoDAO.salva(produtoNovo);
+			System.out.println("Produto atualizado.");
 		}
 		else {
-			produtoDAO.salva(produto); //se não achou igual, salva o produto novo como novo
+			produtoDAO.salva(produtoNovo); //se não achou igual, salva o produto novo como novo
 			System.out.println("Produto adicionado.");
 		}
 		
