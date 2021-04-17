@@ -12,10 +12,23 @@ public class ProdutoControlador {
 	
 	public void criarProduto(Produto produto) {
 		String nomeProduto = produto.getNome(); //Recebe o nome do produto novo
-		List<Produto> produtos = this.listarProduto(); //Recebe lista de produtos já na base
-		ProdutoDAO produtoDAO = new JPAProdutoDAO(); //Instancia o JPA
+		//List<Produto> produtos = this.listarProduto(); //Recebe lista de produtos já na base
 		
-		for(int i = 0; i < produtos.size(); i ++) { //for para percorrer a lista e achar igual
+		ProdutoDAO produtoDAO = new JPAProdutoDAO(); //Instancia o JPA
+		Produto produto01 = null;
+		produto01 = produtoDAO.obterPorNome(nomeProduto);
+		
+		if(produto01 != null) {
+			//Extrair quantidade do produto encontrado
+			//Atulizar produto novo com a soma
+			//Gravar produto novo atualizado
+		}
+		else {
+			produtoDAO.salva(produto); //se não achou igual, salva o produto novo como novo
+			System.out.println("Produto adicionado.");
+		}
+		
+		/*for(int i = 0; i < produtos.size(); i ++) { //for para percorrer a lista e achar igual
 			if (nomeProduto.compareTo(produtos.get(i).getNome())==0) { //compara nome do novo com os nomes antigos
 				int id = produtos.get(i).getId(); //se achou igual, guarda o id do antigo aqui
 				int quant = produtos.get(i).getQuant() + produto.getQuant(); //guarda quantidadade do novo + antigo aqui
@@ -29,7 +42,7 @@ public class ProdutoControlador {
 				System.out.println("Produto adicionado.");
 			}				
 			
-		}
+		}*/
 			
 	}
 	

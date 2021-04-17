@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import br.upe.ProjetoPOO.Classes.Produto;
@@ -27,10 +28,22 @@ public class JPAProdutoDAO implements ProdutoDAO {
 	}
 	
 	public Produto obterPorNome(String nome) {
+		Produto produto = null;
+		
 		em.getTransaction().begin();
-		Produto produto = em.find(Produto.class, nome);
+		
+		try{			
+			produto = em.createQuery(
+					  "SELECT u from Produto u WHERE u.nome = :nome", Produto.class).
+					  setParameter("nome", nome).getSingleResult();
+		}
+		catch (NoResultException nre){
+		
+		}
+		
 		em.getTransaction().commit();
-		emf.close();
+		//em.close();
+		
 		return produto;
 	}
 	
