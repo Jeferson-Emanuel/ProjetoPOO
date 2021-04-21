@@ -25,9 +25,4 @@ public class MoradorTeste extends TestCase{
 		//Comparar valores
 		Assert.assertEquals(cpfBase, morador.getCpf());
 	}
-	
-	
-	
-	
-
 }
