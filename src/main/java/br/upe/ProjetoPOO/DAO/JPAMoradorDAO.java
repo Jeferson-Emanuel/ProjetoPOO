@@ -8,7 +8,6 @@ import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 
 import br.upe.ProjetoPOO.Classes.Morador;
-import br.upe.ProjetoPOO.Classes.Produto;
 
 public class JPAMoradorDAO implements MoradorDAO {
 	
