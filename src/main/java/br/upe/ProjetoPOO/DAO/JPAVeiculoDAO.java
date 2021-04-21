@@ -31,7 +31,7 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		em.getTransaction().begin();
 
 		try {
-			veiculo = em.createQuery("SELECT u from Veiculo u WHERE u.placa = placa", Veiculo.class).
+			veiculo = em.createQuery("SELECT u from Veiculo u WHERE u.placa = :placa", Veiculo.class).
 					setParameter("placa", placa).getSingleResult();
 		}catch(NoResultException nre){
 			
