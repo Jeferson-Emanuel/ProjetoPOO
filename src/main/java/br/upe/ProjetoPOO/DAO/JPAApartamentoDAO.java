@@ -40,13 +40,17 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		em.remove(apartamento);
 		em.getTransaction().commit();
 		em.close();
-		return apartamento;
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Apartamento> lista() {
-		
-		return em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
+		List<Apartamento> apartamentos = null;
+		apartamentos = em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
+		if(apartamentos.size() == 0) {
+			apartamentos = null;
+		}
+		return apartamentos;	
 		
 		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Apartamento ap");

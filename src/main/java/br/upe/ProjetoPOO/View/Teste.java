@@ -18,11 +18,11 @@ public class Teste {
 */
 
 //Teste de reserva à terminar
-/*	
-	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "14:00h", "17:00h");
+	
+	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "15:00h", "17:00h");
 	ReservaControlador reservaControlador = new ReservaControlador();
 	reservaControlador.criarReserva(reservaNova);
-*/
+
 		
 //Cadastro de produtos em lista 
 
