@@ -16,6 +16,8 @@ public class Funcionario {
 	private int id;
 	
 	@Column
+	private String cpf;
+	@Column
 	private String nome;
 	@Column
 	private String funcao;
@@ -27,8 +29,9 @@ public class Funcionario {
 //Constructors
 	public Funcionario() {
 	}
-	public Funcionario(int id, String nome, String funcao, String endereco, String contato) {
-		this.id=id;
+	public Funcionario(String cpf, String nome, String funcao, String endereco, String contato) {
+		//this.id=id;
+		this.cpf=cpf;
 		this.nome=nome;
 		this.funcao=funcao;
 		this.endereco=endereco;
@@ -38,6 +41,9 @@ public class Funcionario {
 //Gets & Sets
 	public int getId() {
 		return id;
+	}
+	public String getCpf() {
+		return cpf;
 	}
 	public String getNome() {
 		return nome;
@@ -53,7 +59,10 @@ public class Funcionario {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}	
+	}
+	public void setCpf(String cpf) {
+		this.cpf=cpf;
+	}
 	public void setNome(String nome) {
 		this.nome=nome;
 	}	

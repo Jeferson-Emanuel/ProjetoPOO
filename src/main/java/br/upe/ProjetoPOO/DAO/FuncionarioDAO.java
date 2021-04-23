@@ -7,6 +7,7 @@ public interface FuncionarioDAO {
 	
 	void salva(Funcionario func);
 	Funcionario obterPorId(int id);
+	Funcionario obterPorCpf(String cpf);	
 	Funcionario remove(int id);
 	List<Funcionario> lista();
 }

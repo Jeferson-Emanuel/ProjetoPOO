@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
-
 import br.upe.ProjetoPOO.Classes.Veiculo;
 
 public class JPAVeiculoDAO implements VeiculoDAO {
@@ -25,6 +25,21 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		emf.close();
 		return veiculo;
 	}
+	
+	public Veiculo obterPorPlaca(String placa) {
+		Veiculo veiculo = null;
+		em.getTransaction().begin();
+
+		try {
+			veiculo = em.createQuery("SELECT u from Veiculo u WHERE u.placa = :placa", Veiculo.class).
+					setParameter("placa", placa).getSingleResult();
+		}catch(NoResultException nre){
+			
+		}	
+		em.getTransaction().commit();
+		return veiculo;	
+	}
+	
 	
 	public void salva(Veiculo v) {
 		em.getTransaction().begin();

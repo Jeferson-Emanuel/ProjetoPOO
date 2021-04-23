@@ -7,6 +7,7 @@ public interface ReservaDAO {
 	
 	void salva(Reserva r);
 	Reserva obterPorId(int id);
+	List<Reserva> obterPorEspaco();
 	Reserva remove(int id);
 	List<Reserva> lista();
 }

@@ -3,6 +3,7 @@ package br.upe.ProjetoPOO.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -23,6 +24,21 @@ public class JPAFuncionarioDAO implements FuncionarioDAO {
 		Funcionario funcionario = em.find(Funcionario.class, id);
 		em.getTransaction().commit();
 		emf.close();
+		return funcionario;
+	}
+	
+	public Funcionario obterPorCpf(String cpf) {
+		Funcionario funcionario = null;
+		em.getTransaction().begin();
+		try {
+			funcionario = em.createQuery(
+					"SELECT u from Funcionario u WHERE u.cpf = :cpf", Funcionario.class).
+					setParameter("cpf", cpf).getSingleResult();
+		}
+		catch(NoResultException nre){
+			
+		}
+		em.getTransaction().commit();
 		return funcionario;
 	}
 	

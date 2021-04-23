@@ -15,7 +15,8 @@ public class Morador {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	@Column
+	private String cpf;
 	@Column
 	private String nome;
 	@Column
@@ -26,17 +27,21 @@ public class Morador {
 //Constructors
 	public Morador() {
 	}
-	public Morador(int id, String nome, String tipo, Apartamento apt) {
-		this.id=id;
-		this.nome=nome;
-		this.tipo=tipo;
-		this.apt=apt;
+	public Morador(/*int id,*/String cpf, String nome, String tipo/*, Apartamento apt*/) {
+		//this.id=id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.tipo = tipo;
+		//this.apt = apt;
 	}
 	
 //Gets & Sets
 	public int getId() {
 		return id;
-	}	
+	}
+	public String getCpf() {
+		return cpf;
+	}
 	public String getNome() {
 		return nome;
 	}	
@@ -47,13 +52,16 @@ public class Morador {
 		return apt;
 	}	
 	public void setId(int id) {
-		this.id=id;
+		this.id = id;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}	
 	public void setNome(String nome) {
-		this.nome=nome;
+		this.nome = nome;
 	}	
 	public void setTipo(String tipo) {
-		this.tipo=tipo;
+		this.tipo = tipo;
 	}	
 	public void setApt(Apartamento apt) {
 		this.apt = apt;

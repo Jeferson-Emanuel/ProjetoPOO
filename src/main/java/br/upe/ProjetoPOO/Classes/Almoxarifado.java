@@ -18,29 +18,55 @@ public class Almoxarifado {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Produto> produtos;
+	private List<Produto> fluxoProdutos;
+	//Produto produto;	
+	private String tipo;
 	private String data;
+	
+	
+	/*private List<Movimentacao> movimentacao;
+
+	public void adicionarMovimetacaoEntrada(Produto produto, int quantidade) {
+		Movimentacao movimentacao = new Movimentacao();
+		this.movimentacao.add(movimentacao);
+		produto.setQuant(quantidade + produto.getQuant());
+	}*/
 
 //Constructor
 	public Almoxarifado(){	
 	}
-	
+	public Almoxarifado(List<Produto> fluxoProdutos, String tipo, String data){	
+	}
+
 //Gets & Sets
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public List<Produto> getFluxoProdutos() {
+		return fluxoProdutos;
 	}
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+
+	public void setFluxoProdutos(List<Produto> fluxoProdutos) {
+		this.fluxoProdutos = fluxoProdutos;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public String getData() {
 		return data;
 	}
+
 	public void setData(String data) {
 		this.data = data;
 	}

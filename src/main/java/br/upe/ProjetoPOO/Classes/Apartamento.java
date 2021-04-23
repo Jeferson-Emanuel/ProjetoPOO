@@ -30,7 +30,7 @@ public class Apartamento {
 //Constructors	
 	public Apartamento() {
 	}
-	public Apartamento(int id, String bloco, int numero) {
+	public Apartamento(/*int id,*/ String bloco, int numero) {
 		this.id=id;
 		this.bloco=bloco;
 		this.numero=numero;
