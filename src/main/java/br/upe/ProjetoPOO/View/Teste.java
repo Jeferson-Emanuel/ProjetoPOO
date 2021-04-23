@@ -10,6 +10,64 @@ import br.upe.ProjetoPOO.DAO.*;
 public class Teste {
 
 	public static void main(String[] args) {
+		
+//Teste almoxarifado com estoque
+		
+		Produto p01 = new Produto("Vassoura", "Madeira", 3, 0f, true);
+		Produto p02 = new Produto("Bucha", "Estopa", 2, 0f, true);
+		Produto p03 = new Produto("Balde", "Plástico", 1, 0f, true);
+		
+		List<Produto> produtos = new ArrayList<Produto>();
+		produtos.add(p01);
+		produtos.add(p02);
+		produtos.add(p03);
+		
+		Almoxarifado novoAlmoxarifado = new Almoxarifado();
+		novoAlmoxarifado.setFluxoProdutos(produtos);
+		novoAlmoxarifado.setTipo("Saída");
+		novoAlmoxarifado.setData("23/10/2020");
+		
+		AlmoxarifadoControlador almoxarifadoControlador = new AlmoxarifadoControlador();
+		almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
+		
+		/*
+		 * Produto p01 = new Produto("Vassoura", "Madeira", 15, 10.0f, true); Produto
+		 * p02 = new Produto("Bucha", "Estopa", 6, 0.90f, true); Produto p03 = new
+		 * Produto("Sabão", "Xeroso", 8, 0.80f, true);
+		 * 
+		 * List<Produto> produtos = new ArrayList<Produto>();
+		 * produtos.add(p01);
+		 * produtos.add(p02);
+		 * produtos.add(p03);
+		 * 
+		 * Almoxarifado novoAlmoxarifado = new Almoxarifado();
+		 * novoAlmoxarifado.setFluxoProdutos(produtos);
+		 * novoAlmoxarifado.setTipo("Entrada"); novoAlmoxarifado.setData("22/10/2020");
+		 * 
+		 * AlmoxarifadoControlador almoxarifadoControlador = new
+		 * AlmoxarifadoControlador();
+		 * almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
+		 */
+		
+		
+		/*
+		 * Produto p01 = new Produto("Vassoura", "Madeira", 12, 10.0f, true); Produto
+		 * p02 = new Produto("Bucha", "Estopa", 5, 0.90f, true); Produto p03 = new
+		 * Produto("Balde", "Plástico", 6, 1.25f, true);
+		 * 
+		 * List<Produto> produtos = new ArrayList<Produto>();
+		 * produtos.add(p01);
+		 * produtos.add(p02);
+		 * produtos.add(p03);
+		 * 
+		 * Almoxarifado novoAlmoxarifado = new Almoxarifado();
+		 * novoAlmoxarifado.setFluxoProdutos(produtos);
+		 * novoAlmoxarifado.setTipo("Entrada"); novoAlmoxarifado.setData("22/10/2020");
+		 * 
+		 * AlmoxarifadoControlador almoxarifadoControlador = new AlmoxarifadoControlador();
+		 * almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
+		 */
+		 	
 
 /*
 	Morador moradorNovo = new Morador("111.222.333-66", "José", "Morador");
@@ -18,11 +76,12 @@ public class Teste {
 */
 
 //Teste de reserva à terminar
-	
+
+/*
 	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "15:00h", "17:00h");
 	ReservaControlador reservaControlador = new ReservaControlador();
 	reservaControlador.criarReserva(reservaNova);
-
+*/
 		
 //Cadastro de produtos em lista 
 
