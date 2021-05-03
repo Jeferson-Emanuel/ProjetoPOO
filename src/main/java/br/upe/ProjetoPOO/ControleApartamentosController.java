@@ -55,7 +55,7 @@ public class ControleApartamentosController implements Initializable{
 	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Apartamento> tableView = new ArrayList<>();
+	private List<Apartamento> tableView = new ArrayList<>(controladorApartamento.lista());
 	
 	//Objeto que recebe dados da linha selecionada na tabela
 	private Apartamento selecionado;

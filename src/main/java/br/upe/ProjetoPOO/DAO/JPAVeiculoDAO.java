@@ -43,9 +43,18 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 	
 	public void salva(Veiculo v) {
 		em.getTransaction().begin();
-		em.merge(v);
-		em.getTransaction().commit();
-		emf.close();
+		try {
+			em.merge(v);
+			em.getTransaction().commit();
+		}
+		catch(Exception e) {
+			em.getTransaction().rollback();
+			em.flush();
+			em.refresh(v);
+		}
+		finally {
+			emf.close();
+		}
 	}
 	
 	@Override
@@ -61,8 +70,12 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Veiculo> lista() {
-		
-		return em.createQuery("FROM " + Veiculo.class.getName()).getResultList();
+		List<Veiculo> veiculos = null;
+		veiculos = em.createQuery("FROM " + Veiculo.class.getName()).getResultList();
+		if(veiculos.size() == 0) {
+			veiculos = null;
+		}		
+		return veiculos;
 		
 		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Veiculo v");

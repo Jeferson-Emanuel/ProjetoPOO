@@ -45,12 +45,18 @@ public class JPAMoradorDAO implements MoradorDAO {
 	
 	public void salva(Morador m) {
 		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		em.getTransaction().rollback();
-		em.flush();
-		em.refresh(m);
-		emf.close();
+		try {
+			em.merge(m);
+			em.getTransaction().commit();
+		}
+		catch(Exception e){
+			em.getTransaction().rollback();
+			em.flush();
+			em.refresh(m);
+		}
+		finally {
+			emf.close();
+		}		
 	}
 	
 	@Override

@@ -2,20 +2,18 @@ package br.upe.ProjetoPOO;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import com.sun.javafx.binding.SelectBinding.AsString;
 
 import br.upe.ProjetoPOO.Classes.Apartamento;
-import br.upe.ProjetoPOO.Classes.Morador;
+import br.upe.ProjetoPOO.Classes.Veiculo;
 import br.upe.ProjetoPOO.Controladores.ApartamentoControlador;
-import br.upe.ProjetoPOO.Controladores.MoradorControlador;
-import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
-import br.upe.ProjetoPOO.DAO.MoradorDAO;
+import br.upe.ProjetoPOO.Controladores.VeiculoControlador;
+import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+import br.upe.ProjetoPOO.DAO.VeiculoDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,13 +28,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-public class ControleMoradorController implements Initializable{
+public class ControleVeiculoController implements Initializable{
 
 	//IDs dos objetos XML
 	@FXML
-	private TextField textFieldCPF;
+	private TextField textFieldPlaca;
 	@FXML
-	private TextField textFieldNome;
+	private TextField textFieldDescricao;
 	@FXML
 	private ChoiceBox<Apartamento> cbApartamento;
 	@FXML
@@ -50,29 +48,29 @@ public class ControleMoradorController implements Initializable{
 	@FXML
 	private Button buttonListar;
 	@FXML
-	private TableView<Morador> moradorTable;
+	private TableView<Veiculo> veiculoTable;
 	@FXML
-	private TableColumn<Morador, String> moradorTableCPF;
+	private TableColumn<Veiculo, String> veiculoTablePlaca;
 	@FXML
-	private TableColumn<Morador, String> moradorTableNome;
+	private TableColumn<Veiculo, String> veiculoTableDescricao;
 	@FXML
-	private TableColumn<Morador, AsString> moradorTableApartamento;
+	private TableColumn<Veiculo, AsString> veiculoTableApartamento;
 	@FXML
 	private Label label01;
 
-	//Regra de negócio de Morador
-	MoradorControlador controladorMorador = MoradorControlador.getINSTANCE();
+	//Regra de negócio de Veiculo
+	VeiculoControlador controladorVeiculo = VeiculoControlador.getINSTANCE();
 	//Regra de negócio de Apartamento
 	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Morador> tableView = new ArrayList<>(controladorMorador.lista());
+	private List<Veiculo> tableView = new ArrayList<>(controladorVeiculo.lista());
 
 	//Lista visível para preencher a choicebox
 	private List<Apartamento> cbView = new ArrayList<Apartamento>(controladorApartamento.lista());
 
 	//Objeto que recebe dados da linha selecionada na tabela
-	private Morador moradorSelecionado;
+	private Veiculo veiculoSelecionado;
 
 	//Objeto que recebe dados do objeto da choicebox
 	private Apartamento apartamentoSelecionado;
@@ -82,17 +80,17 @@ public class ControleMoradorController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		//Fábricas, ou que diabo seja isso de dados, pras células das tabelas
-		moradorTableCPF.setCellValueFactory(new PropertyValueFactory<Morador, String>("cpf"));
-		moradorTableNome.setCellValueFactory(new PropertyValueFactory<Morador, String>("nome"));
-		moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
+		veiculoTablePlaca.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("placa"));
+		veiculoTableDescricao.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("descricao"));
+		veiculoTableApartamento.setCellValueFactory(new PropertyValueFactory<Veiculo, AsString>("apartamento"));
 		
 		//Preenche a tabela
-		moradorTable.getItems().setAll(tableView);
+		veiculoTable.getItems().setAll(tableView);
 		
 		//Listerner da tabela
-		moradorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+		veiculoTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-				moradorSelecionado = (Morador) newValue;
+				veiculoSelecionado = (Veiculo) newValue;
 			}
 		});
 
@@ -107,64 +105,64 @@ public class ControleMoradorController implements Initializable{
 			}
 		});
 		
-		//Ação do botão Editar para editar Morador selecionado na tabela
+		//Ação do botão Editar para editar Veiculo selecionado na tabela
 		buttonEditar.setOnMouseClicked((MouseEvent e) -> {
-			editaMorador();
+			editaVeiculo();
 		});
 		
-		//Ação do botão Deletar para deletar Morador selecionado na tabela
+		//Ação do botão Deletar para deletar Veiculo selecionado na tabela
 		buttonDeletar.setOnMouseClicked((MouseEvent e) -> {
-			deletaMorador();
+			deletaVeiculo();
 		});
 	}
 	
-	//Método para editar Morador
-	public void editaMorador() {
-		textFieldCPF.setText(moradorSelecionado.getCpf());
-		textFieldNome.setText(moradorSelecionado.getNome());
-		cbApartamento.getSelectionModel().select(moradorSelecionado.getApt());
+	//Método para editar Veiculo
+	public void editaVeiculo() {
+		textFieldPlaca.setText(veiculoSelecionado.getPlaca());
+		textFieldDescricao.setText(veiculoSelecionado.getDescricao());
+		cbApartamento.getSelectionModel().select(veiculoSelecionado.getApartamento());
 	}
 
-	//Método para remover Morador
-	public void deletaMorador() {
-		MoradorDAO interfaceMorador = new JPAMoradorDAO();
-		interfaceMorador.remove(moradorSelecionado.getId());
+	//Método para remover Veiculo
+	public void deletaVeiculo() {
+		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
+		interfaceVeiculo.remove(veiculoSelecionado.getId());
 
-		tableView = controladorMorador.lista();
+		tableView = controladorVeiculo.lista();
 		
 		this.initialize(null, null);
 	}
 
 	//Ação do botão Salvar
 	@FXML
-	void salvarMorador(ActionEvent event) {
-		if(moradorSelecionado != null) {
-			Morador m = new Morador();
-			m.setId(moradorSelecionado.getId());
-			m.setCpf(textFieldCPF.getText());
-			m.setNome(textFieldNome.getText());
-			m.setApt(apartamentoSelecionado);
+	void salvarVeiculo(ActionEvent event) {
+		if(veiculoSelecionado != null) {
+			Veiculo v = new Veiculo();
+			v.setId(veiculoSelecionado.getId());
+			v.setPlaca(textFieldPlaca.getText());
+			v.setDescricao(textFieldDescricao.getText());
+			v.setApartamento(apartamentoSelecionado);
 			
-			controladorMorador.criarMorador(m);
+			controladorVeiculo.criarVeiculo(v);
 		}
 		else {
-			Morador morador = new Morador();
-			morador.setCpf(textFieldCPF.getText());
-			morador.setNome(textFieldNome.getText());
-			morador.setApt(apartamentoSelecionado);
+			Veiculo veiculo = new Veiculo();
+			veiculo.setPlaca(textFieldPlaca.getText());
+			veiculo.setDescricao(textFieldDescricao.getText());
+			veiculo.setApartamento(apartamentoSelecionado);
 
-			controladorMorador.criarMorador(morador);			
+			controladorVeiculo.criarVeiculo(veiculo);			
 		}
 		
-		tableView = controladorMorador.lista();
+		tableView = controladorVeiculo.lista();
 		
 		this.initialize(null, null);
 	}
 
 	//Ação do botão Listar
 	@FXML
-	void chamarListaMorador(ActionEvent event) {
-		tableView = controladorMorador.lista();
+	void chamarListaVeiculo(ActionEvent event) {
+		tableView = controladorVeiculo.lista();
 
 		this.initialize(null, null);		
 	}
