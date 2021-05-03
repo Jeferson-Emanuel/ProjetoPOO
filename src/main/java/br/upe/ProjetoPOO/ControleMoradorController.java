@@ -84,9 +84,18 @@ public class ControleMoradorController implements Initializable{
 		moradorTableCPF.setCellValueFactory(new PropertyValueFactory<Morador, String>("cpf"));
 		moradorTableNome.setCellValueFactory(new PropertyValueFactory<Morador, String>("nome"));
 		moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
-
+		
+		//Preenche a tabela
 		moradorTable.getItems().setAll(tableView);
+		
+		moradorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				moradorSelecionado = (Morador) newValue;
+			}
+		});
 
+		//Limpa e depois preenche a choicebox
+		cbApartamento.getItems().removeAll(cbView);
 		cbApartamento.getItems().addAll(cbView);
 
 		cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -95,10 +104,22 @@ public class ControleMoradorController implements Initializable{
 			}
 		});
 		
+		//Ação do botão Editar para editar Morador selecionado na tabela
+		buttonEditar.setOnMouseClicked((MouseEvent e) -> {
+			editaMorador();
+		});
+		
 		//Ação do botão Deletar para deletar Morador selecionado na tabela
 		buttonDeletar.setOnMouseClicked((MouseEvent e) -> {
 			deletaMorador();
 		});
+	}
+	
+	//Método para editar Morador
+	public void editaMorador() {
+		textFieldCPF.setText(moradorSelecionado.getCpf());
+		textFieldNome.setText(moradorSelecionado.getNome());
+		cbApartamento.getSelectionModel().select(moradorSelecionado.getApt());
 	}
 
 	//Método para remover Morador

@@ -47,6 +47,9 @@ public class JPAMoradorDAO implements MoradorDAO {
 		em.getTransaction().begin();
 		em.merge(m);
 		em.getTransaction().commit();
+		em.getTransaction().rollback();
+		em.flush();
+		em.refresh(m);
 		emf.close();
 	}
 	
