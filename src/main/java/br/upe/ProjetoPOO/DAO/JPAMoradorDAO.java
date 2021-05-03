@@ -63,8 +63,12 @@ public class JPAMoradorDAO implements MoradorDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Morador> lista() {
-		
-		return em.createQuery("FROM " + Morador.class.getName()).getResultList();
+		List<Morador> moradores = null;
+		moradores = em.createQuery("FROM " + Morador.class.getName()).getResultList();
+		if(moradores.size() == 0) {
+			moradores = null;
+		}		
+		return moradores;
 		
 		/*em.getTransaction().begin();
 		Query pesquisa = em.createQuery("select a from Morador m");

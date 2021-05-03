@@ -27,10 +27,26 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 	
 	public void salva(Apartamento ap) {
 		em.getTransaction().begin();
+		try {
+			em.merge(ap);
+			em.getTransaction().commit();
+		}
+		catch(Exception e) {
+			em.getTransaction().rollback();
+			em.flush();
+			em.refresh(ap);
+		}
+		finally {
+			emf.close();
+		}		
+	}
+	
+	/*public void salva(Apartamento ap) {
+		em.getTransaction().begin();
 		em.merge(ap);
 		em.getTransaction().commit();
 		emf.close();
-	}
+	}*/
 	
 	@Override
 	public Apartamento remove(int id) {

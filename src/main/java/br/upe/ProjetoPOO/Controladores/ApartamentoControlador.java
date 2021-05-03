@@ -7,8 +7,32 @@ import java.util.List;
 
 public class ApartamentoControlador {
 	
-	//Receber novo apartamento
+	//Singleton	
+	private static ApartamentoControlador INSTANCE;
+	
+	public static ApartamentoControlador getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new ApartamentoControlador();
+		}
+		return INSTANCE;
+	}
+	
 	public void criarApartamento(Apartamento novoApartamento) {
+		ApartamentoDAO interfaceApartamento = new JPAApartamentoDAO();
+		interfaceApartamento.salva(novoApartamento);
+		
+		/*try {
+			interfaceApartamento.salva(novoApartamento);
+			System.out.println("Deu bom.");
+		}
+		catch(Exception E){
+			System.out.println("Deu erro.");
+		}*/		
+	}
+/*	
+	//Receber novo apartamento
+	public String criarApartamento(Apartamento novoApartamento) {
+	
 	//Extrair dados para pesquisa
 		String bloco = novoApartamento.getBloco();
 		int numero = novoApartamento.getNumero();
@@ -25,10 +49,12 @@ public class ApartamentoControlador {
 				if((blocoTemp).equals(bloco)) {
 					if(numeroTemp == numero){
 						System.out.println("Apartamento já cadastrado");
+						return "Apartamento já cadastrado";
 					}
 					else {
 						interfaceApartamento.salva(novoApartamento);
 						System.out.println("Apartamento cadastrado.");
+						return "Apartamento cadastrado";
 					}
 				}
 			}
@@ -36,11 +62,15 @@ public class ApartamentoControlador {
 		else {
 			interfaceApartamento.salva(novoApartamento);
 			System.out.println("Apartamento cadastrado.");
+			return "Apartamento cadastrado";
 		}
+		return "Erro";
 	}
+*/
 	
-	public Apartamento remove(Apartamento removeApartamento) {
-		return null;
+	public void removerApartamento(Apartamento removeApartamento) {
+		ApartamentoDAO interfaceApartamento = new JPAApartamentoDAO();
+		interfaceApartamento.remove(removeApartamento.getId());
 	}
 	
 	public List<Apartamento> lista(){

@@ -1,11 +1,39 @@
 package br.upe.ProjetoPOO.Controladores;
 
+import java.util.List;
+
 import br.upe.ProjetoPOO.Classes.Morador;
 import br.upe.ProjetoPOO.DAO.MoradorDAO;
 import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
 
 public class MoradorControlador {
 	
+	//singleton
+	private static MoradorControlador INSTANCE;
+	
+	public static MoradorControlador getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new MoradorControlador();
+		}
+		return INSTANCE;
+	}
+	
+	public void criarMorador(Morador novoMorador) {
+		MoradorDAO interfaceMorador = new JPAMoradorDAO();
+		interfaceMorador.salva(novoMorador);
+	}
+	
+	public void removerMorador(Morador removeMorador) {
+		MoradorDAO interfaceMorador = new JPAMoradorDAO();
+		interfaceMorador.remove(removeMorador.getId());
+	}
+	
+	public List<Morador> lista(){
+		MoradorDAO interfaceMorador = new JPAMoradorDAO();
+		return interfaceMorador.lista();
+	}
+
+/*
 	//Método de criar morador
 	public void criarMorador(Morador moradorNovo) {	
 	//Extrair cpf
@@ -25,4 +53,5 @@ public class MoradorControlador {
 		System.out.println("Morador cadastrado.");
 	}	
 	}
+*/
 }

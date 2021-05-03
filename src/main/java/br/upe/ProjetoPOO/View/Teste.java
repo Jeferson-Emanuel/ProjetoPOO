@@ -1,88 +1,52 @@
 package br.upe.ProjetoPOO.View;
 
+import br.upe.ProjetoPOO.Classes.Produto;
+import br.upe.ProjetoPOO.DAO.JPAProdutoDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import br.upe.ProjetoPOO.Classes.*;
+import br.upe.ProjetoPOO.Classes.Almoxarifado;
+import br.upe.ProjetoPOO.DAO.JPAAlmoxarifadoDAO;
+
+import br.upe.ProjetoPOO.Classes.Apartamento;
+import br.upe.ProjetoPOO.DAO.JPAApartamentoDAO;
+
+import br.upe.ProjetoPOO.Classes.Fornecedor;
+import br.upe.ProjetoPOO.DAO.JPAFornecedorDAO;
+
+import br.upe.ProjetoPOO.Classes.Funcionario;
+import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
+import br.upe.ProjetoPOO.DAO.AlmoxarifadoDAO;
+import br.upe.ProjetoPOO.DAO.ApartamentoDAO;
+import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
+
+import br.upe.ProjetoPOO.Classes.Morador;
+import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
+
+import br.upe.ProjetoPOO.Classes.Reserva;
+import br.upe.ProjetoPOO.Classes.Veiculo;
+import br.upe.ProjetoPOO.Controladores.FuncionarioControlador;
+import br.upe.ProjetoPOO.Controladores.VeiculoControlador;
+import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
+import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+import br.upe.ProjetoPOO.DAO.ProdutoDAO;
 import br.upe.ProjetoPOO.Controladores.*;
-import br.upe.ProjetoPOO.DAO.*;
 
 public class Teste {
-
-	public static void main(String[] args) {
-		
-//Teste almoxarifado com estoque
-		
-		Produto p01 = new Produto("Vassoura", "Madeira", 3, 0f, true);
-		Produto p02 = new Produto("Bucha", "Estopa", 2, 0f, true);
-		Produto p03 = new Produto("Balde", "Plástico", 1, 0f, true);
-		
-		List<Produto> produtos = new ArrayList<Produto>();
-		produtos.add(p01);
-		produtos.add(p02);
-		produtos.add(p03);
-		
-		Almoxarifado novoAlmoxarifado = new Almoxarifado();
-		novoAlmoxarifado.setFluxoProdutos(produtos);
-		novoAlmoxarifado.setTipo("Saída");
-		novoAlmoxarifado.setData("23/10/2020");
-		
-		AlmoxarifadoControlador almoxarifadoControlador = new AlmoxarifadoControlador();
-		almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
-		
-		/*
-		 * Produto p01 = new Produto("Vassoura", "Madeira", 15, 10.0f, true); Produto
-		 * p02 = new Produto("Bucha", "Estopa", 6, 0.90f, true); Produto p03 = new
-		 * Produto("Sabão", "Xeroso", 8, 0.80f, true);
-		 * 
-		 * List<Produto> produtos = new ArrayList<Produto>();
-		 * produtos.add(p01);
-		 * produtos.add(p02);
-		 * produtos.add(p03);
-		 * 
-		 * Almoxarifado novoAlmoxarifado = new Almoxarifado();
-		 * novoAlmoxarifado.setFluxoProdutos(produtos);
-		 * novoAlmoxarifado.setTipo("Entrada"); novoAlmoxarifado.setData("22/10/2020");
-		 * 
-		 * AlmoxarifadoControlador almoxarifadoControlador = new
-		 * AlmoxarifadoControlador();
-		 * almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
-		 */
-		
-		
-		/*
-		 * Produto p01 = new Produto("Vassoura", "Madeira", 12, 10.0f, true); Produto
-		 * p02 = new Produto("Bucha", "Estopa", 5, 0.90f, true); Produto p03 = new
-		 * Produto("Balde", "Plástico", 6, 1.25f, true);
-		 * 
-		 * List<Produto> produtos = new ArrayList<Produto>();
-		 * produtos.add(p01);
-		 * produtos.add(p02);
-		 * produtos.add(p03);
-		 * 
-		 * Almoxarifado novoAlmoxarifado = new Almoxarifado();
-		 * novoAlmoxarifado.setFluxoProdutos(produtos);
-		 * novoAlmoxarifado.setTipo("Entrada"); novoAlmoxarifado.setData("22/10/2020");
-		 * 
-		 * AlmoxarifadoControlador almoxarifadoControlador = new AlmoxarifadoControlador();
-		 * almoxarifadoControlador.registroAlmoxarifado(novoAlmoxarifado);
-		 */
-		 	
-
-/*
-	Morador moradorNovo = new Morador("111.222.333-66", "José", "Morador");
-	MoradorControlador moradorControlador = new MoradorControlador();
-	moradorControlador.criarMorador(moradorNovo);
-*/
-
-//Teste de reserva à terminar
-
-/*
-	Reserva reservaNova = new Reserva("Piscina", "01/01/2001", "15:00h", "17:00h");
-	ReservaControlador reservaControlador = new ReservaControlador();
-	reservaControlador.criarReserva(reservaNova);
-*/
-		
+public static void main(String[] args) {
+	
+/*	
+	  Funcionario func_novo = new Funcionario("987.654.321-00","Jo�o","Porteiro","rua Viol�o, 13","3712-3210");
+	  FuncionarioControlador funccontrolador = new FuncionarioControlador();
+	  funccontrolador.criarFuncionario(func_novo);
+	  
+	  Apartamento apt_1 = new Apartamento("A", 1);
+*/	 
+	
+	/*Veiculo veiculo_novo = new Veiculo("Honda", "carro", "AAAAA", "verde", apt_1);
+	VeiculoControlador veiculo_contrl = new VeiculoControlador();
+	veiculo_contrl.criarVeiculo(veiculo_novo);*/
 //Cadastro de produtos em lista 
 
 /*		

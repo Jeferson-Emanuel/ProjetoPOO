@@ -21,11 +21,11 @@ public class FuncionarioTeste extends TestCase{
 		FuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
 		Funcionario funcionarioBase = funcionarioDAO.obterPorCpf("666.666.666-66");
 		
-		//extrair para comparação
+		//extrair para comparaï¿½ï¿½o
 		String cpfBase = funcionarioBase.getCpf();
 		//comparar
 		Assert.assertEquals(cpfBase, funcionario.getCpf());
 		//se existir avisa
-		//senão cadastra
+		//seno cadastra
 	}
 }

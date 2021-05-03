@@ -1,29 +1,65 @@
 package br.upe.ProjetoPOO.Controladores;
 
+import java.util.List;
 import br.upe.ProjetoPOO.Classes.Funcionario;
 import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
 import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
 
 public class FuncionarioControlador {
+
+	//Singleton	
+	private static FuncionarioControlador INSTANCE;
 	
-	//Método de criar funcionario
+	public static FuncionarioControlador getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new FuncionarioControlador();
+		}
+		return INSTANCE;
+	}
+	//MÃ©todo de criar funcionario
 	public void criarFuncionario(Funcionario funcionarioNovo) {
+	FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
+	interfaceFuncionario.salva(funcionarioNovo);
+		/*try {
+			interfaceFuncionario.salva(FuncionarioNovo);
+			System.out.println("Deu bom.");
+			}
+			catch(Exception E){
+			System.out.println("Deu erro.");
+		}*/		
+		}
+	public Funcionario remove(Funcionario removeFuncionario) {
+		return null;
+	}
 	
-	//Extrair cpf
-	String cpfNovo = funcionarioNovo.getCpf();
-	//Pesquisar na base
-	FuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
-	Funcionario funcionarioBase = null;
-	funcionarioBase = funcionarioDAO.obterPorCpf(cpfNovo);
-	//Comparar cpf com resultado da base
-	if(funcionarioBase != null) {
-	//Se já existir cpf, não cadastra
-		System.out.println("CPF já cadastrado!");
-	}
-	else {
-	//Se não existir o cpf, cadastra funcionario
-	funcionarioDAO.salva(funcionarioNovo);
-	System.out.println("Funcionario Cadastrado");
-	}
-	}
+	public List<Funcionario> lista(){
+		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
+		return interfaceFuncionario.lista();
+	}	
+	
 }
+
+
+
+
+
+
+
+
+/*	//Extrair cpf
+String cpfNovo = funcionarioNovo.getCpf();
+//Pesquisar na base
+FuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
+Funcionario funcionarioBase = null;
+funcionarioBase = funcionarioDAO.obterPorCpf(cpfNovo);
+//Comparar cpf com resultado da base
+if(funcionarioBase != null) {
+//Se jï¿½ existir cpf, nï¿½o cadastra
+	System.out.println("CPF jï¿½ cadastrado!");
+}
+else {
+//Se nï¿½o existir o cpf, cadastra funcionario
+funcionarioDAO.salva(funcionarioNovo);
+System.out.println("Funcionario Cadastrado");
+}
+}*/
