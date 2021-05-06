@@ -7,33 +7,50 @@ import br.upe.ProjetoPOO.DAO.VeiculoDAO;
 import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
 
 public class VeiculoControlador {
+
+	//singleton
+	private static VeiculoControlador INSTANCE;
+
+	public static VeiculoControlador getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new VeiculoControlador();
+		}
+		return INSTANCE;
+	}
+
+	public void criarVeiculo(Veiculo novoVeiculo) {
+		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
+		interfaceVeiculo.salva(novoVeiculo);
+	}
 	
-		public void criarVeiculo(Veiculo veiculo_novo){
+
+	public void removerVeiculo(Veiculo removeVeiculo) {
+		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
+		interfaceVeiculo.remove(removeVeiculo.getId());
+	}
+	
+	public List<Veiculo> lista() {
+		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
+		return interfaceVeiculo.lista();
+	}
+
+	/*public void criarVeiculo(Veiculo veiculo_novo){
 		//extrair placa
 		String placaNova = veiculo_novo.getPlaca();
-	
+
 		//Pesquisar na base
 		VeiculoDAO veiculo_dao = new JPAVeiculoDAO();
 		Veiculo veiculo_base = null;
 		veiculo_base = veiculo_dao.obterPorPlaca(placaNova);
-		
+
 		//comparar cpf com resultado da base
 		if(veiculo_base != null) {
-			//se já existir placa, não cadastra
-			System.out.println("Placa já cadastrada!");
+			//se jÃ¡ existir placa, nÃ£o cadastra
+			System.out.println("Placa jï¿½ cadastrada!");
 		}else {
-			//se não existir a placa, cadastra veiculo
+			//se nï¿½o existir a placa, cadastra veiculo
 			veiculo_dao.salva(veiculo_novo);
-			System.out.println("Veículo cadastrado!");
-			}
+			System.out.println("Veï¿½culo cadastrado!");
 		}
-		public List<Veiculo> listarVeiculo() {
-			VeiculoDAO veiculo_DAO = new JPAVeiculoDAO();
-			return veiculo_DAO.lista();
-		}
-		
-		public void removerVeiculo(int id) {
-			VeiculoDAO veiculo_DAO = new JPAVeiculoDAO();
-			veiculo_DAO.remove(id);
-		}
+	}*/
 }

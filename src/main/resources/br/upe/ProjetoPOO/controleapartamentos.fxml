@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="apT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleApartamentosController">
+<Pane fx:id="apartamentoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleApartamentosController">
    <children>
       <Button fx:id="apSalvar" layoutX="132.0" layoutY="354.0" mnemonicParsing="false" onAction="#salvarAP" text="Salvar" textAlignment="CENTER" />
       <Button fx:id="apEditar" layoutX="387.0" layoutY="415.0" mnemonicParsing="false" text="Editar" textAlignment="CENTER" />

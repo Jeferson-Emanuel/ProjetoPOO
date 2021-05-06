@@ -7,8 +7,13 @@ import java.util.List;
 
 public class ProdutoControlador {	
 	
-	//Método de criar um produto na base
 	public void criarProduto(Produto produtoNovo) {
+		ProdutoDAO interfaceProduto = new JPAProdutoDAO();
+		interfaceProduto.salva(produtoNovo);
+	}
+	
+	//Método de criar um produto na base
+	/*public void criarProduto(Produto produtoNovo) {
 		String nomeProduto = produtoNovo.getNome(); //Recebe o nome do produto novo
 				
 		ProdutoDAO produtoDAO = new JPAProdutoDAO(); //Instancia o JPA
@@ -31,7 +36,7 @@ public class ProdutoControlador {
 		else {
 			produtoDAO.salva(produtoNovo); //se não achou igual, salva o produto novo como novo atribuindo id automático
 			System.out.println("Produto adicionado.");
-		}
+		}*/
 		
 		/*
 		 	List<Produto> produtos = this.listarProduto(); //Recebe lista de produtos já na base
@@ -49,9 +54,9 @@ public class ProdutoControlador {
 				System.out.println("Produto adicionado.");
 			}				
 			
-		}*/
+		}
 			
-	}
+	}*/
 	
 	//Método de listar produtos
 	public List<Produto> listarProduto() {

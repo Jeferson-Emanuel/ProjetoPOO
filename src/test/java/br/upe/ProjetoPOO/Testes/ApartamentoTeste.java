@@ -16,7 +16,7 @@ public class ApartamentoTeste extends TestCase {
 	public void testApartamentoAdiciona() {
 		
 		//Cria instância de apartamento
-		Apartamento apartamento = new Apartamento("Bloco A", 02);
+		Apartamento apartamento = new Apartamento("Bloco A"/* , 02 */);
 		//Cria instância do controlador
 		ApartamentoControlador apartamentoControlador = new ApartamentoControlador();
 		//Envia objeto da reserva pro controlador
@@ -27,10 +27,10 @@ public class ApartamentoTeste extends TestCase {
 		List<Apartamento> listaTeste = interfaceApartamento.lista();
 		//Extrai dados do primeiro objeto da lista
 		String bloco = listaTeste.get(0).getBloco();
-		int numero = listaTeste.get(0).getNumero();
+		//int numero = listaTeste.get(0).getNumero();
 		//Testa se esses valores são iguais ao objeto adicionado
 		Assert.assertTrue((bloco).equals(apartamento.getBloco()));
-		Assert.assertEquals(numero, apartamento.getNumero());
+		//Assert.assertEquals(numero, apartamento.getNumero());
 	}
 
 }

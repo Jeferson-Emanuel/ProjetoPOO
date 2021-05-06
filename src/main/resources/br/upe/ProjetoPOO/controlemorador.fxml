@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleMoradorController">
+<Pane fx:id="moradorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleMoradorController">
    <children>
       <TextField fx:id="textFieldCPF" layoutX="34.0" layoutY="333.0" />
       <TextField fx:id="textFieldNome" layoutX="34.0" layoutY="369.0" prefHeight="25.0" prefWidth="572.0" />

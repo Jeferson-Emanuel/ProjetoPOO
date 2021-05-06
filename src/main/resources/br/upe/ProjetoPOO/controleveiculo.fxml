@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane fx:id="veiculoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleVeiculoController">
+   <children>
+      <TextField fx:id="textFieldPlaca" layoutX="34.0" layoutY="333.0" />
+      <TextField fx:id="textFieldDescricao" layoutX="34.0" layoutY="369.0" prefHeight="25.0" prefWidth="572.0" />
+      <ChoiceBox fx:id="cbApartamento" layoutX="212.0" layoutY="333.0" prefWidth="150.0" />
+      <Button fx:id="voltarInicial" layoutX="47.0" layoutY="421.0" mnemonicParsing="false" onAction="#switchToTelaInicial" text="Tela Inicial" />
+      <Button fx:id="buttonSalvar" layoutX="137.0" layoutY="421.0" mnemonicParsing="false" onAction="#salvarVeiculo" text="Salvar" />
+      <Button fx:id="buttonEditar" layoutX="212.0" layoutY="421.0" mnemonicParsing="false" text="Editar" />
+      <Button fx:id="buttonDeletar" layoutX="287.0" layoutY="421.0" mnemonicParsing="false" text="Deletar" />
+      <Button fx:id="buttonListar" layoutX="362.0" layoutY="421.0" mnemonicParsing="false" onAction="#chamarListaVeiculo" text="Listar" />
+      <TableView fx:id="veiculoTable" layoutX="34.0" layoutY="35.0" prefHeight="286.0" prefWidth="572.0">
+        <columns>
+          <TableColumn fx:id="veiculoTablePlaca" prefWidth="151.0" text="Placa" />
+          <TableColumn fx:id="veiculoTableDescricao" prefWidth="303.0" text="Descrição" />
+            <TableColumn fx:id="veiculoTableApartamento" prefWidth="117.0" text="Apartamento" />
+        </columns>
+      </TableView>
+      <Label fx:id="label01" layoutX="392.0" layoutY="337.0" prefHeight="17.0" prefWidth="216.0" />
+   </children>
+</Pane>

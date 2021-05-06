@@ -36,6 +36,16 @@ import br.upe.ProjetoPOO.Controladores.*;
 public class Teste {
 public static void main(String[] args) {
 	
+	AlmoxarifadoControlador ia = new AlmoxarifadoControlador();
+	List<Almoxarifado> a = ia.lista();
+	List<Produto> p = a.get(0).getFluxoProdutos();
+	
+	Produto pro = p.get(0);
+	
+	System.out.println("Oi");
+			
+			
+	
 /*	
 	  Funcionario func_novo = new Funcionario("987.654.321-00","Jo�o","Porteiro","rua Viol�o, 13","3712-3210");
 	  FuncionarioControlador funccontrolador = new FuncionarioControlador();

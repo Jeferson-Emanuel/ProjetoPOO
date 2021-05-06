@@ -29,6 +29,8 @@ public class Apartamento {
 	//private int numero;	
 	@OneToMany (mappedBy = "apt")
 	List<Morador> morador;
+	@OneToOne (mappedBy = "apartamento")
+	Veiculo veiculo;
 	
 //Constructors	
 	public Apartamento() {
