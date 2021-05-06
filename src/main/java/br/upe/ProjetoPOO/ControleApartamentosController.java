@@ -55,19 +55,26 @@ public class ControleApartamentosController implements Initializable{
 	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Apartamento> tableView = new ArrayList<>(controladorApartamento.lista());
+	private List<Apartamento> tableView = new ArrayList<>();
 	
 	//Objeto que recebe dados da linha selecionada na tabela
 	private Apartamento selecionado;
+	//Objeto que recebe dados da tabela para editar
+	private Apartamento editar;
 	
 	//Preenchimento da tabela    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
 		//apTableNumero.setCellValueFactory(new PropertyValueFactory<Apartamento, AsInteger>("Numero"));
-
-		apTable.getItems().setAll(tableView);
-
+		
+		//Preenche a tabela
+		tableView = controladorApartamento.lista();
+		if(tableView == null) {}
+		else {
+			apTable.getItems().setAll(tableView);
+		}
+		
 		//Extrai valores da linha selecionada na tabela para objeto
 		apTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
@@ -75,21 +82,22 @@ public class ControleApartamentosController implements Initializable{
 				selecionado = (Apartamento) newValue;
 			}
 		});
+		
 		//Action to botão Editar para editar apartamento selecionado na lista da tabela
-		apEditar.setOnMouseClicked((MouseEvent e)->{
+		apEditar.setOnMouseClicked((MouseEvent e)->{			
 			editaApartamento();
 		});
 
 		//Action do botão Deletar para deletar apartamento selecionado na lista da tabela
-		apDeletar.setOnMouseClicked((MouseEvent e) -> {
+		apDeletar.setOnMouseClicked((MouseEvent e) -> {			
 			deletaApartamento();
 		});		
 	}
 	
 	//Método para editar apartamento
 	public void editaApartamento(){
-		//Apartamento ap = apTable.getSelectionModel().getSelectedItem();
-		textFieldBloco.setText(selecionado.getBloco());
+		editar = apTable.getSelectionModel().getSelectedItem();
+		textFieldBloco.setText(editar.getBloco());
 		//texteFieldNumero.setText(String.valueOf(selecionado.getNumero()));
 		
 		/*apSalvar.setOnMouseClicked((MouseEvent e) -> {
@@ -135,7 +143,7 @@ public class ControleApartamentosController implements Initializable{
 	@FXML
 	void salvarAP(ActionEvent event) {
 		//Apartamento ap = new Apartamento(textFieldBloco.getText(), Integer.parseInt(texteFieldNumero.getText()));
-		if(selecionado != null) {
+		if(editar != null) {
 			Apartamento ap = new Apartamento();
 			ap.setId(selecionado.getId());
 			ap.setBloco(textFieldBloco.getText());
@@ -162,8 +170,13 @@ public class ControleApartamentosController implements Initializable{
 	void chamarListaAP(ActionEvent event) {
 		//ApartamentoControlador controladorApartamento = new ApartamentoControlador();
 		tableView = controladorApartamento.lista();
-
-		this.initialize(null, null);    	
+		
+		if(tableView != null) {
+			this.initialize(null, null);
+		}
+		else {
+			apLabel.setText("Não há cadastros na base.");
+		}
 	}
 	
 	//Ação do botão Tela Inicial

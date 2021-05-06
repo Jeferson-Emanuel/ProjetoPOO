@@ -13,7 +13,7 @@ public class Estoque {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column
+	@Column(unique = true)
 	private String nomeProduto;
 	@Column
 	private int quantidade;
@@ -43,4 +43,10 @@ public class Estoque {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
+	@Override
+	public String toString() {
+		return nomeProduto;
+	}
+	
+	
 }

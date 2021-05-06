@@ -8,7 +8,7 @@ import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
 
 public class MoradorControlador {
 	
-	//singleton
+	//Singleton
 	private static MoradorControlador INSTANCE;
 	
 	public static MoradorControlador getINSTANCE() {

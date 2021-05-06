@@ -64,7 +64,7 @@ public class ControleVeiculoController implements Initializable{
 	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Veiculo> tableView = new ArrayList<>(controladorVeiculo.lista());
+	private List<Veiculo> tableView = new ArrayList<>(controladorVeiculo.lista());	
 
 	//Lista visível para preencher a choicebox
 	private List<Apartamento> cbView = new ArrayList<Apartamento>(controladorApartamento.lista());
@@ -85,7 +85,9 @@ public class ControleVeiculoController implements Initializable{
 		veiculoTableApartamento.setCellValueFactory(new PropertyValueFactory<Veiculo, AsString>("apartamento"));
 		
 		//Preenche a tabela
-		veiculoTable.getItems().setAll(tableView);
+		if(tableView.size() > 0) {
+			veiculoTable.getItems().setAll(tableView);
+		}		
 		
 		//Listerner da tabela
 		veiculoTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -95,9 +97,11 @@ public class ControleVeiculoController implements Initializable{
 		});
 
 		//Limpa e depois preenche a choicebox
-		cbApartamento.getItems().removeAll(cbView);
-		cbApartamento.getItems().addAll(cbView);
-		
+		if(cbView.size() > 0) {
+			cbApartamento.getItems().removeAll(cbView);
+			cbApartamento.getItems().addAll(cbView);
+		}
+				
 		//Listener da choicebox
 		cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {

@@ -87,8 +87,13 @@ public class ControleMoradorController implements Initializable{
 		moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
 		
 		//Preenche a tabela
-		moradorTable.getItems().setAll(tableView);
-		
+		if(tableView.size() > 0) {
+			moradorTable.getItems().setAll(tableView);
+		}
+		else {
+			moradorTable.getItems().clear();
+		}
+				
 		//Listerner da tabela
 		moradorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -97,8 +102,10 @@ public class ControleMoradorController implements Initializable{
 		});
 
 		//Limpa e depois preenche a choicebox
-		cbApartamento.getItems().removeAll(cbView);
-		cbApartamento.getItems().addAll(cbView);
+		if(cbView.size() > 0) {
+			cbApartamento.getItems().removeAll(cbView);
+			cbApartamento.getItems().addAll(cbView);
+		}		
 		
 		//Listener da choicebox
 		cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
