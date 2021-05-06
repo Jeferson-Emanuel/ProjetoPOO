@@ -11,7 +11,9 @@ import com.sun.javafx.binding.SelectBinding.AsString;
 import br.upe.ProjetoPOO.Classes.Apartamento;
 import br.upe.ProjetoPOO.Classes.Veiculo;
 import br.upe.ProjetoPOO.Controladores.ApartamentoControlador;
+import br.upe.ProjetoPOO.Controladores.ApartamentoControladorInterface;
 import br.upe.ProjetoPOO.Controladores.VeiculoControlador;
+import br.upe.ProjetoPOO.Controladores.VeiculoControladorInterface;
 import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
 import br.upe.ProjetoPOO.DAO.VeiculoDAO;
 import javafx.beans.value.ChangeListener;
@@ -59,18 +61,20 @@ public class ControleVeiculoController implements Initializable{
 	private Label label01;
 
 	//Regra de negócio de Veiculo
-	VeiculoControlador controladorVeiculo = VeiculoControlador.getINSTANCE();
+	VeiculoControladorInterface interfaceVeiculo = VeiculoControlador.getINSTANCE();
 	//Regra de negócio de Apartamento
-	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
+	ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Veiculo> tableView = new ArrayList<>(controladorVeiculo.lista());	
+	private List<Veiculo> tableView = new ArrayList<>();	
 
 	//Lista visível para preencher a choicebox
-	private List<Apartamento> cbView = new ArrayList<Apartamento>(controladorApartamento.lista());
+	private List<Apartamento> cbView = new ArrayList<Apartamento>();
 
 	//Objeto que recebe dados da linha selecionada na tabela
 	private Veiculo veiculoSelecionado;
+	//Objeto criado para editar
+	private Veiculo veiculoEdita;
 
 	//Objeto que recebe dados do objeto da choicebox
 	private Apartamento apartamentoSelecionado;
@@ -78,17 +82,25 @@ public class ControleVeiculoController implements Initializable{
 	//Preenchimento da choicebox e tabela
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
+		tableView = interfaceVeiculo.lista();
+		cbView = interfaceApartamento.lista();
+
 		//Fábricas, ou que diabo seja isso de dados, pras células das tabelas
 		veiculoTablePlaca.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("placa"));
 		veiculoTableDescricao.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("descricao"));
 		veiculoTableApartamento.setCellValueFactory(new PropertyValueFactory<Veiculo, AsString>("apartamento"));
-		
+
 		//Preenche a tabela
-		if(tableView.size() > 0) {
-			veiculoTable.getItems().setAll(tableView);
-		}		
-		
+		if(tableView != null) {
+			if(tableView.size() > 0) {
+				veiculoTable.getItems().setAll(tableView);
+			}		
+		}
+		else {
+			veiculoTable.getItems().removeAll();
+		}
+
 		//Listerner da tabela
 		veiculoTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -97,77 +109,74 @@ public class ControleVeiculoController implements Initializable{
 		});
 
 		//Limpa e depois preenche a choicebox
-		if(cbView.size() > 0) {
-			cbApartamento.getItems().removeAll(cbView);
-			cbApartamento.getItems().addAll(cbView);
+		if(cbView != null) {
+			if(cbView.size() > 0) {
+				cbApartamento.getItems().removeAll(cbView);
+				cbApartamento.getItems().addAll(cbView);
+			}		
 		}
-				
+		else {
+			cbApartamento.getItems().clear();
+		}
+
 		//Listener da choicebox
 		cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 				apartamentoSelecionado = (Apartamento) newValue;
 			}
 		});
-		
+
 		//Ação do botão Editar para editar Veiculo selecionado na tabela
 		buttonEditar.setOnMouseClicked((MouseEvent e) -> {
 			editaVeiculo();
 		});
-		
+
 		//Ação do botão Deletar para deletar Veiculo selecionado na tabela
 		buttonDeletar.setOnMouseClicked((MouseEvent e) -> {
 			deletaVeiculo();
 		});
 	}
-	
+
 	//Método para editar Veiculo
 	public void editaVeiculo() {
+		veiculoEdita = veiculoSelecionado;
 		textFieldPlaca.setText(veiculoSelecionado.getPlaca());
 		textFieldDescricao.setText(veiculoSelecionado.getDescricao());
 		cbApartamento.getSelectionModel().select(veiculoSelecionado.getApartamento());
+		this.initialize(null, null);
 	}
 
 	//Método para remover Veiculo
 	public void deletaVeiculo() {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		interfaceVeiculo.remove(veiculoSelecionado.getId());
-
-		tableView = controladorVeiculo.lista();
-		
+		interfaceVeiculo.removerVeiculo(veiculoSelecionado);
 		this.initialize(null, null);
 	}
 
 	//Ação do botão Salvar
 	@FXML
 	void salvarVeiculo(ActionEvent event) {
-		if(veiculoSelecionado != null) {
-			Veiculo v = new Veiculo();
-			v.setId(veiculoSelecionado.getId());
-			v.setPlaca(textFieldPlaca.getText());
-			v.setDescricao(textFieldDescricao.getText());
-			v.setApartamento(apartamentoSelecionado);
-			
-			controladorVeiculo.criarVeiculo(v);
+		Veiculo gravaVeiculo = new Veiculo();
+		
+		if(veiculoEdita != null) {
+			gravaVeiculo.setId(veiculoSelecionado.getId());
+			gravaVeiculo.setPlaca(textFieldPlaca.getText());
+			gravaVeiculo.setDescricao(textFieldDescricao.getText());
+			gravaVeiculo.setApartamento(apartamentoSelecionado);			
 		}
 		else {
-			Veiculo veiculo = new Veiculo();
-			veiculo.setPlaca(textFieldPlaca.getText());
-			veiculo.setDescricao(textFieldDescricao.getText());
-			veiculo.setApartamento(apartamentoSelecionado);
-
-			controladorVeiculo.criarVeiculo(veiculo);			
+			gravaVeiculo.setPlaca(textFieldPlaca.getText());
+			gravaVeiculo.setDescricao(textFieldDescricao.getText());
+			gravaVeiculo.setApartamento(apartamentoSelecionado);			
 		}
 		
-		tableView = controladorVeiculo.lista();
-		
+		interfaceVeiculo.criarVeiculo(gravaVeiculo);
+
 		this.initialize(null, null);
 	}
 
 	//Ação do botão Listar
 	@FXML
 	void chamarListaVeiculo(ActionEvent event) {
-		tableView = controladorVeiculo.lista();
-
 		this.initialize(null, null);		
 	}
 

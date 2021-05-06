@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,20 +17,10 @@ public class Almoxarifado {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@OneToMany(cascade = CascadeType.ALL)//(targetEntity = Produto.class, cascade = CascadeType.ALL, mappedBy = "controleFluxo")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Produto> fluxoProdutos;
-	//Produto produto;	
 	private String tipo;
 	private String data;
-	
-	
-	/*private List<Movimentacao> movimentacao;
-
-	public void adicionarMovimetacaoEntrada(Produto produto, int quantidade) {
-		Movimentacao movimentacao = new Movimentacao();
-		this.movimentacao.add(movimentacao);
-		produto.setQuant(quantidade + produto.getQuant());
-	}*/
 
 //Constructor
 	public Almoxarifado(){	

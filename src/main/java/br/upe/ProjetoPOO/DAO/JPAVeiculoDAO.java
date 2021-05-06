@@ -10,6 +10,16 @@ import br.upe.ProjetoPOO.Classes.Veiculo;
 
 public class JPAVeiculoDAO implements VeiculoDAO {
 	
+	//Singleton
+	private static JPAVeiculoDAO INSTANCE;
+	
+	public static JPAVeiculoDAO getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new JPAVeiculoDAO();
+		}
+		return INSTANCE;
+	}
+	
 	EntityManager em;
 	EntityManagerFactory emf;
 	
@@ -17,7 +27,20 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		emf = Persistence.createEntityManagerFactory("default");
 		em = emf.createEntityManager();
 	}
-	
+	//Persistência que salva objeto no BD
+	public void salva(Veiculo v) {
+		em.getTransaction().begin();
+		try {
+			em.merge(v);
+			em.getTransaction().commit();
+		}
+		catch(Exception e) {
+			em.getTransaction().rollback();
+			em.flush();
+			em.refresh(v);
+		}
+	}
+	//Query que recupera objeto por id
 	public Veiculo obterPorId(int id) {
 		em.getTransaction().begin();
 		Veiculo veiculo = em.find(Veiculo.class, id);
@@ -25,7 +48,7 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		emf.close();
 		return veiculo;
 	}
-	
+	//Query que recupera objeto por placa
 	public Veiculo obterPorPlaca(String placa) {
 		Veiculo veiculo = null;
 		em.getTransaction().begin();
@@ -38,36 +61,16 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 		}	
 		em.getTransaction().commit();
 		return veiculo;	
-	}
-	
-	
-	public void salva(Veiculo v) {
-		em.getTransaction().begin();
-		try {
-			em.merge(v);
-			em.getTransaction().commit();
-		}
-		catch(Exception e) {
-			em.getTransaction().rollback();
-			em.flush();
-			em.refresh(v);
-		}
-		finally {
-			emf.close();
-		}
-	}
-	
+	}	
+	//Persistência que remove objeto do BD
 	@Override
-	public Veiculo remove(int id) {
+	public void remove(int id) {
 		em.getTransaction().begin();
 		Veiculo veiculo = em.find(Veiculo.class, id);
-		System.out.println("Excluindo dados de: " + veiculo.getPlaca());
 		em.remove(veiculo);
 		em.getTransaction().commit();
-		em.close();
-		return veiculo;
 	}
-	
+	//Query que lista todos os objetos no BD
 	@SuppressWarnings("unchecked")
 	public List<Veiculo> lista() {
 		List<Veiculo> veiculos = null;
@@ -76,13 +79,5 @@ public class JPAVeiculoDAO implements VeiculoDAO {
 			veiculos = null;
 		}		
 		return veiculos;
-		
-		/*em.getTransaction().begin();
-		Query pesquisa = em.createQuery("select a from Veiculo v");
-		@SuppressWarnings("unchecked")
-		List<Veiculo> veiculo = pesquisa.getResultList();
-		em.getTransaction().commit();
-		emf.close();
-		return veiculo;*/
 	}
 }

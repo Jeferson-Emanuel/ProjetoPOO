@@ -11,7 +11,7 @@
 
 <Pane fx:id="apartamentoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.ControleApartamentosController">
    <children>
-      <Button fx:id="apSalvar" layoutX="132.0" layoutY="354.0" mnemonicParsing="false" onAction="#salvarAP" text="Salvar" textAlignment="CENTER" />
+      <Button fx:id="apSalvar" layoutX="133.0" layoutY="304.0" mnemonicParsing="false" onAction="#salvarAP" text="Salvar" textAlignment="CENTER" />
       <Button fx:id="apEditar" layoutX="387.0" layoutY="415.0" mnemonicParsing="false" text="Editar" textAlignment="CENTER" />
       <Button fx:id="apDeletar" layoutX="460.0" layoutY="415.0" mnemonicParsing="false" text="Deletar" textAlignment="CENTER" />
       <Button fx:id="voltarInicial" layoutX="120.0" layoutY="415.0" mnemonicParsing="false" onAction="#switchToTelaInicial" text="Tela Inicial" />
@@ -22,9 +22,8 @@
         </columns>
       </TableView>
       <Button fx:id="apListar" layoutX="543.0" layoutY="415.0" mnemonicParsing="false" onAction="#chamarListaAP" text="Listar" />
-      <TextField fx:id="textFieldBloco" layoutX="82.0" layoutY="240.0" promptText="Bloco" />
-      <TextField fx:id="texteFieldNumero" layoutX="81.0" layoutY="276.0" promptText="Número AP" />
-      <Label fx:id="apLabel" layoutX="82.0" layoutY="314.0" prefHeight="17.0" prefWidth="149.0" textAlignment="CENTER" />
+      <TextField fx:id="textFieldBloco" layoutX="82.0" layoutY="240.0" promptText="Apartamento" />
+      <Label fx:id="apLabel" layoutX="82.0" layoutY="274.0" prefHeight="17.0" prefWidth="149.0" textAlignment="CENTER" />
       <Separator layoutX="317.0" layoutY="19.0" orientation="VERTICAL" prefHeight="442.0" prefWidth="0.0" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
    </children>

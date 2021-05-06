@@ -39,6 +39,12 @@ public class FuncionarioControlador implements InterfaceFuncionarioControlador {
 
 		return null;
 	}
+	
+	//Método de listar Funcionário por CPF
+	public Funcionario obterPorCpf(Funcionario obterFuncionario) {
+		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
+		return interfaceFuncionario.obterPorCpf(obterFuncionario.getCpf());
+	}
 
 	//metodo de listar funcionario
 	public List<Funcionario> lista(){

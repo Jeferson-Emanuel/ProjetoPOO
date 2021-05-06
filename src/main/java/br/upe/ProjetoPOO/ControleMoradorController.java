@@ -13,7 +13,9 @@ import com.sun.javafx.binding.SelectBinding.AsString;
 import br.upe.ProjetoPOO.Classes.Apartamento;
 import br.upe.ProjetoPOO.Classes.Morador;
 import br.upe.ProjetoPOO.Controladores.ApartamentoControlador;
+import br.upe.ProjetoPOO.Controladores.ApartamentoControladorInterface;
 import br.upe.ProjetoPOO.Controladores.MoradorControlador;
+import br.upe.ProjetoPOO.Controladores.MoradorControladorInterface;
 import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
 import br.upe.ProjetoPOO.DAO.MoradorDAO;
 import javafx.beans.value.ChangeListener;
@@ -61,39 +63,46 @@ public class ControleMoradorController implements Initializable{
 	private Label label01;
 
 	//Regra de negócio de Morador
-	MoradorControlador controladorMorador = MoradorControlador.getINSTANCE();
+	MoradorControladorInterface interfaceMorador = MoradorControlador.getINSTANCE();
 	//Regra de negócio de Apartamento
-	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
+	ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
 	//Lista visível para preencher a tabela
-	private List<Morador> tableView = new ArrayList<>(controladorMorador.lista());
+	private List<Morador> tableView = new ArrayList<>();
 
 	//Lista visível para preencher a choicebox
-	private List<Apartamento> cbView = new ArrayList<Apartamento>(controladorApartamento.lista());
+	private List<Apartamento> cbView = new ArrayList<Apartamento>();
 
 	//Objeto que recebe dados da linha selecionada na tabela
 	private Morador moradorSelecionado;
-
+	//Objeto criado para editar morador
+	private Morador editarMorador;
+	
 	//Objeto que recebe dados do objeto da choicebox
 	private Apartamento apartamentoSelecionado;
 
 	//Preenchimento da choicebox e tabela
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
+		tableView = interfaceMorador.lista();
+		cbView = interfaceApartamento.lista();
+
 		//Fábricas, ou que diabo seja isso de dados, pras células das tabelas
 		moradorTableCPF.setCellValueFactory(new PropertyValueFactory<Morador, String>("cpf"));
 		moradorTableNome.setCellValueFactory(new PropertyValueFactory<Morador, String>("nome"));
 		moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
-		
+
 		//Preenche a tabela
-		if(tableView.size() > 0) {
-			moradorTable.getItems().setAll(tableView);
-		}
+		if(tableView != null) {
+			if(tableView.size() > 0) {
+				moradorTable.getItems().setAll(tableView);
+			}
+		}		
 		else {
 			moradorTable.getItems().clear();
 		}
-				
+
 		//Listerner da tabela
 		moradorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -102,34 +111,41 @@ public class ControleMoradorController implements Initializable{
 		});
 
 		//Limpa e depois preenche a choicebox
-		if(cbView.size() > 0) {
-			cbApartamento.getItems().removeAll(cbView);
-			cbApartamento.getItems().addAll(cbView);
-		}		
-		
+		if(cbView != null) {
+			if(cbView.size() > 0) {
+				cbApartamento.getItems().removeAll(cbView);
+				cbApartamento.getItems().addAll(cbView);
+			}
+		}
+		else {
+			cbApartamento.getItems().clear();
+		}
+
 		//Listener da choicebox
 		cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 				apartamentoSelecionado = (Apartamento) newValue;
 			}
 		});
-		
+
 		//Ação do botão Editar para editar Morador selecionado na tabela
 		buttonEditar.setOnMouseClicked((MouseEvent e) -> {
 			editaMorador();
 		});
-		
+
 		//Ação do botão Deletar para deletar Morador selecionado na tabela
 		buttonDeletar.setOnMouseClicked((MouseEvent e) -> {
 			deletaMorador();
 		});
 	}
-	
+
 	//Método para editar Morador
 	public void editaMorador() {
+		editarMorador = moradorSelecionado;
 		textFieldCPF.setText(moradorSelecionado.getCpf());
 		textFieldNome.setText(moradorSelecionado.getNome());
 		cbApartamento.getSelectionModel().select(moradorSelecionado.getApt());
+		this.initialize(null, null);
 	}
 
 	//Método para remover Morador
@@ -137,42 +153,41 @@ public class ControleMoradorController implements Initializable{
 		MoradorDAO interfaceMorador = new JPAMoradorDAO();
 		interfaceMorador.remove(moradorSelecionado.getId());
 
-		tableView = controladorMorador.lista();
-		
+		tableView = interfaceMorador.lista();
+
 		this.initialize(null, null);
 	}
 
 	//Ação do botão Salvar
 	@FXML
 	void salvarMorador(ActionEvent event) {
-		if(moradorSelecionado != null) {
-			Morador m = new Morador();
-			m.setId(moradorSelecionado.getId());
-			m.setCpf(textFieldCPF.getText());
-			m.setNome(textFieldNome.getText());
-			m.setApt(apartamentoSelecionado);
-			
-			controladorMorador.criarMorador(m);
+		
+		Morador gravarMorador = new Morador();
+		
+		if(editarMorador != null) {
+			gravarMorador.setId(moradorSelecionado.getId());
+			gravarMorador.setCpf(textFieldCPF.getText());
+			gravarMorador.setNome(textFieldNome.getText());
+			gravarMorador.setApt(apartamentoSelecionado);
 		}
 		else {
-			Morador morador = new Morador();
-			morador.setCpf(textFieldCPF.getText());
-			morador.setNome(textFieldNome.getText());
-			morador.setApt(apartamentoSelecionado);
-
-			controladorMorador.criarMorador(morador);			
+			gravarMorador.setCpf(textFieldCPF.getText());
+			gravarMorador.setNome(textFieldNome.getText());
+			gravarMorador.setApt(apartamentoSelecionado);	
 		}
 		
-		tableView = controladorMorador.lista();
-		
+		interfaceMorador.criarMorador(gravarMorador);
+
 		this.initialize(null, null);
+		
+		textFieldCPF.clear();
+		textFieldNome.clear();
+		cbApartamento.getItems().clear();
 	}
 
 	//Ação do botão Listar
 	@FXML
 	void chamarListaMorador(ActionEvent event) {
-		tableView = controladorMorador.lista();
-
 		this.initialize(null, null);		
 	}
 

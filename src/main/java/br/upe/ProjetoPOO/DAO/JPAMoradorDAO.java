@@ -11,6 +11,16 @@ import br.upe.ProjetoPOO.Classes.Morador;
 
 public class JPAMoradorDAO implements MoradorDAO {
 	
+	//Singleton
+	private static JPAMoradorDAO INSTANCE;
+	
+	public static JPAMoradorDAO getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new JPAMoradorDAO();
+		}
+		return INSTANCE;
+	}
+	
 	EntityManager em;
 	EntityManagerFactory emf;
 	
@@ -18,7 +28,20 @@ public class JPAMoradorDAO implements MoradorDAO {
 		emf = Persistence.createEntityManagerFactory("default");
 		em = emf.createEntityManager();
 	}
-	
+	//Persistência de objeto no BD
+	public void salva(Morador m) {
+		em.getTransaction().begin();
+		try {
+			em.merge(m);
+			em.getTransaction().commit();
+		}
+		catch(Exception e){
+			em.getTransaction().rollback();
+			em.flush();
+			em.refresh(m);
+		}
+	}
+	//Query que traz objeto por id
 	public Morador obterPorId(int id) {
 		em.getTransaction().begin();
 		Morador morador = em.find(Morador.class, id);
@@ -26,6 +49,7 @@ public class JPAMoradorDAO implements MoradorDAO {
 		emf.close();
 		return morador;
 	}
+	//Query que traz objeto por cpf
 	public Morador obterPorCpf(String cpf) {
 		Morador morador = null;
 		em.getTransaction().begin();
@@ -39,37 +63,18 @@ public class JPAMoradorDAO implements MoradorDAO {
 		
 		}
 		em.getTransaction().commit();
-		//emf.close();
 		return morador;
-	}
+	}	
 	
-	public void salva(Morador m) {
-		em.getTransaction().begin();
-		try {
-			em.merge(m);
-			em.getTransaction().commit();
-		}
-		catch(Exception e){
-			em.getTransaction().rollback();
-			em.flush();
-			em.refresh(m);
-		}
-		finally {
-			emf.close();
-		}		
-	}
-	
+	//Persistência que remove objeto
 	@Override
-	public Morador remove(int id) {
+	public void remove(int id) {
 		em.getTransaction().begin();
 		Morador morador = em.find(Morador.class, id);
-		System.out.println("Excluindo dados de: " + morador.getNome());
 		em.remove(morador);
 		em.getTransaction().commit();
-		em.close();
-		return morador;
 	}
-	
+	//Query que traz todos objetos do BD
 	@SuppressWarnings("unchecked")
 	public List<Morador> lista() {
 		List<Morador> moradores = null;
@@ -78,13 +83,5 @@ public class JPAMoradorDAO implements MoradorDAO {
 			moradores = null;
 		}		
 		return moradores;
-		
-		/*em.getTransaction().begin();
-		Query pesquisa = em.createQuery("select a from Morador m");
-		@SuppressWarnings("unchecked")
-		List<Morador> morador = pesquisa.getResultList();
-		em.getTransaction().commit();
-		emf.close();
-		return morador;*/
 	}
 }

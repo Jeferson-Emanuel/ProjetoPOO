@@ -10,6 +10,16 @@ import javax.persistence.Query;
 import br.upe.ProjetoPOO.Classes.Almoxarifado;
 
 public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
+	
+	//Singleton
+	private static JPAAlmoxarifadoDAO INSTANCE;
+	
+	public static JPAAlmoxarifadoDAO getINSTANCE() {
+		if(INSTANCE == null) {
+			INSTANCE = new JPAAlmoxarifadoDAO();
+		}
+		return INSTANCE;
+	}
 
 	EntityManager em;
 	EntityManagerFactory emf;

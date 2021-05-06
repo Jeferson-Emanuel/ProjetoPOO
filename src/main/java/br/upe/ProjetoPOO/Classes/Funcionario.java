@@ -10,11 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name="funcionario")
 public class Funcionario {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(unique = true)
 	private String cpf;
 	@Column
@@ -25,23 +25,22 @@ public class Funcionario {
 	private String endereco;
 	@Column
 	private String contato;
-	
-//Constructors
+
+	//Constructors
 	public Funcionario() {
 	}
 	public Funcionario(String cpf) {
 		this.cpf=cpf;
 	}
 	public Funcionario(String cpf, String nome, String funcao, String endereco, String contato) {
-		//this.id=id;
 		this.cpf=cpf;
 		this.nome=nome;
 		this.funcao=funcao;
 		this.endereco=endereco;
 		this.contato=contato;
 	}
-	
-//Gets & Sets
+
+	//Gets & Sets
 	public int getId() {
 		return id;
 	}
@@ -79,88 +78,3 @@ public class Funcionario {
 		this.contato=contato;
 	}
 }
-
-
-
-
-
-//---------------------------------------------------------------------------------------//
-/*package br.upe.ProjetoPOO.Classes;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="funcionario")
-public class Funcionario {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
-	@Column
-	private String cpf;
-	@Column
-	private String nome;
-	@Column
-	private String funcao;
-	@Column
-	private String endereco;
-	@Column
-	private String contato;
-	
-//Constructors
-	public Funcionario() {
-	}
-	public Funcionario(String cpf, String nome, String funcao, String endereco, String contato) {
-		//this.id=id;
-		this.cpf=cpf;
-		this.nome=nome;
-		this.funcao=funcao;
-		this.endereco=endereco;
-		this.contato=contato;
-	}
-	
-//Gets & Sets
-	public int getId() {
-		return id;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public String getNome() {
-		return nome;
-	}	
-	public String getFuncao() {
-		return funcao;
-	}	
-	public String getEndereco() {
-		return endereco;
-	}	
-	public String getContato() {
-		return contato;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setCpf(String cpf) {
-		this.cpf=cpf;
-	}
-	public void setNome(String nome) {
-		this.nome=nome;
-	}	
-	public void setFuncao(String funcao) {
-		this.funcao=funcao;
-	}	
-	public void setEndereco(String endereco) {
-		this.endereco=endereco;
-	}	
-	public void setContato(String contato) {
-		this.contato=contato;
-	}
-}
-*/

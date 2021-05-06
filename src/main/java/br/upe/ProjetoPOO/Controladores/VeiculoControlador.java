@@ -6,7 +6,7 @@ import br.upe.ProjetoPOO.Classes.Veiculo;
 import br.upe.ProjetoPOO.DAO.VeiculoDAO;
 import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
 
-public class VeiculoControlador {
+public class VeiculoControlador implements VeiculoControladorInterface{
 
 	//singleton
 	private static VeiculoControlador INSTANCE;
@@ -17,40 +17,23 @@ public class VeiculoControlador {
 		}
 		return INSTANCE;
 	}
-
+	//Instancia JPAVeiculo
+	VeiculoDAO interfaceVeiculoDAO = JPAVeiculoDAO.getINSTANCE();
+	
+	//Método que salva Veículo
 	public void criarVeiculo(Veiculo novoVeiculo) {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		interfaceVeiculo.salva(novoVeiculo);
+		interfaceVeiculoDAO.salva(novoVeiculo);
 	}
-	
-
+	//Método que remove Veículo
 	public void removerVeiculo(Veiculo removeVeiculo) {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		interfaceVeiculo.remove(removeVeiculo.getId());
+		interfaceVeiculoDAO.remove(removeVeiculo.getId());
 	}
-	
+	//Método que lista Veículo por placa
+	public Veiculo obterPorPlaca(Veiculo obterVeiculo) {
+		return interfaceVeiculoDAO.obterPorPlaca(obterVeiculo.getPlaca());
+	}
+	//Método que lista todos veículo do BD
 	public List<Veiculo> lista() {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		return interfaceVeiculo.lista();
+		return interfaceVeiculoDAO.lista();
 	}
-
-	/*public void criarVeiculo(Veiculo veiculo_novo){
-		//extrair placa
-		String placaNova = veiculo_novo.getPlaca();
-
-		//Pesquisar na base
-		VeiculoDAO veiculo_dao = new JPAVeiculoDAO();
-		Veiculo veiculo_base = null;
-		veiculo_base = veiculo_dao.obterPorPlaca(placaNova);
-
-		//comparar cpf com resultado da base
-		if(veiculo_base != null) {
-			//se já existir placa, não cadastra
-			System.out.println("Placa j� cadastrada!");
-		}else {
-			//se n�o existir a placa, cadastra veiculo
-			veiculo_dao.salva(veiculo_novo);
-			System.out.println("Ve�culo cadastrado!");
-		}
-	}*/
 }

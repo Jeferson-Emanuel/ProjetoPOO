@@ -7,5 +7,6 @@ import br.upe.ProjetoPOO.Classes.Funcionario;
 public interface InterfaceFuncionarioControlador {
 	void criarFuncionario(Funcionario funcionarioNovo);
 	Funcionario remove(Funcionario removeFuncionario);
+	Funcionario obterPorCpf(Funcionario obterFuncionario);
 	List<Funcionario> lista();
 }
