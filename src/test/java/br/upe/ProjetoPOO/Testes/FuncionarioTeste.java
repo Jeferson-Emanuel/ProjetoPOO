@@ -1,14 +1,12 @@
 package br.upe.ProjetoPOO.Testes;
 
-import br.upe.ProjetoPOO.Classes.Funcionario;
-import br.upe.ProjetoPOO.Controladores.FuncionarioControlador;
-import br.upe.ProjetoPOO.Controladores.InterfaceFuncionarioControlador;
-import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
-import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
-import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import br.upe.ProjetoPOO.Classes.Funcionario;
+import br.upe.ProjetoPOO.Controladores.FuncionarioControlador;
+import br.upe.ProjetoPOO.Controladores.FuncionarioControladorInterface;
+import junit.framework.TestCase;
 
 public class FuncionarioTeste extends TestCase{
 	@Test
@@ -19,7 +17,7 @@ public class FuncionarioTeste extends TestCase{
 		//cria funcionário para receber pesquisa da base
 		Funcionario funcionarioBase = new Funcionario();
 		//Instancia interface Funcionário
-		InterfaceFuncionarioControlador interfaceFuncionario = FuncionarioControlador.getINSTANCE();
+		FuncionarioControladorInterface interfaceFuncionario = FuncionarioControlador.getINSTANCE();
 		//Grava Funcionário na base
 		interfaceFuncionario.criarFuncionario(funcionario);
 

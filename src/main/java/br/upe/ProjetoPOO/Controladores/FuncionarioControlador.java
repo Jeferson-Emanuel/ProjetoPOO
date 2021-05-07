@@ -5,7 +5,7 @@ import br.upe.ProjetoPOO.Classes.Funcionario;
 import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
 import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
 
-public class FuncionarioControlador implements InterfaceFuncionarioControlador {
+public class FuncionarioControlador implements FuncionarioControladorInterface {
 
 	//Singleton	
 	private static FuncionarioControlador INSTANCE;

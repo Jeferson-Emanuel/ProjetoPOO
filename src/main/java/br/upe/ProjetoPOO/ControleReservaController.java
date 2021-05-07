@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import br.upe.ProjetoPOO.Classes.Reserva;
-import br.upe.ProjetoPOO.Controladores.InterfaceReservaControlador;
+import br.upe.ProjetoPOO.Controladores.ReservaControladorInterface;
 import br.upe.ProjetoPOO.Controladores.ReservaControlador;
 import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
 import br.upe.ProjetoPOO.DAO.ReservaDAO;
@@ -102,7 +102,7 @@ public class ControleReservaController implements Initializable {
 	private Reserva atualiza;
 
 	//Regra de negocio de Reserva
-	InterfaceReservaControlador controladorReserva = ReservaControlador.getINSTANCE();
+	ReservaControladorInterface controladorReserva = ReservaControlador.getINSTANCE();
 
 	//Preenchemento da tabela e da choicebox
 	@SuppressWarnings({ "unchecked", "rawtypes" })

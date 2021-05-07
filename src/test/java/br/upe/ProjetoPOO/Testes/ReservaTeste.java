@@ -2,7 +2,7 @@ package br.upe.ProjetoPOO.Testes;
 
 
 import br.upe.ProjetoPOO.Classes.Reserva;
-import br.upe.ProjetoPOO.Controladores.InterfaceReservaControlador;
+import br.upe.ProjetoPOO.Controladores.ReservaControladorInterface;
 import br.upe.ProjetoPOO.Controladores.ReservaControlador;
 import br.upe.ProjetoPOO.DAO.ReservaDAO;
 import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
@@ -28,7 +28,7 @@ public class ReservaTeste extends TestCase{
 		Reserva criaReserva = new Reserva("Piscina", data, horaini, horafim, "kiko");	
 		
 		//Cria instÃ¢ncia do controlador
-		InterfaceReservaControlador reserva = new ReservaControlador();
+		ReservaControladorInterface reserva = new ReservaControlador();
 		
 		//Envia objeto da reserva pro controlador
 		reserva.criarReserva(criaReserva);

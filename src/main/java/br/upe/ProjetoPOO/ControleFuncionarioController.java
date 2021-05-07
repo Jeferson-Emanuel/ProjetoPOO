@@ -10,7 +10,7 @@ import br.upe.ProjetoPOO.Classes.Funcionario;
 import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
 import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
 import br.upe.ProjetoPOO.Controladores.FuncionarioControlador;
-import br.upe.ProjetoPOO.Controladores.InterfaceFuncionarioControlador;
+import br.upe.ProjetoPOO.Controladores.FuncionarioControladorInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -87,7 +87,7 @@ public class ControleFuncionarioController implements Initializable {
 	private Funcionario edita;
 
 	//Regra de negocio de funcionario
-	InterfaceFuncionarioControlador controladorFuncionario = FuncionarioControlador.getINSTANCE();
+	FuncionarioControladorInterface controladorFuncionario = FuncionarioControlador.getINSTANCE();
 
 	//Preenchimento da tabela
 	@Override

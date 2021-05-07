@@ -136,7 +136,7 @@ public class ControleApartamentosController implements Initializable{
 			ap.setBloco(textFieldBloco.getText());
 		}
 
-		interfaceApartamento.criarApartamento(ap);
+		apLabel.setText(interfaceApartamento.criarApartamento(ap));
 
 		this.initialize(null, null);
 		

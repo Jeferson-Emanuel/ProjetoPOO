@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import br.upe.ProjetoPOO.Classes.Apartamento;
+import br.upe.ProjetoPOO.Classes.Funcionario;
 
 public class JPAApartamentoDAO implements ApartamentoDAO {
 	
@@ -50,6 +52,21 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		Apartamento apartamento = em.find(Apartamento.class, id);
 		em.getTransaction().commit();
 		emf.close();
+		return apartamento;
+	}
+	
+	public Apartamento obterPorBloco(String bloco) {
+		Apartamento apartamento = null;
+		em.getTransaction().begin();
+		try {
+			apartamento = em.createQuery(
+					"SELECT u from Apartamento u WHERE u.bloco = :bloco", Apartamento.class).
+					setParameter("bloco", bloco).getSingleResult();
+		}
+		catch(NoResultException nre){
+			
+		}
+		em.getTransaction().commit();
 		return apartamento;
 	}
 	

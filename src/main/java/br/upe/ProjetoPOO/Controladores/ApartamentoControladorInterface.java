@@ -6,7 +6,7 @@ import br.upe.ProjetoPOO.Classes.Apartamento;
 
 public interface ApartamentoControladorInterface {
 	
-	void criarApartamento(Apartamento novoApartamento);
+	String criarApartamento(Apartamento novoApartamento);
 	void removerApartamento(Apartamento removeApartamento);
 	List<Apartamento> lista();
 	

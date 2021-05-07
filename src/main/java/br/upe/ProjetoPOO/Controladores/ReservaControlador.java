@@ -8,7 +8,7 @@ import br.upe.ProjetoPOO.Classes.Reserva;
 import br.upe.ProjetoPOO.DAO.ReservaDAO;
 import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
 
-public class ReservaControlador implements InterfaceReservaControlador {
+public class ReservaControlador implements ReservaControladorInterface {
 	
 	//Singleton	
 	private static ReservaControlador INSTANCE;
