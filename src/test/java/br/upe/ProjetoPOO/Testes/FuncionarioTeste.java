@@ -18,7 +18,7 @@ public class FuncionarioTeste extends TestCase{
 		Funcionario funcionario = new Funcionario("666.666.666-66", "Nelson", "Porteiro", "R. Ma Fama, 14", "4002-8922");
 		//cria funcionário para receber pesquisa da base
 		Funcionario funcionarioBase = new Funcionario();
-		//Instancia interface Funcinário
+		//Instancia interface Funcionário
 		InterfaceFuncionarioControlador interfaceFuncionario = FuncionarioControlador.getINSTANCE();
 		//Grava Funcionário na base
 		interfaceFuncionario.criarFuncionario(funcionario);
@@ -26,12 +26,13 @@ public class FuncionarioTeste extends TestCase{
 		//pesquisa na base
 		funcionarioBase = interfaceFuncionario.obterPorCpf(funcionario);
 
-		//Comparar
+		//Testa
 		Assert.assertTrue(funcionarioBase.getCpf().equals(funcionario.getCpf()));
 		Assert.assertTrue(funcionarioBase.getNome().equals(funcionario.getNome()));
 		Assert.assertTrue(funcionarioBase.getFuncao().equals(funcionario.getFuncao()));
 		
 		//Muda valores de funcionário externo
+		funcionario.setId(interfaceFuncionario.obterPorCpf(funcionario).getId());
 		funcionario.setCpf("111.222.333-64");
 		funcionario.setNome("Júlio");
 
@@ -50,7 +51,7 @@ public class FuncionarioTeste extends TestCase{
 		interfaceFuncionario.remove(interfaceFuncionario.obterPorCpf(funcionario));
 		
 		//Testa
-		Assert.assertTrue();
+		Assert.assertNull(interfaceFuncionario.obterPorCpf(funcionario));
 		
 	}
 }

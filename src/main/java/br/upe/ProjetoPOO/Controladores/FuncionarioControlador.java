@@ -34,8 +34,8 @@ public class FuncionarioControlador implements InterfaceFuncionarioControlador {
 	//Metodo de remover funcionario
 	public Funcionario remove(Funcionario removeFuncionario) {
 
-		//FuncionarioDAO remove = new JPAFuncionarioDAO();
-		//remove.remove(removeFuncionario.getId());
+		FuncionarioDAO remove = new JPAFuncionarioDAO();
+		remove.remove(removeFuncionario.getId());
 
 		return null;
 	}
