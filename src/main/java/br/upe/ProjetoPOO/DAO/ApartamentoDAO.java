@@ -5,9 +5,9 @@ import br.upe.ProjetoPOO.Classes.Apartamento;
 
 public interface ApartamentoDAO {
 	
-	void salva(Apartamento ap);
-	Apartamento obterPorId(int id);
-	Apartamento obterPorBloco(String bloco);
-	void remove(int id);
+	void salva(Apartamento ap) throws Exception;
+	Apartamento obterPorId(int id) throws Exception;
+	Apartamento obterPorBloco(String bloco) throws Exception;
+	void remove(int id) throws Exception;
 	List<Apartamento> lista();
 }

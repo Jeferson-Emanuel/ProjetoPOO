@@ -22,25 +22,41 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 	ApartamentoDAO interfaceApartamentoDAO = JPAApartamentoDAO.getINSTANCE();
 
 	//Método para gravar Apartamento
-	public String criarApartamento(Apartamento novoApartamento) {
-		Apartamento apTemp = obterPorBloco(novoApartamento);
-
-		if(apTemp != null) {
+	public void criarApartamento(Apartamento novoApartamento) throws Exception{
+		try {
+			interfaceApartamentoDAO.salva(novoApartamento);
+		}
+		catch(Exception e){
+			throw e;			
+		}
+		/*if(obterPorBloco(novoApartamento) != null) {
 			return "Apartamento já cadastrado.";
 		}
 		else {
 			interfaceApartamentoDAO.salva(novoApartamento);
 			return "Apartamento cadastrado.";
-		}
+		}*/
 		
 	}
 	//Método que lista Apartamento por Bloco
-	public Apartamento obterPorBloco(Apartamento obterApartamento) {
-		return interfaceApartamentoDAO.obterPorBloco(obterApartamento.getBloco());		
+	public Apartamento obterPorBloco(Apartamento obterApartamento) throws Exception{
+		try {
+			return interfaceApartamentoDAO.obterPorBloco(obterApartamento.getBloco());	
+		}
+		catch(Exception e) {
+			throw e;
+		}
+			
 	}
 	//Método para remover Apartamento
-	public void removerApartamento(Apartamento removeApartamento) {
-		interfaceApartamentoDAO.remove(removeApartamento.getId());
+	public void removerApartamento(Apartamento removeApartamento) throws Exception{
+		try {
+			interfaceApartamentoDAO.remove(removeApartamento.getId());
+		}
+		catch(Exception e) {
+			throw e;
+		}
+		
 	}
 	//Método para listar todos os Apartamentos
 	public List<Apartamento> lista(){

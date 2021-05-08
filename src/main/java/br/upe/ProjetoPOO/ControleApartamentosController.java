@@ -64,11 +64,11 @@ public class ControleApartamentosController implements Initializable{
 	//Preenchimento da tabela    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		tableView = interfaceApartamento.lista();
-		
+
 		apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
-		
+
 		//Preenche a tabela
 		tableView = interfaceApartamento.lista();
 		if(tableView != null) {
@@ -111,14 +111,19 @@ public class ControleApartamentosController implements Initializable{
 		ap.setId(selecionado.getId());
 		ap.setBloco(textFieldBloco.getText());
 
-		interfaceApartamento.criarApartamento(ap);
+		//interfaceApartamento.criarApartamento(ap);
 	}
 
 	//Método para remover apartamento
 	public void deletaApartamento() {
-		
-		interfaceApartamento.removerApartamento(selecionado);
 
+		try {
+			interfaceApartamento.removerApartamento(selecionado);
+			apLabel.setText("Apartamento deletado.");
+		}
+		catch(Exception e) {
+			apLabel.setText("Apartamento não existe.");
+		}
 		this.initialize(null, null);  
 	}
 
@@ -126,21 +131,27 @@ public class ControleApartamentosController implements Initializable{
 	@FXML
 	void salvarAP(ActionEvent event) {
 
-		Apartamento ap = new Apartamento();
+		try {
+			Apartamento ap = new Apartamento();
 
-		if(editar != null) {			
-			ap.setId(selecionado.getId());
-			ap.setBloco(textFieldBloco.getText());					
+			if(editar != null) {			
+				ap.setId(selecionado.getId());
+				ap.setBloco(textFieldBloco.getText());
+				editar = null;
+			}
+			else {
+				ap.setBloco(textFieldBloco.getText());
+			}
+			interfaceApartamento.criarApartamento(ap);
+			apLabel.setText("Apartamento cadastrado.");
 		}
-		else {
-			ap.setBloco(textFieldBloco.getText());
+		catch(Exception e) {
+			apLabel.setText("Apartamento já cadastrado.");
 		}
-
-		apLabel.setText(interfaceApartamento.criarApartamento(ap));
-
-		this.initialize(null, null);
-		
-		textFieldBloco.clear();
+		finally {
+			this.initialize(null, null);			
+			textFieldBloco.clear();
+		}
 
 	}
 

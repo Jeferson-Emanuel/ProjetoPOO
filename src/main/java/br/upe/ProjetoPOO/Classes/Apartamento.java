@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+
 //import java.util.List;
 
 import javax.persistence.Column;
@@ -24,9 +26,9 @@ public class Apartamento {
 	private int id;
 	@Column(unique = true)
 	private String bloco;
-	@OneToMany (mappedBy = "apt")
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "apt")
 	List<Morador> morador;
-	@OneToOne (mappedBy = "apartamento")
+	@OneToOne (cascade = CascadeType.ALL, mappedBy = "apartamento")
 	Veiculo veiculo;
 	
 //Constructors	

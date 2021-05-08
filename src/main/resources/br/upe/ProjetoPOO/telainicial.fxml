@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../_UPE%202020.1(2021)/POO/Pictures/modern-apartments.jpg" />
+            <Image url="@../../../../../../../../../Pictures/syscond.png" />
          </image>
       </ImageView>
       <Button fx:id="controleApartamentos" alignment="CENTER" onAction="#switchToControleApartamentos" text="Controle de Apartamentos" />
