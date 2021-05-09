@@ -1,10 +1,10 @@
 package br.upe.ProjetoPOO.Controladores;
 
-import java.util.List;
-
 import br.upe.ProjetoPOO.Classes.Apartamento;
 import br.upe.ProjetoPOO.DAO.ApartamentoDAO;
 import br.upe.ProjetoPOO.DAO.JPAApartamentoDAO;
+
+import java.util.List;
 
 public class ApartamentoControlador implements ApartamentoControladorInterface{
 
@@ -29,13 +29,6 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 		catch(Exception e){
 			throw e;			
 		}
-		/*if(obterPorBloco(novoApartamento) != null) {
-			return "Apartamento já cadastrado.";
-		}
-		else {
-			interfaceApartamentoDAO.salva(novoApartamento);
-			return "Apartamento cadastrado.";
-		}*/
 		
 	}
 	//Método que lista Apartamento por Bloco
@@ -48,6 +41,7 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 		}
 			
 	}
+
 	//Método para remover Apartamento
 	public void removerApartamento(Apartamento removeApartamento) throws Exception{
 		try {
@@ -60,7 +54,15 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 	}
 	//Método para listar todos os Apartamentos
 	public List<Apartamento> lista(){
-		return interfaceApartamentoDAO.lista();
+
+		List<Apartamento> lista;
+
+		if((lista = interfaceApartamentoDAO.lista()).size() == 0){
+			lista = null;
+		}
+
+		return lista;
+
 	}
 
 }

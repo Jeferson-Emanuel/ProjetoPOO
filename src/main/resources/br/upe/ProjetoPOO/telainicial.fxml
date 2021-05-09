@@ -5,20 +5,39 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" minHeight="480.0" minWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.upe.ProjetoPOO.TelaInicialController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Pictures/syscond.png" />
+            <Image url="@../../../media/SysCond.png" />
          </image>
       </ImageView>
-      <Button fx:id="controleApartamentos" alignment="CENTER" onAction="#switchToControleApartamentos" text="Controle de Apartamentos" />
-      <Button fx:id="controleMorador" mnemonicParsing="false" onAction="#switchToControleMorador" text="Controle de Morador" />
-      <Button fx:id="controleVeiculos" mnemonicParsing="false" onAction="#switchToControleVeiculo" text="Controle de Veículos" />
-      <Button fx:id="controleFuncionario" mnemonicParsing="false" onAction="#switchToControleFuncionario" text="Controle de Funcionário" />
-      <Button fx:id="almoxarifado" mnemonicParsing="false" onAction="#switchToAlmoxarifado" text="Almoxarifado" />
-      <Button fx:id="controleReservas" mnemonicParsing="false" onAction="#switchToControleReservas" text="Controle de Reservas" />
+      <Button fx:id="controleApartamentos" alignment="CENTER" onAction="#switchToControleApartamentos" prefWidth="200.0" text="Controle de Apartamentos" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="controleMorador" mnemonicParsing="false" onAction="#switchToControleMorador" prefWidth="200.0" text="Controle de Morador">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="controleVeiculos" mnemonicParsing="false" onAction="#switchToControleVeiculo" prefWidth="200.0" text="Controle de Veículos">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="controleFuncionario" mnemonicParsing="false" onAction="#switchToControleFuncionario" prefWidth="200.0" text="Controle de Funcionário">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="almoxarifado" mnemonicParsing="false" onAction="#switchToAlmoxarifado" prefWidth="200.0" text="Almoxarifado">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="controleReservas" mnemonicParsing="false" onAction="#switchToControleReservas" prefWidth="200.0" text="Controle de Reservas">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

@@ -5,6 +5,7 @@ import br.upe.ProjetoPOO.Classes.Apartamento;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static br.upe.ProjetoPOO.DAO.PersistenceManager.getEntityManager;
@@ -37,6 +38,9 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 			em.flush();
 			em.refresh(ap);
 			throw e;
+		}
+		catch(Exception e){
+
 		}
 		finally {
 			em.close();
@@ -103,13 +107,18 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 	@SuppressWarnings("unchecked")
 	public List<Apartamento> lista() {
 		em = getEntityManager();
-		List<Apartamento> apartamentos;
-		apartamentos = em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
-		if(apartamentos.size() == 0) {
-			apartamentos = null;
+		List<Apartamento> lista = new ArrayList<>();
+		try{
+			lista = em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
+		}
+		catch(Exception e){
+
+		}
+		finally{
 			em.close();
 		}
-		return apartamentos;
+
+		return lista;
 
 	}
 }
