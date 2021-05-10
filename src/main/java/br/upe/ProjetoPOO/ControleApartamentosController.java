@@ -21,18 +21,25 @@ public class ControleApartamentosController implements Initializable {
     //IDs dos objetos FXML
     @FXML
     private Button apSalvar;
+
     @FXML
     private Button apEditar;
+
     @FXML
     private Button apDeletar;
+
     @FXML
     private TableView<Apartamento> apTable;
+
     @FXML
     private TableColumn<Apartamento, String> apTableBloco;
+
     @FXML
     private Button apListar;
+
     @FXML
     private TextField textFieldBloco;
+
     @FXML
     private Label apLabel;
 
@@ -44,43 +51,36 @@ public class ControleApartamentosController implements Initializable {
 
     //Objeto que recebe dados da linha selecionada na tabela
     private Apartamento selecionado;
+
     //Boolean que sinaliza edição de apartamento
     Boolean editar = false;
 
     //Preenchimento da tabela
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         tableView = interfaceApartamento.lista();
-
         apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
-
         //Checa se a lista visível é nula e em seguida não vazia e então preenche a a tabela
         tableView = interfaceApartamento.lista();
-        if (tableView != null) {
-            if (tableView.size() > 0) {
-                apTable.getItems().setAll(tableView);
-            }
+        if (tableView != null && tableView.size() > 0) {
+            apTable.getItems().setAll(tableView);
         } else {
             apTable.getItems().clear();
         }
-
         //Extrai valores da linha selecionada na tabela para objeto
-        apTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selecionado = (Apartamento) newValue;
-            }
-        });
+        apTable.getSelectionModel().
+                selectedItemProperty().
+                addListener(new ChangeListener() {
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                        selecionado = (Apartamento) newValue;
+                    }
+                });
     }
 
     //Método para salvar apartamento
     public void salvaApartamento() {
-
         Apartamento gravaApartamento = new Apartamento();
-
         try {
-
             if (editar == true) {
                 gravaApartamento.setId(selecionado.getId());
                 gravaApartamento.setBloco(textFieldBloco.getText());
@@ -88,11 +88,9 @@ public class ControleApartamentosController implements Initializable {
             } else {
                 gravaApartamento.setBloco(textFieldBloco.getText());
             }
-
             interfaceApartamento.criarApartamento(gravaApartamento);
             apLabel.setText("Apartamento cadastrado.");
             textFieldBloco.clear();
-
         } catch (Exception e) {
             apLabel.setText("Apartamento já cadastrado.");
         } finally {
@@ -108,17 +106,14 @@ public class ControleApartamentosController implements Initializable {
 
     //Método para deletar apartamento
     public void deletaApartamento() {
-
         try {
             interfaceApartamento.removerApartamento(selecionado);
             apLabel.setText("Apartamento deletado.");
         } catch (Exception e) {
             apLabel.setText("Apartamento não existe.");
-        }
-        finally{
+        } finally {
             this.initialize(null, null);
         }
-
     }
 
     //Ação do botão Salvar
@@ -129,13 +124,13 @@ public class ControleApartamentosController implements Initializable {
 
     //Ação do botão Editar
     @FXML
-    void editarAP(ActionEvent event){
+    void editarAP(ActionEvent event) {
         editaApartamento();
     }
 
     //Ação do botão Deletar
     @FXML
-    void deletarAP(ActionEvent event){
+    void deletarAP(ActionEvent event) {
         deletaApartamento();
     }
 
@@ -144,5 +139,4 @@ public class ControleApartamentosController implements Initializable {
     void chamarListaAP(ActionEvent event) {
         this.initialize(null, null);
     }
-
 }

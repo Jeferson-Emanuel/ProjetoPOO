@@ -76,8 +76,23 @@ public class TelaInicialController {
     }
 
     @FXML
-    private void switchToControleVeiculo() throws IOException {
-        App.setRoot("controleveiculo");
+    void switchToControleVeiculo() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("controleveiculo.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 610, 450);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Controle de Veiculos");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
     }
 
     @FXML

@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,37 +21,49 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControleMoradorController implements Initializable {
-
     //IDs dos objetos XML
     @FXML
     private TextField textFieldCPF;
+
     @FXML
     private TextField textFieldNome;
+
     @FXML
     private ChoiceBox<Apartamento> cbApartamento;
+
     @FXML
     private Button voltarInicial;
+
     @FXML
     private Button buttonSalvar;
+
     @FXML
     private Button buttonEditar;
+
     @FXML
     private Button buttonDeletar;
+
     @FXML
     private Button buttonListar;
+
     @FXML
     private TableView<Morador> moradorTable;
+
     @FXML
     private TableColumn<Morador, String> moradorTableCPF;
+
     @FXML
     private TableColumn<Morador, String> moradorTableNome;
+
     @FXML
     private TableColumn<Morador, AsString> moradorTableApartamento;
+
     @FXML
     private Label label01;
 
     //Regra de negócio de Morador
     MoradorControladorInterface interfaceMorador = MoradorControlador.getINSTANCE();
+
     //Regra de negócio de Apartamento
     ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
@@ -64,8 +75,10 @@ public class ControleMoradorController implements Initializable {
 
     //Objeto que recebe dados da linha selecionada na tabela
     private Morador moradorSelecionado;
-    //Objeto criado para editar morador
+
+    //Boolean para confirmar edição
     Boolean editar = false;
+
     //Objeto que recebe dados do objeto da choicebox
     private Apartamento apartamentoSelecionado;
 
@@ -76,76 +89,70 @@ public class ControleMoradorController implements Initializable {
         tableView = interfaceMorador.lista();
         cbView = interfaceApartamento.lista();
 
-        //Fábricas, ou que diabo seja isso de dados, pras células das tabelas
+        //Fábricas de dados pras células das tabelas
         moradorTableCPF.setCellValueFactory(new PropertyValueFactory<Morador, String>("cpf"));
         moradorTableNome.setCellValueFactory(new PropertyValueFactory<Morador, String>("nome"));
         moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
 
         //Preenche a tabela
-        if (tableView != null) {
-            if (tableView.size() > 0) {
-                moradorTable.getItems().setAll(tableView);
-            }
+        if (tableView != null && tableView.size() > 0) {
+            moradorTable.getItems().setAll(tableView);
         } else {
             moradorTable.getItems().clear();
         }
 
         //Listerner da tabela
-        moradorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                moradorSelecionado = (Morador) newValue;
-            }
-        });
+        moradorTable.getSelectionModel().
+                selectedItemProperty().
+                addListener(new ChangeListener() {
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                        moradorSelecionado = (Morador) newValue;
+                    }
+                });
 
         //Limpa e depois preenche a choicebox
-        if (cbView != null) {
-            if (cbView.size() > 0) {
-                cbApartamento.getItems().removeAll(cbView);
-                cbApartamento.getItems().addAll(cbView);
-            }
+        if (cbView != null && cbView.size() > 0) {
+            cbApartamento.getItems().removeAll(cbView);
+            cbApartamento.getItems().addAll(cbView);
         } else {
             cbApartamento.getItems().clear();
         }
 
         //Listener da choicebox
-        cbApartamento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                apartamentoSelecionado = (Apartamento) newValue;
-            }
-        });
-
-        //Ação do botão Editar para editar Morador selecionado na tabela
-        buttonEditar.setOnMouseClicked((MouseEvent e) -> {
-            editaMorador();
-        });
-
-        //Ação do botão Deletar para deletar Morador selecionado na tabela
-        buttonDeletar.setOnMouseClicked((MouseEvent e) -> {
-            deletaMorador();
-        });
+        cbApartamento.getSelectionModel().
+                selectedItemProperty().
+                addListener(new ChangeListener() {
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                        apartamentoSelecionado = (Apartamento) newValue;
+                    }
+                });
     }
 
     //Método para salvar Morador
     public void salvaMorador() {
         Morador gravaMorador = new Morador();
-        if (editar == true) {
-            gravaMorador.setId(moradorSelecionado.getId());
-            gravaMorador.setCpf(textFieldCPF.getText());
-            gravaMorador.setNome(textFieldNome.getText());
-            gravaMorador.setApt(cbApartamento.getValue());
-            editar = false;
-        } else {
-            gravaMorador.setCpf(textFieldCPF.getText());
-            gravaMorador.setNome(textFieldNome.getText());
-            gravaMorador.setApt(cbApartamento.getValue());
+        try {
+            if (editar == true) {
+                gravaMorador.setId(moradorSelecionado.getId());
+                gravaMorador.setCpf(textFieldCPF.getText());
+                gravaMorador.setNome(textFieldNome.getText());
+                gravaMorador.setApt(cbApartamento.getValue());
+                editar = false;
+            } else {
+                gravaMorador.setCpf(textFieldCPF.getText());
+                gravaMorador.setNome(textFieldNome.getText());
+                gravaMorador.setApt(cbApartamento.getValue());
+            }
+            interfaceMorador.criarMorador(gravaMorador);
+            label01.setText("Morador cadastrado.");
+            textFieldCPF.clear();
+            textFieldNome.clear();
+            cbApartamento.getItems().clear();
+        } catch (Exception e) {
+            label01.setText("CPF já cadastrado.");
+        } finally {
+            this.initialize(null, null);
         }
-        interfaceMorador.criarMorador(gravaMorador);
-
-        this.initialize(null, null);
-
-        textFieldCPF.clear();
-        textFieldNome.clear();
-        cbApartamento.getItems().clear();
     }
 
     //Método para editar Morador
@@ -156,22 +163,29 @@ public class ControleMoradorController implements Initializable {
         cbApartamento.getSelectionModel().select(moradorSelecionado.getApt());
     }
 
-    //Método para remover Morador
+    //Método para deletar Morador
     public void deletaMorador() {
-        interfaceMorador.removerMorador(moradorSelecionado);
-        this.initialize(null, null);
+        try {
+            interfaceMorador.removerMorador(moradorSelecionado);
+            label01.setText("Morador deletado.");
+        } catch (Exception e) {
+            label01.setText("Morador não existe.");
+        }
+        finally {
+            this.initialize(null, null);
+        }
     }
 
     //Ação do botão Salvar
     @FXML
     void salvarMorador(ActionEvent event) {
-       salvaMorador();
+        salvaMorador();
     }
 
     //Ação do botão Editar
     @FXML
     void editarMorador(ActionEvent event) {
-
+        editaMorador();
     }
 
     //Ação do botão Deletar
@@ -183,11 +197,11 @@ public class ControleMoradorController implements Initializable {
     //Ação do botão Listar
     @FXML
     void chamarListaMorador(ActionEvent event) {
+
         if ((interfaceMorador.lista() == null) || (interfaceMorador.lista().size() <= 0)) {
             label01.setText("Nada encontrado na base.");
         } else {
             this.initialize(null, null);
         }
     }
-
 }

@@ -10,14 +10,12 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 
 	//Singleton	
 	private static ApartamentoControlador INSTANCE;
-
 	public static ApartamentoControlador getINSTANCE() {
 		if(INSTANCE == null) {
 			INSTANCE = new ApartamentoControlador();
 		}
 		return INSTANCE;
 	}
-	
 	//Instancia Interface ApartamentoDAO
 	ApartamentoDAO interfaceApartamentoDAO = JPAApartamentoDAO.getINSTANCE();
 
@@ -29,7 +27,6 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 		catch(Exception e){
 			throw e;			
 		}
-		
 	}
 	//Método que lista Apartamento por Bloco
 	public Apartamento obterPorBloco(Apartamento obterApartamento) throws Exception{
@@ -39,9 +36,7 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 		catch(Exception e) {
 			throw e;
 		}
-			
 	}
-
 	//Método para remover Apartamento
 	public void removerApartamento(Apartamento removeApartamento) throws Exception{
 		try {
@@ -50,19 +45,13 @@ public class ApartamentoControlador implements ApartamentoControladorInterface{
 		catch(Exception e) {
 			throw e;
 		}
-		
 	}
 	//Método para listar todos os Apartamentos
 	public List<Apartamento> lista(){
-
 		List<Apartamento> lista;
-
 		if((lista = interfaceApartamentoDAO.lista()).size() == 0){
 			lista = null;
 		}
-
 		return lista;
-
 	}
-
 }

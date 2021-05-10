@@ -1,39 +1,59 @@
 package br.upe.ProjetoPOO.Controladores;
 
+import br.upe.ProjetoPOO.Classes.Veiculo;
+import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+import br.upe.ProjetoPOO.DAO.VeiculoDAO;
+
 import java.util.List;
 
-import br.upe.ProjetoPOO.Classes.Veiculo;
-import br.upe.ProjetoPOO.DAO.VeiculoDAO;
-import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+public class VeiculoControlador implements VeiculoControladorInterface {
 
-public class VeiculoControlador implements VeiculoControladorInterface{
+    //singleton
+    private static VeiculoControlador INSTANCE;
 
-	//singleton
-	private static VeiculoControlador INSTANCE;
+    public static VeiculoControlador getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new VeiculoControlador();
+        }
+        return INSTANCE;
+    }
 
-	public static VeiculoControlador getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new VeiculoControlador();
-		}
-		return INSTANCE;
-	}
-	//Instancia JPAVeiculo
-	VeiculoDAO interfaceVeiculoDAO = JPAVeiculoDAO.getINSTANCE();
-	
-	//Método que salva Veículo
-	public void criarVeiculo(Veiculo novoVeiculo) {
-		interfaceVeiculoDAO.salva(novoVeiculo);
-	}
-	//Método que remove Veículo
-	public void removerVeiculo(Veiculo removeVeiculo) {
-		interfaceVeiculoDAO.remove(removeVeiculo.getId());
-	}
-	//Método que lista Veículo por placa
-	public Veiculo obterPorPlaca(Veiculo obterVeiculo) {
-		return interfaceVeiculoDAO.obterPorPlaca(obterVeiculo.getPlaca());
-	}
-	//Método que lista todos veículo do BD
-	public List<Veiculo> lista() {
-		return interfaceVeiculoDAO.lista();
-	}
+    //Instancia Interface VeiculoDAO
+    VeiculoDAO interfaceVeiculoDAO = JPAVeiculoDAO.getINSTANCE();
+
+    //Método para gravar Veículo
+    public void criarVeiculo(Veiculo novoVeiculo) throws Exception {
+        try {
+            interfaceVeiculoDAO.salva(novoVeiculo);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método que lista Veiculo por Placa
+    public Veiculo obterPorPlaca(Veiculo obterVeiculo) throws Exception {
+        try {
+            return interfaceVeiculoDAO.obterPorPlaca(obterVeiculo.getPlaca());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método para remover Veículo
+    public void removerVeiculo(Veiculo removeVeiculo) throws Exception {
+        try {
+            interfaceVeiculoDAO.remove(removeVeiculo.getId());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método que lista todos Veículos
+    public List<Veiculo> lista() {
+        List<Veiculo> lista;
+        if((lista = interfaceVeiculoDAO.lista()).size() == 0){
+            lista = null;
+        }
+        return lista;
+    }
 }

@@ -6,8 +6,9 @@ import br.upe.ProjetoPOO.Classes.Morador;
 
 public interface MoradorControladorInterface {
 	
-	void criarMorador(Morador novoMorador);
-	void removerMorador(Morador removeMorador);
+	void criarMorador(Morador novoMorador) throws Exception;
+	Morador obterPorCpf(Morador obterMorador) throws Exception;
+	void removerMorador(Morador removeMorador) throws Exception;
 	List<Morador> lista();
 	
 }

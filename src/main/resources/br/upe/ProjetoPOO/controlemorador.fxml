@@ -21,12 +21,12 @@
       <Button fx:id="buttonListar" layoutX="369.0" layoutY="412.0" mnemonicParsing="false" onAction="#chamarListaMorador" text="Listar" />
       <TableView fx:id="moradorTable" layoutX="10.0" layoutY="25.0" prefHeight="280.0" prefWidth="590.0">
         <columns>
-          <TableColumn fx:id="moradorTableCPF" prefWidth="150.0" resizable="false" text="CPF" />
-          <TableColumn fx:id="moradorTableNome" prefWidth="354.0" resizable="false" text="Nome" />
-            <TableColumn fx:id="moradorTableApartamento" prefWidth="85.0" resizable="false" text="Apartamento" />
+          <TableColumn fx:id="moradorTableCPF" prefWidth="105.0" resizable="false" text="CPF" />
+          <TableColumn fx:id="moradorTableNome" prefWidth="364.0" resizable="false" text="Nome" />
+            <TableColumn fx:id="moradorTableApartamento" prefWidth="119.0" resizable="false" text="Apartamento" />
         </columns>
       </TableView>
-      <Label fx:id="label01" layoutX="165.0" layoutY="387.0" prefHeight="17.0" prefWidth="300.0" />
+      <Label fx:id="label01" layoutX="155.0" layoutY="387.0" prefHeight="17.0" prefWidth="300.0" />
       <ImageView fitHeight="25.0" fitWidth="200.0" layoutX="410.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../media/SysCond.png" />

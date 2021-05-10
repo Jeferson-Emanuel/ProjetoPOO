@@ -39,9 +39,6 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 			em.refresh(ap);
 			throw e;
 		}
-		catch(Exception e){
-
-		}
 		finally {
 			em.close();
 		}
@@ -65,10 +62,11 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		}		
 		return apartamento;
 	}
-	
-	public Apartamento obterPorBloco(String bloco) {
+
+	//Query que traz Apartamento por bloco
+	public Apartamento obterPorBloco(String bloco) throws Exception {
 		em = getEntityManager();
-		Apartamento apartamento = null;
+		Apartamento apartamento;
 		em.getTransaction().begin();
 		try {
 			apartamento = em.createQuery(
@@ -87,7 +85,7 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 
 	//Persistência que remove Apartamento
 	@Override
-	public void remove(int id) {
+	public void remove(int id) throws Exception{
 		em = getEntityManager();
 		em.getTransaction().begin();
 		try {
@@ -97,6 +95,7 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		}
 		catch(Exception e) {
 			em.getTransaction().rollback();
+			throw e;
 		}
 		finally {
 			em.close();
@@ -107,9 +106,9 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 	@SuppressWarnings("unchecked")
 	public List<Apartamento> lista() {
 		em = getEntityManager();
-		List<Apartamento> lista = new ArrayList<>();
+		List<Apartamento> apartamentos = new ArrayList<>();
 		try{
-			lista = em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
+			apartamentos = em.createQuery("FROM " + Apartamento.class.getName()).getResultList();
 		}
 		catch(Exception e){
 
@@ -117,8 +116,6 @@ public class JPAApartamentoDAO implements ApartamentoDAO {
 		finally{
 			em.close();
 		}
-
-		return lista;
-
+		return apartamentos;
 	}
 }
