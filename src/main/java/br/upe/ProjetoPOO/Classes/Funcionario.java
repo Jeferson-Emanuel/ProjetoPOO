@@ -26,7 +26,9 @@ public class Funcionario {
 	@Column
 	private String contato;
 
-	//Constructors
+	/**
+	 * Constructors da classe
+	 */
 	public Funcionario() {
 	}
 	public Funcionario(String cpf) {
@@ -40,7 +42,11 @@ public class Funcionario {
 		this.contato=contato;
 	}
 
-	//Gets & Sets
+/**
+ * Métodos de get e set
+ *  @return Retorna nos métodos get, o valor pedido do objeto da classe
+ *  e os set definem o valor do objeto
+ */
 	public int getId() {
 		return id;
 	}

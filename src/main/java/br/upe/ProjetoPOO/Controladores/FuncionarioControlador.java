@@ -2,149 +2,77 @@ package br.upe.ProjetoPOO.Controladores;
 
 import java.util.List;
 import br.upe.ProjetoPOO.Classes.Funcionario;
+import br.upe.ProjetoPOO.Classes.Morador;
 import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
 import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
 
 public class FuncionarioControlador implements FuncionarioControladorInterface {
+	
 
-	//Singleton	
 	private static FuncionarioControlador INSTANCE;
-
+	/**
+	 * Método para chamada do Singleton dessa classe.
+	 * @return Retorna a instância dessa classe.
+	 */
 	public static FuncionarioControlador getINSTANCE() {
 		if(INSTANCE == null) {
 			INSTANCE = new FuncionarioControlador();
 		}
 		return INSTANCE;
 	}
-	//Metodo de criar funcionario
-	public void criarFuncionario(Funcionario funcionarioNovo) {
+	
+	FuncionarioDAO interfaceFuncionarioDAO = JPAFuncionarioDAO.getINSTANCE();
+	/**
+	 * Método de gravar Funcionário
+	 * @param funcionarioNovo recebe um objeto Funcionario da interface para ser salvo no BD.
+	 * @throws Exception Joga uma exceção para a interface.
+	 */
+	public void criarFuncionario(Funcionario funcionarioNovo) throws Exception {
 		
-		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
-		interfaceFuncionario.salva(funcionarioNovo);
-		
-		/*try {
-			interfaceFuncionario.salva(FuncionarioNovo);
-			System.out.println("Deu bom.");
-			}
-			catch(Exception E){
-			System.out.println("Deu erro.");
-		}*/		
-	}
-
-	//Metodo de remover funcionario
-	public Funcionario remove(Funcionario removeFuncionario) {
-
-		FuncionarioDAO remove = new JPAFuncionarioDAO();
-		remove.remove(removeFuncionario.getId());
-
-		return null;
-	}
-	
-	//MÃ©todo de listar FuncionÃ¡rio por CPF
-	public Funcionario obterPorCpf(Funcionario obterFuncionario) {
-		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
-		return interfaceFuncionario.obterPorCpf(obterFuncionario.getCpf());
-	}
-
-	//metodo de listar funcionario
-	public List<Funcionario> lista(){
-		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
-		return interfaceFuncionario.lista();
-	}	
-
-}
-
-
-
-
-
-
-
-//Metodo antigo do controlador
-/*	//Extrair cpf
-String cpfNovo = funcionarioNovo.getCpf();
-//Pesquisar na base
-FuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
-Funcionario funcionarioBase = null;
-funcionarioBase = funcionarioDAO.obterPorCpf(cpfNovo);
-//Comparar cpf com resultado da base
-if(funcionarioBase != null) {
-//Se jÃ¯Â¿Â½ existir cpf, nÃ¯Â¿Â½o cadastra
-	System.out.println("CPF jÃ¯Â¿Â½ cadastrado!");
-}
-else {
-//Se nÃ¯Â¿Â½o existir o cpf, cadastra funcionario
-funcionarioDAO.salva(funcionarioNovo);
-System.out.println("Funcionario Cadastrado");
-}
-}*/
-
-
-
-//-------------------------------------------------------------------------------------------------------------------//
-/*package br.upe.ProjetoPOO.Controladores;
-
-import java.util.List;
-import br.upe.ProjetoPOO.Classes.Funcionario;
-import br.upe.ProjetoPOO.DAO.FuncionarioDAO;
-import br.upe.ProjetoPOO.DAO.JPAFuncionarioDAO;
-
-public class FuncionarioControlador {
-
-	//Singleton	
-	private static FuncionarioControlador INSTANCE;
-	
-	public static FuncionarioControlador getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new FuncionarioControlador();
+		try {
+			interfaceFuncionarioDAO.salva(funcionarioNovo) ;
+		} catch (Exception e) {
+			throw e;
 		}
-		return INSTANCE;
 	}
-	//MÃ©todo de criar funcionario
-	public void criarFuncionario(Funcionario funcionarioNovo) {
-	FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
-	interfaceFuncionario.salva(funcionarioNovo);
-		/*try {
-			interfaceFuncionario.salva(FuncionarioNovo);
-			System.out.println("Deu bom.");
-			}
-			catch(Exception E){
-			System.out.println("Deu erro.");
-		}		
+
+	/**
+	 * Método de deletar Funcionário
+	 * @param removeFuncionario recebe um objeto Funcionario da interface para ser removido do BD.
+	 * @throws Exception Joga uma exceção para a interface.
+	 */
+	public void remove(Funcionario removeFuncionario)  throws Exception{
+		try {
+			interfaceFuncionarioDAO.remove(removeFuncionario.getId());
+		} catch (Exception e) {
+			throw e;
 		}
-	public Funcionario remove(Funcionario removeFuncionario) {
-		return null;
 	}
 	
+	/**
+	 * Método de obter funcionário por CPF
+	 * @param obterFuncionario recebe um objeto Funcionario da interface para ser procurado no BD.
+	 * @return Retorna o funcionário encontrado identificado pelo CPF
+	 * @throws Exception Joga uma exceção para a interface.
+	 */
+	public Funcionario obterPorCpf(Funcionario obterFuncionario) throws Exception {
+		try {
+			return interfaceFuncionarioDAO.obterPorCpf(obterFuncionario.getCpf());
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * Método de listar Funcionário
+	 * @return Retorna a lista de Funcionarios presentes no BD.
+	 * caso vazia ou nula, @return retorna NULL
+	 */
 	public List<Funcionario> lista(){
-		FuncionarioDAO interfaceFuncionario = new JPAFuncionarioDAO();
-		return interfaceFuncionario.lista();
-	}	
-	
+		 List<Funcionario> lista;
+	     if ((lista = interfaceFuncionarioDAO.lista()).size() == 0) {
+	       lista = null;
+	     }
+	     return lista;
+	}
 }
-
-
-*/
-
-//---------------------------------------------------------------------------------------------------------------------------//
-
-
-
-/*	//Extrair cpf
-String cpfNovo = funcionarioNovo.getCpf();
-//Pesquisar na base
-FuncionarioDAO funcionarioDAO = new JPAFuncionarioDAO();
-Funcionario funcionarioBase = null;
-funcionarioBase = funcionarioDAO.obterPorCpf(cpfNovo);
-//Comparar cpf com resultado da base
-if(funcionarioBase != null) {
-//Se jï¿½ existir cpf, nï¿½o cadastra
-	System.out.println("CPF jï¿½ cadastrado!");
-}
-else {
-//Se nï¿½o existir o cpf, cadastra funcionario
-funcionarioDAO.salva(funcionarioNovo);
-System.out.println("Funcionario Cadastrado");
-}
-}*/
-
