@@ -97,7 +97,24 @@ public class TelaInicialController {
 
     @FXML
     private void switchToControleFuncionario() throws IOException {
-        App.setRoot("controlefuncionario");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("controlefuncionario.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 610, 450);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Controle de Funcionario");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+
+    	//        App.setRoot("controlefuncionario");
     }
 
     @FXML
@@ -107,7 +124,24 @@ public class TelaInicialController {
 
     @FXML
     private void switchToControleReservas() throws IOException {
-        App.setRoot("controlereservas");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("controlereservas.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 610, 450);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Controle de Reserva");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+
+    	//        App.setRoot("controlereservas");
     }
 
 }

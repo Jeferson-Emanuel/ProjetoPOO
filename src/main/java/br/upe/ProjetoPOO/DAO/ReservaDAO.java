@@ -5,9 +5,9 @@ import br.upe.ProjetoPOO.Classes.Reserva;
 
 public interface ReservaDAO {
 	
-	void salva(Reserva r);
-	Reserva obterPorId(int id);
-	List<Reserva> obterPorEspaco();
-	Reserva remove(int id);
+	void salva(Reserva r) throws Exception;
+	Reserva obterPorId(int id) throws Exception;
+	List<Reserva> obterPorEspaco() throws Exception;
+	void remove(int id) throws Exception;
 	List<Reserva> lista();
 }

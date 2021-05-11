@@ -29,7 +29,10 @@ public class Reserva {
 	
 
 
-//Constructors	
+	/**
+	 * Constructors da classe
+	 */
+
 	public Reserva() {
 	}
 	public Reserva(String tipo_espaco, LocalDate data, LocalTime horaInicio, LocalTime horaFim, String morador) {
@@ -40,7 +43,11 @@ public class Reserva {
 		this.morador=morador;
 	}
 	
-//Gets & Sets
+	/**
+	 * Métodos de get e set
+	 *  @return Retorna nos métodos get, o valor pedido do objeto da classe
+	 *  e os set definem o valor do objeto
+	 */
 	public int getId() {
 		return id;
 	}	
