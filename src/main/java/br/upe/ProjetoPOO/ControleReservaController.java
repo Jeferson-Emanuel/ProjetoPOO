@@ -1,22 +1,17 @@
 package br.upe.ProjetoPOO;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import br.upe.ProjetoPOO.Classes.Reserva;
-import br.upe.ProjetoPOO.Controladores.InterfaceReservaControlador;
+import br.upe.ProjetoPOO.Controladores.ReservaControladorInterface;
 import br.upe.ProjetoPOO.Controladores.ReservaControlador;
-import br.upe.ProjetoPOO.DAO.JPAReservaDAO;
-import br.upe.ProjetoPOO.DAO.ReservaDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -89,6 +84,8 @@ public class ControleReservaController implements Initializable {
 
 	@FXML
 	private Button voltarInicial;
+	@FXML
+	private Label reservaLabel;
 
 	//Lista visivel para preencher a tabela
 	private List<Reserva> tableView = new ArrayList<>();
@@ -98,154 +95,195 @@ public class ControleReservaController implements Initializable {
 
 	//Objeto que recebe dados do objeto da choicebox
 	private Reserva reservaSelecionada;
-	
-	private Reserva atualiza;
+
+	//variável que indica se está editando ou não
+	private boolean atualiza;
 
 	//Regra de negocio de Reserva
-	InterfaceReservaControlador controladorReserva = ReservaControlador.getINSTANCE();
+	ReservaControladorInterface controladorReserva = ReservaControlador.getINSTANCE();
 
-	//Preenchemento da tabela e da choicebox
+	/**Método de Preenchimento da Tabela
+	 * Configura as colunas da tabela
+	 * Preenche a tabela
+	 * Extrai os valores de um objeto do banco de dados quando uma linha é selecionada na tabela  
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void initialize(URL location, ResourceBundle resources) {
 
-		//Configura as colunas da tabela
 		reservaTableEspaco.setCellValueFactory(new PropertyValueFactory<Reserva, String>("tipo_espaco"));
 		reservaTableData.setCellValueFactory(new PropertyValueFactory<Reserva, LocalDate>("Data"));
 		reservaTableHorainicio.setCellValueFactory(new PropertyValueFactory<Reserva, LocalTime>("HoraInicio"));
 		reservaTableHorafim.setCellValueFactory(new PropertyValueFactory<Reserva, LocalTime>("HoraFim"));
 		reservaTableMorador.setCellValueFactory(new PropertyValueFactory<Reserva, String>("Morador"));
 
-		//Preenche a tabela
 		reservaTable.getItems().setAll(tableView);
-
-		//Listener
+		
 		reservaTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 				reservaSelecionada = (Reserva) newValue;
 			}
 		});
 
-		//Acao do botao deletar, para deletar uma reserva da tabela
 		deletaReserva.setOnMouseClicked((MouseEvent e)->{
-			deletaReserva();
+				try {
+					deletarReserva();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 		});
 
-		//Lista que preenche a choicebox
 		espacos = Arrays.asList("Piscina", "Salao", "Quiosque", "Quadra");
-		
-		//Preenche a choicebox
+
 		choiceReserva.getItems().setAll(espacos);
 	}
 
-	//Acao do botao	salvar
-	@FXML
-	void salvarReserva(ActionEvent event) {
-
+	/**Método de salvar Reserva
+	 * Os valores nos campos de texto são convertidos de LocalDateTime para String 
+	 * caso atualiza seja verdadeiro, então o processo atual é o de atualizar
+	 * nesse caso, os dados nos campos de texto são sobreescritos com reservaSelecionada
+	 * caso contrário, os dados serão salvos no banco de dados como uma nova Reserva
+	 */
+	public void salvaReserva() throws Exception {
 
 		Reserva reserva = new Reserva();
 
-		if(atualiza != null) {
-			
-			reserva.setId(reservaSelecionada.getId());
-			reserva.setTipo_espaco(choiceReserva.getValue());
-			reserva.setMorador(reservaMorador.getText());
+		String data = reservaData.getText();
+		LocalDate ld = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		reservaData.setText(String.valueOf(ld.minusDays(1)));
+		reserva.setData(ld);
 
-			//Conversao de String para LocalDate e LocalTime
-			String data = reservaData.getText();
-			LocalDate ld = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			String dia = String.valueOf(ld.minusDays(1));
-			reservaData.setText(dia);
-			reserva.setData(ld);
+		String hora = reservaHoraInicio.getText();
+		LocalTime lti = LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm"));
+		reservaData.setText(String.valueOf(lti.minusNanos(1)));
+		reserva.setHoraInicio(lti);
 
-			String hora = reservaHoraInicio.getText();
-			LocalTime lti = LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm"));
-			String di = String.valueOf(lti.minusNanos(1));
-			reservaData.setText(di);
-			reserva.setHoraInicio(lti);
+		String horaf = reservaHoraFim.getText();
+		LocalTime ltf = LocalTime.parse(horaf, DateTimeFormatter.ofPattern("HH:mm"));
+		reservaData.setText(String.valueOf(ltf.minusNanos(1)));
+		reserva.setHoraFim(ltf);
 
-			String horaf = reservaHoraFim.getText();
-			LocalTime ltf = LocalTime.parse(horaf, DateTimeFormatter.ofPattern("HH:mm"));
-			String d = String.valueOf(ltf.minusNanos(1));
-			reservaData.setText(d);
-			reserva.setHoraFim(ltf);
-		}else {
-			
-			//reserva.setId(reservaSelecionada.getId());
-			reserva.setTipo_espaco(choiceReserva.getValue());
-			reserva.setMorador(reservaMorador.getText());
+		try {
+			if(atualiza == true) {
 
-			//Conversao de String para LocalDate e LocalTime
-			String data = reservaData.getText();
-			LocalDate ld = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			String dia = String.valueOf(ld.minusDays(1));
-			reservaData.setText(dia);
-			reserva.setData(ld);
+				reserva.setId(reservaSelecionada.getId());
+				reserva.setTipo_espaco(choiceReserva.getValue());
+				reserva.setMorador(reservaMorador.getText());
 
-			String hora = reservaHoraInicio.getText();
-			LocalTime lti = LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm"));
-			String di = String.valueOf(lti.minusNanos(1));
-			reservaData.setText(di);
-			reserva.setHoraInicio(lti);
+				reservaLabel.setText("Atualizado com sucesso");
 
-			String horaf = reservaHoraFim.getText();
-			LocalTime ltf = LocalTime.parse(horaf, DateTimeFormatter.ofPattern("HH:mm"));
-			String d = String.valueOf(ltf.minusNanos(1));
-			reservaData.setText(d);
-			reserva.setHoraFim(ltf);
-			
-		}	
+				reservaMorador.clear();
+				reservaData.clear();
+				reservaHoraInicio.clear();
+				reservaMorador.clear();
+				reservaHoraFim.clear();
 
-		//Chama a interface do controlador, que chama o metodo que cria a reserva
-		controladorReserva.criarReserva(reserva);
+				atualiza = false;
+			}else {
 
-		//Lista as informacoes na tabela
-		tableView = controladorReserva.lista();
+				System.out.println("atualiza ta falso");
+				reserva.setTipo_espaco(choiceReserva.getValue());
+				reserva.setMorador(reservaMorador.getText());
 
-		//Responsavel pelo preenchimento
-		this.initialize(null, null);  
+				reservaLabel.setText("Salvo com sucesso");
 
-		//}
-		//else {
-		//	Reserva reserva = new Reserva();
-		//	controladorReserva.criarReserva(reserva);
-		//	}
+			}
+			controladorReserva.criarReserva(reserva);
+
+			reservaMorador.clear();
+			reservaData.clear();
+			reservaHoraInicio.clear();
+			reservaMorador.clear();
+			reservaHoraFim.clear();
+
+			tableView = controladorReserva.lista();
+
+		}catch(Exception e){
+			reservaLabel.setText("Erro ao salvar reserva");	
+		}finally{
+			this.initialize(null, null);
+		}
 	}
 
-	//Acao do botao listar
+	/**
+	 * Método de editar Reserva
+	 * sobe o valor do @param atualiza para true.
+	 * define os valores do @param reservaSelecionada com os valores dos campos de texto.
+	 */
+	public void atualizarReserva() {
+		atualiza = true;
+
+		try {
+			choiceReserva.getSelectionModel().select(reservaSelecionada.getTipo_espaco());
+			reservaMorador.setText(reservaSelecionada.getMorador());
+			reservaData.setText(String.valueOf(reservaSelecionada.getData()));
+			reservaHoraInicio.setText(String.valueOf(reservaSelecionada.getHoraInicio()));
+			reservaHoraFim.setText(String.valueOf(reservaSelecionada.getHoraFim()));
+
+			reservaData.clear();
+		}catch(Exception e){
+			reservaLabel.setText("Escolha uma reserva para edicao");
+		}
+
+	}
+
+	/**
+	 * Método de deletar Reserva
+	 * remove a Reserva da linha selecionada na tabela Reserva
+	 * Caso haja erro, retorna mensagem de erro
+	 */
+	public void deletarReserva() throws Exception {
+
+		try {
+
+			controladorReserva.removerReserva(reservaSelecionada);
+			tableView = controladorReserva.lista();
+			reservaLabel.setText("Reserva deletada");
+
+		} catch (Exception e) {
+			reservaLabel.setText("Erro ao deletar reserva");
+		}
+
+		this.initialize(null, null);  
+	}
+	/**
+	 * Ação de listar Reserva
+	 * @param chama na tabela o método lista do controlador de Reserva
+	 * caso nulo retorna mensagem de erro
+	 */
 	@FXML
 	void chamarListaReserva(ActionEvent event) {
-
-		tableView = controladorReserva.lista();
-		this.initialize(null, null);    	
+		if ((controladorReserva.lista() == null) || (controladorReserva.lista().size() <= 0)) {
+			reservaLabel.setText("Nada encontrado na base.");
+		} else {
+			tableView = controladorReserva.lista();
+			this.initialize(null, null);
+		}    	
 	}
-	
+	/**
+	 * Ação de editar Reserva
+	 * @param Chama a função de editar o reserva
+	 */
 	@FXML
-    void atualizarReserva(ActionEvent event) {
-		
-		atualiza = reservaSelecionada;
-		
-		choiceReserva.getSelectionModel().select(reservaSelecionada.getTipo_espaco());
-		reservaMorador.setText(reservaSelecionada.getMorador());
-		reservaData.setText(String.valueOf(reservaSelecionada.getData()));
-		reservaHoraInicio.setText(String.valueOf(reservaSelecionada.getHoraInicio()));
-		reservaHoraFim.setText(String.valueOf(reservaSelecionada.getHoraFim()));
-		
-		
-    }
-
-	//acao do botao deletar
-	public void deletaReserva() {
-
-		ReservaDAO interfaceReserva = new JPAReservaDAO();
-		interfaceReserva.remove(reservaSelecionada.getId());
-
-		tableView = controladorReserva.lista();
-		this.initialize(null, null);  
+	void editarReserva(ActionEvent event) {
+		atualizarReserva();
 	}
-
-	//Acao do botao tela inicial
+	/**
+	 * Ação de salvar Reserva
+	 * @param Chama a função de salvar a reserva
+	 */
 	@FXML
-	void switchToTelaInicial(ActionEvent event) throws IOException {
-		App.setRoot("telainicial");
+	void salvarReserva(ActionEvent event) throws Exception {
+		salvaReserva();
 	}
+	/**
+	 * Ação de deletar Reserva
+	 * @param Chama a função de remover reserva 
+	 */
+	@FXML
+	void deletaReserva(ActionEvent event) throws Exception {
+		deletarReserva();
+	}
+
 }

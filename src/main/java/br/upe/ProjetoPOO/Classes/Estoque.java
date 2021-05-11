@@ -48,5 +48,4 @@ public class Estoque {
 		return nomeProduto;
 	}
 	
-	
 }

@@ -1,56 +1,59 @@
 package br.upe.ProjetoPOO.Controladores;
 
+import br.upe.ProjetoPOO.Classes.Veiculo;
+import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+import br.upe.ProjetoPOO.DAO.VeiculoDAO;
+
 import java.util.List;
 
-import br.upe.ProjetoPOO.Classes.Veiculo;
-import br.upe.ProjetoPOO.DAO.VeiculoDAO;
-import br.upe.ProjetoPOO.DAO.JPAVeiculoDAO;
+public class VeiculoControlador implements VeiculoControladorInterface {
 
-public class VeiculoControlador {
+    //singleton
+    private static VeiculoControlador INSTANCE;
 
-	//singleton
-	private static VeiculoControlador INSTANCE;
+    public static VeiculoControlador getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new VeiculoControlador();
+        }
+        return INSTANCE;
+    }
 
-	public static VeiculoControlador getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new VeiculoControlador();
-		}
-		return INSTANCE;
-	}
+    //Instancia Interface VeiculoDAO
+    VeiculoDAO interfaceVeiculoDAO = JPAVeiculoDAO.getINSTANCE();
 
-	public void criarVeiculo(Veiculo novoVeiculo) {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		interfaceVeiculo.salva(novoVeiculo);
-	}
-	
+    //Método para gravar Veículo
+    public void criarVeiculo(Veiculo novoVeiculo) throws Exception {
+        try {
+            interfaceVeiculoDAO.salva(novoVeiculo);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
-	public void removerVeiculo(Veiculo removeVeiculo) {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		interfaceVeiculo.remove(removeVeiculo.getId());
-	}
-	
-	public List<Veiculo> lista() {
-		VeiculoDAO interfaceVeiculo = new JPAVeiculoDAO();
-		return interfaceVeiculo.lista();
-	}
+    //Método que lista Veiculo por Placa
+    public Veiculo obterPorPlaca(Veiculo obterVeiculo) throws Exception {
+        try {
+            return interfaceVeiculoDAO.obterPorPlaca(obterVeiculo.getPlaca());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
-	/*public void criarVeiculo(Veiculo veiculo_novo){
-		//extrair placa
-		String placaNova = veiculo_novo.getPlaca();
+    //Método para remover Veículo
+    public void removerVeiculo(Veiculo removeVeiculo) throws Exception {
+        try {
+            interfaceVeiculoDAO.remove(removeVeiculo.getId());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
-		//Pesquisar na base
-		VeiculoDAO veiculo_dao = new JPAVeiculoDAO();
-		Veiculo veiculo_base = null;
-		veiculo_base = veiculo_dao.obterPorPlaca(placaNova);
-
-		//comparar cpf com resultado da base
-		if(veiculo_base != null) {
-			//se já existir placa, não cadastra
-			System.out.println("Placa j� cadastrada!");
-		}else {
-			//se n�o existir a placa, cadastra veiculo
-			veiculo_dao.salva(veiculo_novo);
-			System.out.println("Ve�culo cadastrado!");
-		}
-	}*/
+    //Método que lista todos Veículos
+    public List<Veiculo> lista() {
+        List<Veiculo> lista;
+        if((lista = interfaceVeiculoDAO.lista()).size() == 0){
+            lista = null;
+        }
+        return lista;
+    }
 }

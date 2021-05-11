@@ -1,13 +1,15 @@
 package br.upe.ProjetoPOO.DAO;
 
-import java.util.List;
 import br.upe.ProjetoPOO.Classes.Veiculo;
 
+import java.util.List;
+
 public interface VeiculoDAO {
-	
-	void salva(Veiculo v);
-	Veiculo obterPorId(int id);
-	Veiculo obterPorPlaca(String placa);
-	Veiculo remove(int id);
-	List<Veiculo> lista();
+
+    void salva(Veiculo v) throws Exception;
+    Veiculo obterPorId(int id) throws Exception;
+    Veiculo obterPorPlaca(String placa) throws Exception;
+    void remove(int id) throws Exception;
+    List<Veiculo> lista();
+
 }

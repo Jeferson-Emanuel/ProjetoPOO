@@ -1,57 +1,59 @@
 package br.upe.ProjetoPOO.Controladores;
 
+import br.upe.ProjetoPOO.Classes.Morador;
+import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
+import br.upe.ProjetoPOO.DAO.MoradorDAO;
+
 import java.util.List;
 
-import br.upe.ProjetoPOO.Classes.Morador;
-import br.upe.ProjetoPOO.DAO.MoradorDAO;
-import br.upe.ProjetoPOO.DAO.JPAMoradorDAO;
+public class MoradorControlador implements MoradorControladorInterface {
 
-public class MoradorControlador {
-	
-	//Singleton
-	private static MoradorControlador INSTANCE;
-	
-	public static MoradorControlador getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new MoradorControlador();
-		}
-		return INSTANCE;
-	}
-	
-	public void criarMorador(Morador novoMorador) {
-		MoradorDAO interfaceMorador = new JPAMoradorDAO();
-		interfaceMorador.salva(novoMorador);
-	}
-	
-	public void removerMorador(Morador removeMorador) {
-		MoradorDAO interfaceMorador = new JPAMoradorDAO();
-		interfaceMorador.remove(removeMorador.getId());
-	}
-	
-	public List<Morador> lista(){
-		MoradorDAO interfaceMorador = new JPAMoradorDAO();
-		return interfaceMorador.lista();
-	}
+    //Singleton
+    private static MoradorControlador INSTANCE;
 
-/*
-	//Método de criar morador
-	public void criarMorador(Morador moradorNovo) {	
-	//Extrair cpf
-	String cpfNovo = moradorNovo.getCpf();
-	//Pesquisar na base
-	MoradorDAO moradorDAO = new JPAMoradorDAO();
-	Morador moradorBase = null;
-	moradorBase = moradorDAO.obterPorCpf(cpfNovo);
-	//Comparar cpf com resultado da base
-	if(moradorBase != null) {
-		//Se já existir cpf, não cadastra
-		System.out.println("CPF já cadastrado.");
-	}
-	else {
-		//Se não existir o cpf, cadastra morador
-		moradorDAO.salva(moradorNovo);
-		System.out.println("Morador cadastrado.");
-	}	
-	}
-*/
+    public static MoradorControlador getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new MoradorControlador();
+        }
+        return INSTANCE;
+    }
+
+    //Instancia Interface MoradorDAO
+    MoradorDAO interfaceMoradorDAO = JPAMoradorDAO.getINSTANCE();
+
+    //Método para gravar Morador
+    public void criarMorador(Morador novoMorador) throws Exception {
+        try {
+            interfaceMoradorDAO.salva(novoMorador);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método que lista Morador por CPF
+    public Morador obterPorCpf(Morador obterMorador) throws Exception {
+        try {
+            return interfaceMoradorDAO.obterPorCpf(obterMorador.getCpf());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método para remover Morador
+    public void removerMorador(Morador removeMorador) throws Exception {
+        try {
+            interfaceMoradorDAO.remove(removeMorador.getId());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    //Método que lista todos Moradores
+    public List<Morador> lista() {
+        List<Morador> lista;
+        if ((lista = interfaceMoradorDAO.lista()).size() == 0) {
+            lista = null;
+        }
+        return lista;
+    }
 }

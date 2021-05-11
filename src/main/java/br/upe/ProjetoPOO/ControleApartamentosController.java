@@ -1,188 +1,142 @@
 package br.upe.ProjetoPOO;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import com.sun.javafx.binding.SelectBinding.AsInteger;
-
 import br.upe.ProjetoPOO.Classes.Apartamento;
 import br.upe.ProjetoPOO.Controladores.ApartamentoControlador;
-import br.upe.ProjetoPOO.DAO.ApartamentoDAO;
-import br.upe.ProjetoPOO.DAO.JPAApartamentoDAO;
+import br.upe.ProjetoPOO.Controladores.ApartamentoControladorInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
-public class ControleApartamentosController implements Initializable{
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-	//IDs dos objetos FXML
-	@FXML
-	private Button apSalvar;
-	@FXML
-	private Button apEditar;
-	@FXML
-	private Button apDeletar;
-	@FXML
-	private Button voltarInicial;
-	@FXML
-	private TableView<Apartamento> apTable;
-	@FXML
-	private TableColumn<Apartamento, String> apTableBloco;
-	@FXML
-	private TableColumn<Apartamento, AsInteger> apTableNumero;
-	@FXML
-	private Button apListar;
-	@FXML
-	private TextField textFieldBloco;
-	@FXML
-	private TextField texteFieldNumero;
-	@FXML
-	private Label apLabel;
+public class ControleApartamentosController implements Initializable {
 
-	//Regra de negócio de Apartamento
-	ApartamentoControlador controladorApartamento = ApartamentoControlador.getINSTANCE();
+    //IDs dos objetos FXML
+    @FXML
+    private Button apSalvar;
 
-	//Lista visível para preencher a tabela
-	private List<Apartamento> tableView = new ArrayList<>();
-	
-	//Objeto que recebe dados da linha selecionada na tabela
-	private Apartamento selecionado;
-	//Objeto que recebe dados da tabela para editar
-	private Apartamento editar;
-	
-	//Preenchimento da tabela    
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
-		//apTableNumero.setCellValueFactory(new PropertyValueFactory<Apartamento, AsInteger>("Numero"));
-		
-		//Preenche a tabela
-		tableView = controladorApartamento.lista();
-		if(tableView == null) {}
-		else {
-			apTable.getItems().setAll(tableView);
-		}
-		
-		//Extrai valores da linha selecionada na tabela para objeto
-		apTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+    @FXML
+    private Button apEditar;
 
-			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-				selecionado = (Apartamento) newValue;
-			}
-		});
-		
-		//Action to botão Editar para editar apartamento selecionado na lista da tabela
-		apEditar.setOnMouseClicked((MouseEvent e)->{			
-			editaApartamento();
-		});
+    @FXML
+    private Button apDeletar;
 
-		//Action do botão Deletar para deletar apartamento selecionado na lista da tabela
-		apDeletar.setOnMouseClicked((MouseEvent e) -> {			
-			deletaApartamento();
-		});		
-	}
-	
-	//Método para editar apartamento
-	public void editaApartamento(){
-		editar = apTable.getSelectionModel().getSelectedItem();
-		textFieldBloco.setText(editar.getBloco());
-		//texteFieldNumero.setText(String.valueOf(selecionado.getNumero()));
-		
-		/*apSalvar.setOnMouseClicked((MouseEvent e) -> {
-			ap.setBloco(textFieldBloco.getText());
-			ap.setNumero(Integer.parseInt(texteFieldNumero.getText()));
-			
-			controladorApartamento.criarApartamento(ap);
-			//atualizaApartamento();			
-		});
-		/*Apartamento ap = apTable.getSelectionModel().getSelectedItem();
-		ap.setBloco(textFieldBloco.getText());
-		ap.setNumero(Integer.parseInt(texteFieldNumero.getText()));
-		
+    @FXML
+    private TableView<Apartamento> apTable;
 
-		ApartamentoDAO interfaceApartamento = new JPAApartamentoDAO();
-		interfaceApartamento.salva(selecionado);
+    @FXML
+    private TableColumn<Apartamento, String> apTableBloco;
 
-		//atualiza.editaApartamento(ap);         OBS: não sei se essa linha será necessária.*/
-	}
+    @FXML
+    private Button apListar;
 
-	//Método para atualizar apartamento
-	public void atualizaApartamento() {
-		Apartamento ap = new Apartamento();
-		ap.setId(selecionado.getId());
-		ap.setBloco(textFieldBloco.getText());
-		//ap.setNumero(Integer.parseInt(texteFieldNumero.getText()));
-		
-		ApartamentoDAO interfaceApartamento = new JPAApartamentoDAO();
-		interfaceApartamento.salva(ap);
-	}
+    @FXML
+    private TextField textFieldBloco;
 
-	//Método para remover apartamento
-	public void deletaApartamento() {
-		ApartamentoDAO interfaceApartamento = new JPAApartamentoDAO();
-		interfaceApartamento.remove(selecionado.getId());
+    @FXML
+    private Label apLabel;
 
-		tableView = controladorApartamento.lista();
+    //Regra de negócio de Apartamento
+    ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
-		this.initialize(null, null);  
-	}
+    //Lista visível para preencher a tabela
+    private List<Apartamento> tableView = new ArrayList<>();
 
-	//Ação do botão Salvar
-	@FXML
-	void salvarAP(ActionEvent event) {
-		//Apartamento ap = new Apartamento(textFieldBloco.getText(), Integer.parseInt(texteFieldNumero.getText()));
-		if(editar != null) {
-			Apartamento ap = new Apartamento();
-			ap.setId(selecionado.getId());
-			ap.setBloco(textFieldBloco.getText());
-			//ap.setNumero(Integer.parseInt(texteFieldNumero.getText()));
-			
-			controladorApartamento.criarApartamento(ap);
-		}
-		else {
-			Apartamento ap = new Apartamento(textFieldBloco.getText()/*, Integer.parseInt(texteFieldNumero.getText())*/);
-			
-			controladorApartamento.criarApartamento(ap);
-		}
-		
-		tableView = controladorApartamento.lista();
+    //Objeto que recebe dados da linha selecionada na tabela
+    private Apartamento selecionado;
 
-		this.initialize(null, null);  
+    //Boolean que sinaliza edição de apartamento
+    Boolean editar = false;
 
-		//apLabel.setText(controladorApartamento.criarApartamento(ap));
+    //Preenchimento da tabela
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        tableView = interfaceApartamento.lista();
+        apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
+        //Checa se a lista visível é nula e em seguida não vazia e então preenche a a tabela
+        tableView = interfaceApartamento.lista();
+        if (tableView != null && tableView.size() > 0) {
+            apTable.getItems().setAll(tableView);
+        } else {
+            apTable.getItems().clear();
+        }
+        //Extrai valores da linha selecionada na tabela para objeto
+        apTable.getSelectionModel().
+                selectedItemProperty().
+                addListener(new ChangeListener() {
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                        selecionado = (Apartamento) newValue;
+                    }
+                });
+    }
 
-	}
-	
-	//Ação do botão Listar
-	@FXML
-	void chamarListaAP(ActionEvent event) {
-		//ApartamentoControlador controladorApartamento = new ApartamentoControlador();
-		tableView = controladorApartamento.lista();
-		
-		if(tableView != null) {
-			this.initialize(null, null);
-		}
-		else {
-			apLabel.setText("Não há cadastros na base.");
-		}
-	}
-	
-	//Ação do botão Tela Inicial
-	@FXML
-	private void switchToTelaInicial() throws IOException {
-		App.setRoot("telainicial");
-	}
+    //Método para salvar apartamento
+    public void salvaApartamento() {
+        Apartamento gravaApartamento = new Apartamento();
+        try {
+            if (editar == true) {
+                gravaApartamento.setId(selecionado.getId());
+                gravaApartamento.setBloco(textFieldBloco.getText());
+                editar = false;
+            } else {
+                gravaApartamento.setBloco(textFieldBloco.getText());
+            }
+            interfaceApartamento.criarApartamento(gravaApartamento);
+            apLabel.setText("Apartamento cadastrado.");
+            textFieldBloco.clear();
+        } catch (Exception e) {
+            apLabel.setText("Apartamento já cadastrado.");
+        } finally {
+            this.initialize(null, null);
+        }
+    }
 
+    //Método para editar apartamento
+    public void editaApartamento() {
+        editar = true;
+        textFieldBloco.setText(selecionado.getBloco());
+    }
+
+    //Método para deletar apartamento
+    public void deletaApartamento() {
+        try {
+            interfaceApartamento.removerApartamento(selecionado);
+            apLabel.setText("Apartamento deletado.");
+        } catch (Exception e) {
+            apLabel.setText("Apartamento não existe.");
+        } finally {
+            this.initialize(null, null);
+        }
+    }
+
+    //Ação do botão Salvar
+    @FXML
+    void salvarAP(ActionEvent event) {
+        salvaApartamento();
+    }
+
+    //Ação do botão Editar
+    @FXML
+    void editarAP(ActionEvent event) {
+        editaApartamento();
+    }
+
+    //Ação do botão Deletar
+    @FXML
+    void deletarAP(ActionEvent event) {
+        deletaApartamento();
+    }
+
+    //Ação do botão Listar
+    @FXML
+    void chamarListaAP(ActionEvent event) {
+        this.initialize(null, null);
+    }
 }
