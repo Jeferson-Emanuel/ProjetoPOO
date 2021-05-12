@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Classe controladora da interface JavaFX.
+ */
 public class ControleVeiculoController implements Initializable {
 
     //IDs dos objetos XML
@@ -62,22 +65,22 @@ public class ControleVeiculoController implements Initializable {
     @FXML
     private Label label01;
 
-    //Regra de neg√≥cio de Veiculo
+    //Regra de negÛcio de Veiculo
     VeiculoControladorInterface interfaceVeiculo = VeiculoControlador.getINSTANCE();
 
-    //Regra de neg√≥cio de Apartamento
+    //Regra de negÛcio de Apartamento
     ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
-    //Lista vis√≠vel para preencher a tabela
+    //Lista visÌvel para preencher a tabela
     private List<Veiculo> tableView = new ArrayList<>();
 
-    //Lista vis√≠vel para preencher a choicebox
+    //Lista visÌvel para preencher a choicebox
     private List<Apartamento> cbView = new ArrayList<Apartamento>();
 
     //Objeto que recebe dados da linha selecionada na tabela
     private Veiculo veiculoSelecionado;
 
-    //Boolean para confirmar edi√ß√£o
+    //Boolean para confirmar ediÁ„o
     Boolean editar = false;
 
     //Objeto que recebe dados do objeto da choicebox
@@ -90,7 +93,7 @@ public class ControleVeiculoController implements Initializable {
         tableView = interfaceVeiculo.lista();
         cbView = interfaceApartamento.lista();
 
-        //F√°bricas de dados pras c√©lulas das tabelas
+        //F·bricas de dados pras cÈlulas das tabelas
         veiculoTablePlaca.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("placa"));
         veiculoTableDescricao.setCellValueFactory(new PropertyValueFactory<Veiculo, String>("descricao"));
         veiculoTableApartamento.setCellValueFactory(new PropertyValueFactory<Veiculo, AsString>("apartamento"));
@@ -130,7 +133,9 @@ public class ControleVeiculoController implements Initializable {
                 });
     }
 
-    //M√©todo para salvar Ve√≠culo
+    /**
+     * MÈtodo para salvar Veiculo.
+     */
     public void salvaVeiculo() {
         Veiculo gravaVeiculo = new Veiculo();
         try {
@@ -146,18 +151,20 @@ public class ControleVeiculoController implements Initializable {
                 gravaVeiculo.setApartamento(cbApartamento.getValue());
             }
             interfaceVeiculo.criarVeiculo(gravaVeiculo);
-            label01.setText("Ve√≠culo cadastrado.");
+            label01.setText("VeÌculo cadastrado.");
             textFieldPlaca.clear();
             textFieldDescricao.clear();
             cbApartamento.getItems().clear();
         } catch (Exception e) {
-            label01.setText("Placa j√° cadastrada.");
+            label01.setText("Placa j· cadastrada.");
         } finally {
             this.initialize(null, null);
         }
     }
 
-    //M√©todo para editar Veiculo
+    /**
+     * MÈtodo para editar Veiculo.
+     */
     public void editaVeiculo() {
         editar = true;
         textFieldPlaca.setText(veiculoSelecionado.getPlaca());
@@ -165,37 +172,39 @@ public class ControleVeiculoController implements Initializable {
         cbApartamento.getSelectionModel().select(veiculoSelecionado.getApartamento());
     }
 
-    //M√©todo para deletar Veiculo
+    /**
+     * MÈtodo para deletar Veiculo.
+     */
     public void deletaVeiculo() {
         try {
             interfaceVeiculo.removerVeiculo(veiculoSelecionado);
-            label01.setText("Ve√≠culo deletado.");
+            label01.setText("VeÌculo deletado.");
         } catch (Exception e) {
-            label01.setText("Ve√≠culo n√£o existe.");
+            label01.setText("VeÌculo n„o existe.");
         } finally {
             this.initialize(null, null);
         }
     }
 
-    //A√ß√£o do bot√£o Salvar
+    //AÁ„o do bot„o Salvar
     @FXML
     void salvarVeiculo(ActionEvent event) {
         salvaVeiculo();
     }
 
-    //A√ß√£o do bot√£o Editar
+    //AÁ„o do bot„o Editar
     @FXML
     void editarVeiculo(ActionEvent event) {
         editaVeiculo();
     }
 
-    //A√ß√£o do bot√£o Deletar
+    //AÁ„o do bot„o Deletar
     @FXML
     void deletarVeiculo(ActionEvent event) {
         deletaVeiculo();
     }
 
-    //A√ß√£o do bot√£o Listar
+    //AÁ„o do bot„o Listar
     @FXML
     void chamarListaVeiculo(ActionEvent event) {
         if ((interfaceVeiculo.lista() == null) || (interfaceVeiculo.lista().size() <= 0)) {

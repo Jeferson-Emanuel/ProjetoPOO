@@ -10,6 +10,9 @@ import java.util.List;
 
 import static br.upe.ProjetoPOO.DAO.PersistenceManager.getEntityManager;
 
+/**
+ * JPA da classe Morador.
+ */
 public class JPAMoradorDAO implements MoradorDAO {
 
     //Singleton
@@ -25,7 +28,12 @@ public class JPAMoradorDAO implements MoradorDAO {
     //Cria Entitymanager
     EntityManager em;
 
-    //PersistÃªncia de Morador no BD
+    /**
+     * Persistência de objeto Morador no BD.
+     *
+     * @param m Recebe um objeto do tipo Morador do Controlador.
+     * @throws Exception Retorna exceção do tipo EntityExistsException para o Controlador.
+     */
     public void salva(Morador m) throws Exception {
         em = getEntityManager();
         em.getTransaction().begin();
@@ -42,7 +50,13 @@ public class JPAMoradorDAO implements MoradorDAO {
         }
     }
 
-    //Query que retorna Morador por id
+    /**
+     * Query que traz Morador por id.
+     *
+     * @param id Recebe um inteiro extraido de um objeto Morador pelo Controlador.
+     * @return Retorna objeto do tipo Morador.
+     * @throws Exception Joga exceção do tipo NoResultException para o Controlador.
+     */
     public Morador obterPorId(int id) throws Exception {
         em = getEntityManager();
         Morador morador;
@@ -59,7 +73,13 @@ public class JPAMoradorDAO implements MoradorDAO {
         return morador;
     }
 
-    //Query que traz Morador por cpf
+    /**
+     * Query que traz Morador por CPF.
+     *
+     * @param cpf Recebe uma string extraída de um objeto Morador pelo Controlador.
+     * @return Retorna um objeto do tipo Morador.
+     * @throws Exception Joga uma exceção do tipo NoResultException para o Controlador.
+     */
     public Morador obterPorCpf(String cpf) throws Exception {
         em = getEntityManager();
         Morador morador;
@@ -76,7 +96,11 @@ public class JPAMoradorDAO implements MoradorDAO {
         return morador;
     }
 
-    //PersistÃªncia que remove Morador
+    /**
+     * Persistência que remove Morador.
+     *
+     * @param id Recebe um inteiro extraído de um objeto Morador pelo Controlador.
+     */
     @Override
     public void remove(int id) {
         em = getEntityManager();
@@ -93,7 +117,11 @@ public class JPAMoradorDAO implements MoradorDAO {
         }
     }
 
-    //Query que traz todos Moradores do BD
+    /**
+     * Query que traz todos Moradores do BD.
+     *
+     * @return Retorna uma lista com todos os objetos do tipo Apartamento do BD.
+     */
     @SuppressWarnings("unchecked")
     public List<Morador> lista() {
         em = getEntityManager();

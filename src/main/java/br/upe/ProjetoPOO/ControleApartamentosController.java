@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Classe controladora da interface JavaFX.
+ */
 public class ControleApartamentosController implements Initializable {
 
     //IDs dos objetos FXML
@@ -43,16 +46,16 @@ public class ControleApartamentosController implements Initializable {
     @FXML
     private Label apLabel;
 
-    //Regra de neg√≥cio de Apartamento
+    //Regra de negÛcio de Apartamento
     ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
-    //Lista vis√≠vel para preencher a tabela
+    //Lista visÌvel para preencher a tabela
     private List<Apartamento> tableView = new ArrayList<>();
 
     //Objeto que recebe dados da linha selecionada na tabela
     private Apartamento selecionado;
 
-    //Boolean que sinaliza edi√ß√£o de apartamento
+    //Boolean que sinaliza ediÁ„o de apartamento
     Boolean editar = false;
 
     //Preenchimento da tabela
@@ -60,7 +63,7 @@ public class ControleApartamentosController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tableView = interfaceApartamento.lista();
         apTableBloco.setCellValueFactory(new PropertyValueFactory<Apartamento, String>("Bloco"));
-        //Checa se a lista vis√≠vel √© nula e em seguida n√£o vazia e ent√£o preenche a a tabela
+        //Checa se a lista visÌvel È nula e em seguida n„o vazia e ent„o preenche a a tabela
         tableView = interfaceApartamento.lista();
         if (tableView != null && tableView.size() > 0) {
             apTable.getItems().setAll(tableView);
@@ -77,7 +80,9 @@ public class ControleApartamentosController implements Initializable {
                 });
     }
 
-    //M√©todo para salvar apartamento
+    /**
+     * MÈtodo para salvar Apartamento.
+     */
     public void salvaApartamento() {
         Apartamento gravaApartamento = new Apartamento();
         try {
@@ -92,49 +97,53 @@ public class ControleApartamentosController implements Initializable {
             apLabel.setText("Apartamento cadastrado.");
             textFieldBloco.clear();
         } catch (Exception e) {
-            apLabel.setText("Apartamento j√° cadastrado.");
+            apLabel.setText("Apartamento j· cadastrado.");
         } finally {
             this.initialize(null, null);
         }
     }
 
-    //M√©todo para editar apartamento
+    /**
+     * MÈtodo para editar apartamento.
+     */
     public void editaApartamento() {
         editar = true;
         textFieldBloco.setText(selecionado.getBloco());
     }
 
-    //M√©todo para deletar apartamento
+    /**
+     * MÈtodo para deletar apartamento.
+     */
     public void deletaApartamento() {
         try {
             interfaceApartamento.removerApartamento(selecionado);
             apLabel.setText("Apartamento deletado.");
         } catch (Exception e) {
-            apLabel.setText("Apartamento n√£o existe.");
+            apLabel.setText("Apartamento n„o existe.");
         } finally {
             this.initialize(null, null);
         }
     }
 
-    //A√ß√£o do bot√£o Salvar
+    //AÁ„o do bot„o Salvar
     @FXML
     void salvarAP(ActionEvent event) {
         salvaApartamento();
     }
 
-    //A√ß√£o do bot√£o Editar
+    //AÁ„o do bot„o Editar
     @FXML
     void editarAP(ActionEvent event) {
         editaApartamento();
     }
 
-    //A√ß√£o do bot√£o Deletar
+    //AÁ„o do bot„o Deletar
     @FXML
     void deletarAP(ActionEvent event) {
         deletaApartamento();
     }
 
-    //A√ß√£o do bot√£o Listar
+    //AÁ„o do bot„o Listar
     @FXML
     void chamarListaAP(ActionEvent event) {
         this.initialize(null, null);

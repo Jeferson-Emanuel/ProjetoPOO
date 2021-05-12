@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,7 +15,7 @@
         <columns>
           <TableColumn fx:id="textFieldProduto" prefWidth="327.0" text="Produto" />
           <TableColumn fx:id="textFieldQuantidade" prefWidth="97.0" text="Quantidade" />
-            <TableColumn fx:id="textFieldPreco" prefWidth="117.0" text="PreÃ§o" />
+            <TableColumn fx:id="textFieldPreco" prefWidth="117.0" text="Preço" />
         </columns>
       </TableView>
    </children>

@@ -1,5 +1,27 @@
 package br.upe.ProjetoPOO;
 
+import br.upe.ProjetoPOO.Classes.Almoxarifado;
+import br.upe.ProjetoPOO.Classes.Estoque;
+import br.upe.ProjetoPOO.Controladores.AlmoxarifadoControlador;
+import br.upe.ProjetoPOO.Controladores.AlmoxarifadoControladorInterface;
+import br.upe.ProjetoPOO.Controladores.EstoqueControlador;
+import br.upe.ProjetoPOO.Controladores.EstoqueControladorInterface;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,233 +30,226 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.sun.tools.javac.Main;
+/**
+ * Classe controladora da interface JavaFX.
+ */
+public class ControleAlmoxarifadoController implements Initializable {
 
-import br.upe.ProjetoPOO.Classes.Almoxarifado;
-import br.upe.ProjetoPOO.Classes.Estoque;
-import br.upe.ProjetoPOO.Controladores.AlmoxarifadoControlador;
-import br.upe.ProjetoPOO.Controladores.AlmoxarifadoControladorInterface;
-import br.upe.ProjetoPOO.Controladores.EstoqueControlador;
-import br.upe.ProjetoPOO.Controladores.EstoqueControladorInterface;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+    @FXML
+    private Button buttonControleEstoque;
 
+    @FXML
+    private Button buttonCadastrarFluxo;
 
-public class ControleAlmoxarifadoController implements Initializable{
+    @FXML
+    private Button buttonDetalheFluxo;
 
-	@FXML
-	private Button buttonControleEstoque;
+    @FXML
+    private Button buttonDeeletaFluxo;
 
-	@FXML
-	private Button buttonCadastrarFluxo;
+    @FXML
+    private Button buttonListaFluxo;
 
-	@FXML
-	private Button buttonDetalheFluxo;
+    @FXML
+    private TableView<Almoxarifado> tableViewFluxos;
 
-	@FXML
-	private Button buttonDeeletaFluxo;
+    @FXML
+    private TableColumn<Almoxarifado, String> tcFluxoData;
 
-	@FXML
-	private Button buttonListaFluxo;
+    @FXML
+    private TableColumn<Almoxarifado, String> tcFluxoTipo;
 
-	@FXML
-	private TableView<Almoxarifado> tableViewFluxos;
+    @FXML
+    private TableView<Estoque> tableViewEstoques;
 
-	@FXML
-	private TableColumn<Almoxarifado, String> tcFluxoData;
+    @FXML
+    private TableColumn<Estoque, String> tcEstoqueProduto;
 
-	@FXML
-	private TableColumn<Almoxarifado, String> tcFluxoTipo;
+    @FXML
+    private TableColumn<Estoque, Integer> tcEstoqueQuantidade;
 
-	@FXML
-	private TableView<Estoque> tableViewEstoques;
+    @FXML
+    private Button buttonListaEstoque;
 
-	@FXML
-	private TableColumn<Estoque, String> tcEstoqueProduto;
+    @FXML
+    private Button buttonVoltar;
 
-	@FXML
-	private TableColumn<Estoque, Integer> tcEstoqueQuantidade;
+    //Regra de negÛcio de Almoxarifado
+    AlmoxarifadoControladorInterface interfaceAlmoxarifado = AlmoxarifadoControlador.getINSTANCE();
 
-	@FXML
-	private Button buttonListaEstoque;
+    //Regra de negÛcio de Estoque
+    EstoqueControladorInterface interfaceEstoque = EstoqueControlador.getINSTANCE();
 
-	@FXML
-	private Button buttonVoltar;
+    //Lista visÌvel para preencher a tabela Fluxo
+    private List<Almoxarifado> tableViewFluxo = new ArrayList<>();
 
-	//Regra de neg√≥cio de Almoxarifado
-	AlmoxarifadoControladorInterface interfaceAlmoxarifado = AlmoxarifadoControlador.getINSTANCE();
-	//Regra de neg√≥cio de Estoque
-	EstoqueControladorInterface interfaceEstoque = EstoqueControlador.getINSTANCE();
+    //Lista visÌvel para preencher a tabela Estoque
+    private List<Estoque> tableViewEstoque = new ArrayList<>();
 
-	//Lista vis√≠vel para preencher a tabela Fluxo
-	private List<Almoxarifado> tableViewFluxo = new ArrayList<>(interfaceAlmoxarifado.lista());
-	//Lista vis√≠vel para preencher a tabela Estoque
-	private List<Estoque> tableViewEstoque = new ArrayList<>(interfaceEstoque.lista());
+    //Objeto que recebe linha selecionada da tabela Fluxos
+    Almoxarifado fluxoSelecionado = new Almoxarifado();
 
-	//Objeto que recebe linha selecionada da tabela Fluxos
-	Almoxarifado fluxoSelecionado = new Almoxarifado();
+    @Override
+    public void initialize(URL url, ResourceBundle resources) {
 
-	@Override
-	public void initialize(URL url, ResourceBundle resources) {
+        tableViewFluxo = interfaceAlmoxarifado.lista();
+        tableViewEstoque = interfaceEstoque.lista();
 
-		//F√°bricas de dados pras c√©lulas da tabela de Fluxos
-		tcFluxoData.setCellValueFactory(new PropertyValueFactory<Almoxarifado, String>("data"));
-		tcFluxoTipo.setCellValueFactory(new PropertyValueFactory<Almoxarifado, String>("tipo"));
-		//F√°bricas de dados pras c√©lulas da tabela de Estoques
-		tcEstoqueProduto.setCellValueFactory(new PropertyValueFactory<Estoque, String>("nomeProduto"));
-		tcEstoqueQuantidade.setCellValueFactory(new PropertyValueFactory<Estoque, Integer>("quantidade"));
+        //F·bricas de dados pras cÈlulas da tabela de Fluxos
+        tcFluxoData.setCellValueFactory(new PropertyValueFactory<Almoxarifado, String>("data"));
+        tcFluxoTipo.setCellValueFactory(new PropertyValueFactory<Almoxarifado, String>("tipo"));
+        //F·bricas de dados pras cÈlulas da tabela de Estoques
+        tcEstoqueProduto.setCellValueFactory(new PropertyValueFactory<Estoque, String>("nomeProduto"));
+        tcEstoqueQuantidade.setCellValueFactory(new PropertyValueFactory<Estoque, Integer>("quantidade"));
 
-		//Preenche a tabela Fluxo se a lista vis√≠vel n√£o estiver vazia
-		if(tableViewFluxo.size() > 0) {
-			tableViewFluxos.getItems().setAll(tableViewFluxo);
-		}
-		else {
-			tableViewFluxos.getItems().clear();
-		}
-		//Preenche a tabela Estoque se a lista vis√≠vel n√£o estiver vazia
-		if(tableViewEstoque.size() > 0) {
-			tableViewEstoques.getItems().setAll(tableViewEstoque);
-		}
-		else {
-			tableViewEstoques.getItems().clear();
-		}
+        //Preenche a tabela Fluxo se a lista visÌvel n„o estiver vazia
+        if (tableViewFluxo.size() > 0) {
+            tableViewFluxos.getItems().setAll(tableViewFluxo);
+        } else {
+            tableViewFluxos.getItems().clear();
+        }
+        //Preenche a tabela Estoque se a lista visÌvel n„o estiver vazia
+        if (tableViewEstoque.size() > 0) {
+            tableViewEstoques.getItems().setAll(tableViewEstoque);
+        } else {
+            tableViewEstoques.getItems().clear();
+        }
 
-		//Listener da Tabela
-		tableViewFluxos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-				fluxoSelecionado = (Almoxarifado) newValue;
-			}
-		});
-	}
+        //Listener da Tabela
+        tableViewFluxos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                fluxoSelecionado = (Almoxarifado) newValue;
+            }
+        });
+    }
 
-	//A√ß√£o do bot√£o Cadastrar Fluxo
-	@FXML
-	void abreAlmoxarifadoFluxo(ActionEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("almoxarifadofluxo.fxml"));
-			/* 
-			 * if "fx:controller" is not set in fxml
-			 * fxmlLoader.setController(NewWindowController);
-			 */
-			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-			Stage stage = new Stage();
-			stage.setTitle("Cadastra Fluxo");
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
+    /**
+     * MÈtodo que atualiza Tabelas quando janelas de Fluxo e Estoque s„o fechadas.
+     *
+     * @param event Recebe o evento de fechamento de janela das janelas filhas.
+     */
+    private void closeWindowEvent(WindowEvent event) {
+        this.initialize(null, null);
+    }
 
-			/*stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    /**
+     * AÁ„o do bot„o Cadastrar Fluxo.
+     *
+     * @param event N„o utilizado.
+     */
+    @FXML
+    void abreAlmoxarifadoFluxo(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("almoxarifadofluxo.fxml"));
+            /*
+             * if "fx:controller" is not set in fxml
+             * fxmlLoader.setController(NewWindowController);
+             */
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Cadastra Fluxo");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
 
-				public void handle(WindowEvent we) {
-					//System.out.println("Stage is closing");
-				}
-			});*/ 
+            stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
 
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
-	}
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
 
-	//A√ß√£o do bot√£o Detalhe
-	@FXML
-	void abreDetalheFluxo(ActionEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("almoxarifadodetalhefluxo.fxml"));
-			//fxmlLoader.setLocation(Main.class.getResource("/almoxarifadodetalhefluxo.fxml"));
+    /**
+     * AÁ„o do bot„o Detalhe. Abre janela com detalhes to Fluxo de Produtos selecionado.
+     * @param event N„o utilizado.
+     */
+    @FXML
+    void abreDetalheFluxo(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("almoxarifadodetalhefluxo.fxml"));
 
-			//Envia objeto para a pr√≥xima janela
-			//Parent scene = fxmlLoader.load();             
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
 
+            ControleAmoxarifadoDetalheController controller = fxmlLoader.getController();
+            //controller.setData(fluxoSelecionado);
+            controller.setData(tableViewFluxos.getSelectionModel().getSelectedItem());
 
-			/* 
-			 * if "fx:controller" is not set in fxml
-			 * fxmlLoader.setController(NewWindowController);
-			 */
-			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Detalhe Fluxo");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
 
-			ControleAmoxarifadoDetalheController controller = fxmlLoader.getController();             
-			//controller.setData(fluxoSelecionado);
-			controller.setData(tableViewFluxos.getSelectionModel().getSelectedItem());
+    /**
+     * AÁ„o do bot„o Listar(Fluxo).
+     * @param event N„o utilizado.
+     */
+    @FXML
+    void listaFluxo(ActionEvent event) {
+        this.initialize(null, null);
+    }
 
-			Stage stage = new Stage();
-			stage.setTitle("Detalhe Fluxo");
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
-	}
+    /**
+     * AÁ„o do bot„o Listar(Estoque).
+     * @param event N„o utilizado.
+     */
+    @FXML
+    void listaEstoque(ActionEvent event) {
+        this.initialize(null, null);
+    }
 
-	//A√ß√£o do bot√£o Listar(Fluxo)
-	@FXML
-	void listaFluxo(ActionEvent event) {
-		tableViewFluxo = interfaceAlmoxarifado.lista();
+    /**
+     * AÁ„o do bot„o Deletar(Fluxo).
+     * @param event N„o utilizado.
+     */
+    @FXML
+    void deletaFluxo(ActionEvent event) {
+        interfaceAlmoxarifado.removeAlmoxarifado(fluxoSelecionado);
+        this.initialize(null, null);
+    }
 
-		this.initialize(null, null);
-	}
-	//A√ß√£o do bot√£o Listar(Estoque)
-	@FXML
-	void listaEstoque(ActionEvent event) {
-		tableViewEstoque = interfaceEstoque.lista();
+    /**
+     * AÁ„o do bot„o Controle Estoque. Abre janela para controle de Estoque.
+     * @param event N„o utilizado.
+     *
+     */
+    @FXML
+    void abreControleEstoque(ActionEvent event) {
 
-		this.initialize(null, null);
-	}
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("almoxarifadocontroleestoque.fxml"));
 
-	@FXML
-	void deletaFluxo(ActionEvent event) {
-		interfaceAlmoxarifado.removeAlmoxarifado(fluxoSelecionado);
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Controle Estoque");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
 
-		tableViewFluxo = interfaceAlmoxarifado.lista();
+            stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
 
-		this.initialize(null, null);
-	}
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
 
-	@FXML
-	void abreControleEstoque(ActionEvent event) {
-		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("almoxarifadocontroleestoque.fxml"));
-			
-			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-			Stage stage = new Stage();
-			stage.setTitle("Controle Estoque");
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
+    }
 
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
-
-	}
-
-	@FXML
-	void voltaTelaInicial(ActionEvent event) throws IOException {
-		App.setRoot("telainicial");
-	}
+    @FXML
+    void voltaTelaInicial(ActionEvent event) throws IOException {
+        App.setRoot("telainicial");
+    }
 
 }

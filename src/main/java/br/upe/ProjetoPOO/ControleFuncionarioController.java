@@ -224,7 +224,7 @@ public class ControleFuncionarioController implements Initializable {
 	 * @param Chama a função de salvar o funcionário
 	 */
 	@FXML
-	void salvarFuncionario(ActionEvent event) {
+	void salvarFunc(ActionEvent event) {
 		salvaFuncionario();
 	}
 	/**

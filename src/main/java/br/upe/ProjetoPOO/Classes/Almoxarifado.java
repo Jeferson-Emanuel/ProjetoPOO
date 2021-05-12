@@ -1,64 +1,61 @@
 package br.upe.ProjetoPOO.Classes;
 
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 @Entity
-@Table(name="almoxarifado")
+@Table(name = "almoxarifado")
 public class Almoxarifado {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Produto> fluxoProdutos;
-	private String tipo;
-	private String data;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-//Constructor
-	public Almoxarifado(){	
-	}
-	public Almoxarifado(List<Produto> fluxoProdutos, String tipo, String data){	
-	}
+    private String data;
 
-//Gets & Sets
-	public int getId() {
-		return id;
-	}
+    private String tipo;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Produto> fluxoProdutos;
 
-	public List<Produto> getFluxoProdutos() {
-		return fluxoProdutos;
-	}
+    //Construtores
+    public Almoxarifado() {
+    }
 
-	public void setFluxoProdutos(List<Produto> fluxoProdutos) {
-		this.fluxoProdutos = fluxoProdutos;
-	}
+    public Almoxarifado(String tipo, String data, List<Produto> fluxoProdutos) {
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    //Gets & Sets
+    public int getId() {
+        return id;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getData() {
-		return data;
-	}
+    public List<Produto> getFluxoProdutos() {
+        return fluxoProdutos;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
-	
+    public void setFluxoProdutos(List<Produto> fluxoProdutos) {
+        this.fluxoProdutos = fluxoProdutos;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
 }

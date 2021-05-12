@@ -1,78 +1,109 @@
 package br.upe.ProjetoPOO.DAO;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import br.upe.ProjetoPOO.Classes.Almoxarifado;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
+
+import static br.upe.ProjetoPOO.DAO.PersistenceManager.getEntityManager;
+
+/**
+ * JPA da classe Almoxarifado.
+ */
 public class JPAAlmoxarifadoDAO implements AlmoxarifadoDAO {
-	
-	//Singleton
-	private static JPAAlmoxarifadoDAO INSTANCE;
-	
-	public static JPAAlmoxarifadoDAO getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new JPAAlmoxarifadoDAO();
-		}
-		return INSTANCE;
-	}
 
-	EntityManager em;
-	EntityManagerFactory emf;
+    //Singleton
+    private static JPAAlmoxarifadoDAO INSTANCE;
 
-	public JPAAlmoxarifadoDAO() {
-		emf = Persistence.createEntityManagerFactory("default");
-		em = emf.createEntityManager();
-	}
+    public static JPAAlmoxarifadoDAO getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new JPAAlmoxarifadoDAO();
+        }
+        return INSTANCE;
+    }
 
-	public Almoxarifado obterPorId(int id) {
-		em.getTransaction().begin();
-		Almoxarifado almoxarifado = em.find(Almoxarifado.class, id);
-		em.getTransaction().commit();
-		emf.close();
-		return almoxarifado;
-	}
+    //Cria Entitymanager
+    EntityManager em;
 
-	public void salva(Almoxarifado a) {
-		em.getTransaction().begin();
-		em.merge(a);
-		em.getTransaction().commit();
-		//emf.close();
-	}
+    /**
+     * Persistência de objeto Almoxarifado no BD.
+     * @param a Recebe um objeto do tipo Almoxarifado do Controlador.
+     */
+    public void salva(Almoxarifado a) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.merge(a);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            em.flush();
+            em.refresh(a);
+        } finally {
+            em.close();
+        }
+    }
 
-	@Override
-	public Almoxarifado remove(int id) {
-		// TODO Auto-generated method stub
-		em.getTransaction().begin();
-		Almoxarifado almoxarifado = em.find(Almoxarifado.class, id); //consulta por meio do id.
-		System.out.println("Excluindo os dados de: " + almoxarifado.getId());
-		em.remove(almoxarifado);
-		em.getTransaction().commit();
-		em.close();
-		return almoxarifado;
-	}
+    /**
+     * Query que traz Almoxarifado por id.
+     * @param id Recebe um inteiro extraido de um objeto Almoxarifado pelo Controlador.
+     * @return Retorna objeto do tipo Almoxarifado.
+     */
+    public Almoxarifado obterPorId(int id) {
+        em = getEntityManager();
+        Almoxarifado almoxarifado;
+        em.getTransaction().begin();
+        try {
+            almoxarifado = em.find(Almoxarifado.class, id);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+        return almoxarifado;
+    }
 
-	@SuppressWarnings("unchecked")
-	public List<Almoxarifado> lista() {
+    /**
+     * Persistência que remove Almoxarifado.
+     * @param id Recebe um inteiro extraído de um objeto Almoxarifado pelo Controlador.
+     */
+    @Override
+    public void remove(int id) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        try {
+            Almoxarifado almoxarifado = em.find(Almoxarifado.class, id);
+            em.remove(almoxarifado);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 
-		Query query = em.createQuery("SELECT DISTINCT a FROM Almoxarifado a INNER JOIN a.fluxoProdutos p");
-		List<Almoxarifado> resultList = query.getResultList();
-		
-		return resultList;
+    /**
+     * Query que traz todos Almoxarifados do BD
+     * @return Retorna uma lista com todos os objetos do tipo Almoxarifado do BD.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Almoxarifado> lista() {
+        em = getEntityManager();
+        List<Almoxarifado> almoxarifados = new ArrayList<>();
+        try {
+            Query query = em.createQuery("SELECT DISTINCT a FROM Almoxarifado a INNER JOIN a.fluxoProdutos p");
+            almoxarifados = query.getResultList();
+        } catch (Exception e) {
 
-		//return em.createQuery("FROM " + Almoxarifado.class.getName()).getResultList();		
-
-		/*em.getTransaction().begin();
-		Query pesquisa = em.createQuery("select a from Almoxarifado a");
-		@SuppressWarnings("unchecked")
-		List<Almoxarifado> almoxarifado = pesquisa.getResultList();
-		em.getTransaction().commit();
-		emf.close();
-		return almoxarifado;*/
-	}
+        } finally {
+            em.close();
+        }
+        return almoxarifados;
+    }
 
 }

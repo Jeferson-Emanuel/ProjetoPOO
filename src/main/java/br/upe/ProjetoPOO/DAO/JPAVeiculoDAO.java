@@ -10,6 +10,9 @@ import java.util.List;
 
 import static br.upe.ProjetoPOO.DAO.PersistenceManager.getEntityManager;
 
+/**
+ * JPA da classe Veiculo.
+ */
 public class JPAVeiculoDAO implements VeiculoDAO {
 
     //Singleton
@@ -25,7 +28,12 @@ public class JPAVeiculoDAO implements VeiculoDAO {
     //Cria Entitymanager
     EntityManager em;
 
-    //PersistÃªncia de VeÃ­culo no BD
+    /**
+     * Persistência de objeto Veiculo no BD.
+     *
+     * @param v Recebe um objeto do tipo Veiculo do Controlador.
+     * @throws Exception Retorna exceção do tipo EntityExistsException para o Controlador.
+     */
     public void salva(Veiculo v) throws Exception {
         em = getEntityManager();
         em.getTransaction().begin();
@@ -42,7 +50,13 @@ public class JPAVeiculoDAO implements VeiculoDAO {
         }
     }
 
-    //Query que recupera objeto por id
+    /**
+     * Query que traz Veiculo por id.
+     *
+     * @param id Recebe um inteiro extraido de um objeto Veiculo pelo Controlador.
+     * @return Retorna objeto do tipo Veiculo.
+     * @throws Exception Joga exceção do tipo NoResultException para o Controlador.
+     */
     public Veiculo obterPorId(int id) throws Exception {
         em = getEntityManager();
         Veiculo veiculo;
@@ -59,7 +73,13 @@ public class JPAVeiculoDAO implements VeiculoDAO {
         return veiculo;
     }
 
-    //Query que recupera objeto por placa
+    /**
+     * Query que traz Veiculo por placa.
+     *
+     * @param placa Recebe uma string extraída de um objeto Veiculo pelo Controlador.
+     * @return Retorna um objeto do tipo Veiculo.
+     * @throws Exception Joga uma exceção do tipo NoResultException para o Controlador.
+     */
     public Veiculo obterPorPlaca(String placa) throws Exception {
         em = getEntityManager();
         Veiculo veiculo;
@@ -75,7 +95,11 @@ public class JPAVeiculoDAO implements VeiculoDAO {
         return veiculo;
     }
 
-    //PersistÃªncia que remove VeÃ­culo
+    /**
+     * Persistência que remove Veiculo.
+     *
+     * @param id Recebe um inteiro extraído de um objeto Veiculo pelo Controlador.
+     */
     @Override
     public void remove(int id) {
         em = getEntityManager();
@@ -92,16 +116,20 @@ public class JPAVeiculoDAO implements VeiculoDAO {
         }
     }
 
-    //Query que lista todos os VeÃ­culos do BD
+    /**
+     * Query que traz todos Veiculos do BD.
+     *
+     * @return Retorna uma lista com todos os objetos do tipo Veiculo do BD.
+     */
     @SuppressWarnings("unchecked")
     public List<Veiculo> lista() {
         em = getEntityManager();
         List<Veiculo> veiculos = new ArrayList<>();
         try {
             veiculos = em.createQuery("FROM " + Veiculo.class.getName()).getResultList();
-        }catch (Exception e){
+        } catch (Exception e) {
 
-        }finally {
+        } finally {
             em.close();
         }
         return veiculos;

@@ -33,8 +33,7 @@ public class TelaInicialController {
     @FXML
     private Button controleReservas;
 
-
-    //A√ß√£o do bot√£o Controle de Apartamentos
+    //AÁ„o do bot„o Controle de Apartamentos
     @FXML
     void switchToControleApartamentos(ActionEvent event) {
         try {
@@ -114,12 +113,27 @@ public class TelaInicialController {
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
 
-    	//        App.setRoot("controlefuncionario");
+        //        App.setRoot("controlefuncionario");
     }
 
     @FXML
-    private void switchToAlmoxarifado() throws IOException {
-        App.setRoot("almoxarifado");
+    void switchToAlmoxarifado() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("almoxarifado.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 610, 450);
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/media/SC_icon.png"));
+            stage.setTitle("Almoxarifado");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
     }
 
     @FXML
@@ -141,7 +155,7 @@ public class TelaInicialController {
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
 
-    	//        App.setRoot("controlereservas");
+        //        App.setRoot("controlereservas");
     }
 
 }

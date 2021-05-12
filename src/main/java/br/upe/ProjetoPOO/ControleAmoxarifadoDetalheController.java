@@ -53,7 +53,7 @@ public class ControleAmoxarifadoDetalheController implements Initializable{
     	this.initialize(null, null);
     }    
     
-    //Lista visÃ­vel para preencher a tabela
+    //Lista visível para preencher a tabela
     private List<Produto> produtosFluxo = new ArrayList<>();
     
     //Preenche a tabela

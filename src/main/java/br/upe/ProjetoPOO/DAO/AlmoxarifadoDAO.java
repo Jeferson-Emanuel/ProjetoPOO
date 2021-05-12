@@ -7,6 +7,6 @@ public interface AlmoxarifadoDAO {
 	
 	void salva(Almoxarifado a);
 	Almoxarifado obterPorId(int id);
-	Almoxarifado remove(int id);
+	void remove(int id);
 	List<Almoxarifado> lista();
 }

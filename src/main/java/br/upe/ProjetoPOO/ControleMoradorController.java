@@ -20,7 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Classe controladora da interface JavaFX.
+ */
 public class ControleMoradorController implements Initializable {
+
     //IDs dos objetos XML
     @FXML
     private TextField textFieldCPF;
@@ -61,22 +65,22 @@ public class ControleMoradorController implements Initializable {
     @FXML
     private Label label01;
 
-    //Regra de neg√≥cio de Morador
+    //Regra de negÛcio de Morador
     MoradorControladorInterface interfaceMorador = MoradorControlador.getINSTANCE();
 
-    //Regra de neg√≥cio de Apartamento
+    //Regra de negÛcio de Apartamento
     ApartamentoControladorInterface interfaceApartamento = ApartamentoControlador.getINSTANCE();
 
-    //Lista vis√≠vel para preencher a tabela
+    //Lista visÌvel para preencher a tabela
     private List<Morador> tableView = new ArrayList<>();
 
-    //Lista vis√≠vel para preencher a choicebox
+    //Lista visÌvel para preencher a choicebox
     private List<Apartamento> cbView = new ArrayList<Apartamento>();
 
     //Objeto que recebe dados da linha selecionada na tabela
     private Morador moradorSelecionado;
 
-    //Boolean para confirmar edi√ß√£o
+    //Boolean para confirmar ediÁ„o
     Boolean editar = false;
 
     //Objeto que recebe dados do objeto da choicebox
@@ -89,7 +93,7 @@ public class ControleMoradorController implements Initializable {
         tableView = interfaceMorador.lista();
         cbView = interfaceApartamento.lista();
 
-        //F√°bricas de dados pras c√©lulas das tabelas
+        //F·bricas de dados pras cÈlulas das tabelas
         moradorTableCPF.setCellValueFactory(new PropertyValueFactory<Morador, String>("cpf"));
         moradorTableNome.setCellValueFactory(new PropertyValueFactory<Morador, String>("nome"));
         moradorTableApartamento.setCellValueFactory(new PropertyValueFactory<Morador, AsString>("apt"));
@@ -128,7 +132,9 @@ public class ControleMoradorController implements Initializable {
                 });
     }
 
-    //M√©todo para salvar Morador
+    /**
+     * MÈtodo para salvar Morador.
+     */
     public void salvaMorador() {
         Morador gravaMorador = new Morador();
         try {
@@ -149,13 +155,15 @@ public class ControleMoradorController implements Initializable {
             textFieldNome.clear();
             cbApartamento.getItems().clear();
         } catch (Exception e) {
-            label01.setText("CPF j√° cadastrado.");
+            label01.setText("CPF j· cadastrado.");
         } finally {
             this.initialize(null, null);
         }
     }
 
-    //M√©todo para editar Morador
+    /**
+     * MÈtodo para editar Morador.
+     */
     public void editaMorador() {
         editar = true;
         textFieldCPF.setText(moradorSelecionado.getCpf());
@@ -163,38 +171,39 @@ public class ControleMoradorController implements Initializable {
         cbApartamento.getSelectionModel().select(moradorSelecionado.getApt());
     }
 
-    //M√©todo para deletar Morador
+    /**
+     * MÈtodo para deletar Morador.
+     */
     public void deletaMorador() {
         try {
             interfaceMorador.removerMorador(moradorSelecionado);
             label01.setText("Morador deletado.");
         } catch (Exception e) {
-            label01.setText("Morador n√£o existe.");
-        }
-        finally {
+            label01.setText("Morador n„o existe.");
+        } finally {
             this.initialize(null, null);
         }
     }
 
-    //A√ß√£o do bot√£o Salvar
+    //AÁ„o do bot„o Salvar
     @FXML
     void salvarMorador(ActionEvent event) {
         salvaMorador();
     }
 
-    //A√ß√£o do bot√£o Editar
+    //AÁ„o do bot„o Editar
     @FXML
     void editarMorador(ActionEvent event) {
         editaMorador();
     }
 
-    //A√ß√£o do bot√£o Deletar
+    //AÁ„o do bot„o Deletar
     @FXML
     void deletarMorador(ActionEvent event) {
         deletaMorador();
     }
 
-    //A√ß√£o do bot√£o Listar
+    //AÁ„o do bot„o Listar
     @FXML
     void chamarListaMorador(ActionEvent event) {
 

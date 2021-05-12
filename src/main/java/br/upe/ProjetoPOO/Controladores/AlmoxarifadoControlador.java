@@ -3,53 +3,67 @@ package br.upe.ProjetoPOO.Controladores;
 import br.upe.ProjetoPOO.Classes.Almoxarifado;
 import br.upe.ProjetoPOO.DAO.AlmoxarifadoDAO;
 import br.upe.ProjetoPOO.DAO.JPAAlmoxarifadoDAO;
+
 import java.util.List;
 
+/**
+ * Regra de negÛcio para objeto Almoxarifado.
+ */
 public class AlmoxarifadoControlador implements AlmoxarifadoControladorInterface {
 
-	//Singleton
-	private static AlmoxarifadoControlador INSTANCE;
+    //Singleton
+    private static AlmoxarifadoControlador INSTANCE;
 
-	public static AlmoxarifadoControlador getINSTANCE() {
-		if(INSTANCE == null) {
-			INSTANCE = new AlmoxarifadoControlador();
-		}
-		return INSTANCE;
-	}
+    /**
+     * MÈtodo para chamada do Singleton dessa classe.
+     *
+     * @return Retorna inst‚ncia dessa classe.
+     */
+    public static AlmoxarifadoControlador getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new AlmoxarifadoControlador();
+        }
+        return INSTANCE;
+    }
 
-	public void registroAlmoxarifado(Almoxarifado novoAlmoxarifado) {
-		AlmoxarifadoDAO interfaceAlmoxarifado = new JPAAlmoxarifadoDAO();
-		interfaceAlmoxarifado.salva(novoAlmoxarifado);
-	}
+    //Instancia interface AlmoxarifadoDAO
+    AlmoxarifadoDAO interfaceAlmoxarifadoDAO = JPAAlmoxarifadoDAO.getINSTANCE();
 
-	public void removeAlmoxarifado(Almoxarifado removeAlmoxarifado) {
-		AlmoxarifadoDAO interfaceAlmoxarifado = new JPAAlmoxarifadoDAO();
-		interfaceAlmoxarifado.remove(removeAlmoxarifado.getId());
-	}
-	
-	public Almoxarifado obterPorId(Almoxarifado obterAlmoxarifado) {
-		
-		Almoxarifado temp = new Almoxarifado();
-		AlmoxarifadoDAO interfaceAlmoxarifado = new JPAAlmoxarifadoDAO();
-		return temp = interfaceAlmoxarifado.obterPorId(obterAlmoxarifado.getId());
-		
-	}
+    /**
+     * MÈtodo para gravar Almoxarifado.
+     *
+     * @param novoAlmoxarifado Recebe um objeto Almoxarifado da interface para ser salvo no BD.
+     */
+    public void registroAlmoxarifado(Almoxarifado novoAlmoxarifado) {
+        interfaceAlmoxarifadoDAO.salva(novoAlmoxarifado);
+    }
 
-	public List<Almoxarifado> lista(){
-		AlmoxarifadoDAO interfaceAlmoxarifado = new JPAAlmoxarifadoDAO();
-		return interfaceAlmoxarifado.lista();
-	}
-	/*public void registroAlmoxarifado(Almoxarifado novoAlmoxarifado) {//Recebe inst√¢ncia de almoxarifado
+    /**
+     * MÈtodo para remover Almoxarifado.
+     *
+     * @param removeAlmoxarifado Recebe um objeto Almoxarifado da Interface para ser removido do BD.
+     */
+    public void removeAlmoxarifado(Almoxarifado removeAlmoxarifado) {
+        interfaceAlmoxarifadoDAO.remove(removeAlmoxarifado.getId());
+    }
 
-		//Cria inst√¢ncia de controlador de estoque
-		EstoqueControlador estoqueControlador = new EstoqueControlador();
-		estoqueControlador.criarEstoque(novoAlmoxarifado);
+    /**
+     * MÈtodo que lista Almoxarifado por id.
+     *
+     * @param obterAlmoxarifado Recebe um objeto Almoxarifado da Interface para ser pesquisado no BD.
+     * @return Retorna um objeto do tipo Almoxarifado.
+     */
+    public Almoxarifado obterPorId(Almoxarifado obterAlmoxarifado) {
+        Almoxarifado temp = new Almoxarifado();
+        return temp = interfaceAlmoxarifadoDAO.obterPorId(obterAlmoxarifado.getId());
+    }
 
-		AlmoxarifadoDAO interfaceAlmoxarifado = new JPAAlmoxarifadoDAO();
-		interfaceAlmoxarifado.salva(novoAlmoxarifado);
-		System.out.println("Fluxo de produtos registrado com sucesso.");
-	}*/
-
-
+    /**
+     * MÈtodo que lista todos Almoxarifados.
+     *
+     * @return Retorna uma lista com todos objetos do tipo Almoxarifado do BD.
+     */
+    public List<Almoxarifado> lista() {
+        return interfaceAlmoxarifadoDAO.lista();
+    }
 }
-
